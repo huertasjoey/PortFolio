@@ -1,11 +1,11 @@
 import { Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from './BrandIcons'
-import { profile } from '../data/profile'
+import { gmailComposeUrl, profile } from '../data/profile'
 
 const links = [
   { label: 'GitHub', href: profile.github, Icon: GithubIcon, external: true },
   { label: 'LinkedIn', href: profile.linkedin, Icon: LinkedinIcon, external: true },
-  { label: 'Email', href: `mailto:${profile.email}`, Icon: Mail, external: false },
+  { label: 'Email', href: gmailComposeUrl(), Icon: Mail, external: true },
 ]
 
 export function SocialLinks() {

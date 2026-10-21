@@ -10,10 +10,10 @@ export const profile = {
   shortTitle: 'COMPUTER ENGINEER · FULL-STACK',
   interests: ['IoT', 'Embedded Systems', 'AI Engineering'],
   availability: 'Open to work',
-  /** PLACEHOLDER — replace with your real email address. */
-  email: 'your-email@example.com',
-  /** PLACEHOLDER — replace with your real profile URLs. */
-  github: 'https://github.com/your-username',
+  /** Used for every email link and the contact form fallback. */
+  email: 'joeyhuertas12@gmail.com',
+  /** PLACEHOLDER (LinkedIn) — replace with your real profile URL. */
+  github: 'https://github.com/huertasjoey',
   linkedin: 'https://www.linkedin.com/in/your-profile',
   /**
    * Put your resume PDF in `frontend/public/` (e.g. `resume.pdf`) and set this
@@ -44,3 +44,9 @@ export const focusAreas = [
   'IoT & automation',
   'Applied AI engineering',
 ]
+
+/** Opens a Gmail compose window addressed to `profile.email` (optionally prefilled). */
+export const gmailComposeUrl = (subject = '', body = '') =>
+  `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profile.email)}` +
+  (subject ? `&su=${encodeURIComponent(subject)}` : '') +
+  (body ? `&body=${encodeURIComponent(body)}` : '')

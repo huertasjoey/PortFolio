@@ -4,7 +4,7 @@ import { GithubIcon, LinkedinIcon } from '../components/BrandIcons'
 import { SectionHeading } from '../components/SectionHeading'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
-import { profile } from '../data/profile'
+import { gmailComposeUrl, profile } from '../data/profile'
 
 type Fields = { name: string; email: string; subject: string; message: string }
 type Errors = Partial<Record<keyof Fields, string>>
@@ -63,9 +63,9 @@ export function ContactSection() {
 
   const set = (k: keyof Fields) => (e: { target: { value: string } }) => setFields((f) => ({ ...f, [k]: e.target.value }))
 
-  const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(fields.subject)}&body=${encodeURIComponent(
-    `${fields.message}\n\n— ${fields.name} (${fields.email})`,
-  )}`
+  const mailto = gmailComposeUrl(fields.subject, `${fields.message}
+
+— ${fields.name} (${fields.email})`)
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -111,7 +111,7 @@ export function ContactSection() {
 
       <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
         <Reveal className="flex flex-col items-start gap-3">
-          <ButtonLink href={`mailto:${profile.email}`}>
+          <ButtonLink href={gmailComposeUrl()} target="_blank" rel="noopener noreferrer">
             <Mail size={16} /> {profile.email}
           </ButtonLink>
           <ButtonLink href={profile.github} variant="secondary" target="_blank" rel="noopener noreferrer">
@@ -120,7 +120,7 @@ export function ContactSection() {
           <ButtonLink href={profile.linkedin} variant="secondary" target="_blank" rel="noopener noreferrer">
             <LinkedinIcon /> LinkedIn
           </ButtonLink>
-          <p className="mt-2 font-mono text-xs text-muted">Email, GitHub and LinkedIn links are placeholders until set in src/data/profile.ts.</p>
+          <p className="mt-2 font-mono text-xs text-muted">The LinkedIn link is a placeholder until set in src/data/profile.ts.</p>
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -157,8 +157,8 @@ export function ContactSection() {
                   <p>
                     This form isn't connected to an email service yet, so nothing has been delivered. Set{' '}
                     <code className="font-mono text-xs text-accent">VITE_CONTACT_ENDPOINT</code> to enable it, or{' '}
-                    <a className="text-accent underline underline-offset-2" href={mailto}>
-                      send this message from your email app
+                    <a className="text-accent underline underline-offset-2" href={mailto} target="_blank" rel="noopener noreferrer">
+                      send this message from Gmail
                     </a>
                     .
                   </p>
