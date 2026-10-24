@@ -54,6 +54,12 @@ const nav: NavItem[] = [
 /* ───────────────────────────── 01 About ───────────────────────────── */
 
 const about = {
+  /** Portrait shown beside the headline. Files live in frontend/public/images/. Set src to '' to hide it. */
+  photo: {
+    src: '/images/joey-portrait.jpg',
+    alt: 'Portrait of Joey Huertas in graduation attire',
+    caption: 'Computer Engineering · Pampanga State University',
+  },
   headline: 'Building at the intersection of **hardware**, **software**, and **intelligence.**',
   paragraphs: [
     'I’m Joey Huertas, a Computer Engineering graduate growing into full-stack web development, IoT, embedded systems and AI engineering.',
