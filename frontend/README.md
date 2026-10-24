@@ -7,4 +7,4 @@ React + Vite + TypeScript + Tailwind CSS v4.
     npm run build     # outputs dist/
     npm run preview   # serve the production build locally
 
-Content lives in `src/data/`. Optional env var: `VITE_CONTACT_ENDPOINT` (see `.env.example`).
+All content lives in `src/content.ts`. Optional env var: `VITE_CONTACT_ENDPOINT` (see `.env.example`).

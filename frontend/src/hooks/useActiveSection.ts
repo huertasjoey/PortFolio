@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { navItems, type SectionId } from '../data/profile'
+import { content } from '../content'
+import type { SectionId } from '../types'
 
 /** Tracks which section crosses the middle band of the viewport. */
 export function useActiveSection(): SectionId {
@@ -14,7 +15,7 @@ export function useActiveSection(): SectionId {
       },
       { rootMargin: '-40% 0px -55% 0px' },
     )
-    for (const { id } of navItems) {
+    for (const { id } of content.nav) {
       const el = document.getElementById(id)
       if (el) observer.observe(el)
     }

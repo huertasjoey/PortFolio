@@ -1,18 +1,16 @@
 import { GraduationCap, MapPin } from 'lucide-react'
 import { SectionHeading } from '../components/SectionHeading'
 import { Reveal } from '../components/ui/Reveal'
-import { education } from '../data/education'
+import { content } from '../content'
+
+const { education } = content
 
 export function EducationSection() {
   return (
     <section id="education" aria-labelledby="education-title" className="py-24 lg:py-28">
-      <SectionHeading number="05" label="Education">
-        <span id="education-title">
-          Engineering my <strong>foundation.</strong>
-        </span>
-      </SectionHeading>
+      <SectionHeading number="05" label="Education" id="education-title" title={education.heading} />
       <ol className="relative space-y-5 border-l border-line pl-8">
-        {education.map((e) => (
+        {education.entries.map((e) => (
           <li key={e.degree} className="relative">
             <span className="absolute top-8 -left-[37px] size-2.5 rounded-full border-2 border-accent bg-bg" aria-hidden />
             <Reveal>
@@ -23,6 +21,7 @@ export function EducationSection() {
                 <div>
                   <h3 className="text-2xl font-semibold text-fg">{e.degree}</h3>
                   <p className="mt-1 text-fg2">{e.institution}</p>
+                  {e.period && <p className="mt-1 font-mono text-xs text-muted">{e.period}</p>}
                   <p className="mt-3 flex items-center gap-2 font-mono text-xs text-muted">
                     <MapPin size={13} /> {e.location}
                   </p>

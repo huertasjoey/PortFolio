@@ -1,6 +1,9 @@
 import { Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from './BrandIcons'
-import { gmailComposeUrl, profile } from '../data/profile'
+import { content } from '../content'
+import { gmailComposeUrl } from '../lib/utils'
+
+const { profile } = content
 
 const links = [
   { label: 'GitHub', href: profile.github, Icon: GithubIcon, external: true },

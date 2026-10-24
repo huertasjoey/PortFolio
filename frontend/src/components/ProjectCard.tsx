@@ -1,5 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
-import type { Project } from '../data/projects'
+import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
 import { Tag } from './ui/Tag'
 

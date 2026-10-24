@@ -1,7 +1,10 @@
-import { navItems, profile, type SectionId } from '../data/profile'
+import { content } from '../content'
+import type { SectionId } from '../types'
 import { ResumeButton } from './ResumeButton'
 import { SocialLinks } from './SocialLinks'
 import { ThemeToggle } from './ThemeToggle'
+
+const { profile } = content
 
 export function StatusDot() {
   return (
@@ -20,7 +23,7 @@ interface NavProps {
 export function NavLinks({ active, onNavigate }: NavProps) {
   return (
     <ul className="space-y-1">
-      {navItems.map(({ id, number, label }) => {
+      {content.nav.map(({ id, number, label }) => {
         const isActive = active === id
         return (
           <li key={id}>

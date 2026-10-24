@@ -1,9 +1,12 @@
 import { X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, type ReactNode } from 'react'
-import type { Project } from '../data/projects'
+import { content } from '../content'
+import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
 import { Tag } from './ui/Tag'
+
+const ui = content.projectUi
 
 interface Props {
   project: Project | null
@@ -78,7 +81,7 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
             <button
               type="button"
               onClick={onClose}
-              aria-label="Close case study"
+              aria-label={ui.closeLabel}
               className="absolute top-4 right-4 z-10 grid size-10 place-items-center rounded-xl border border-line bg-card/80 text-fg backdrop-blur transition hover:border-accent hover:text-accent"
             >
               <X size={18} />
@@ -102,23 +105,23 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                   ))}
                 </ul>
               </header>
-              <Block title="Overview">{project.caseStudy.overview}</Block>
-              <Block title="Problem">{project.caseStudy.problem}</Block>
-              <Block title="Solution">{project.caseStudy.solution}</Block>
-              <Block title="Technical implementation">
+              <Block title={ui.caseStudyHeadings.overview}>{project.caseStudy.overview}</Block>
+              <Block title={ui.caseStudyHeadings.problem}>{project.caseStudy.problem}</Block>
+              <Block title={ui.caseStudyHeadings.solution}>{project.caseStudy.solution}</Block>
+              <Block title={ui.caseStudyHeadings.implementation}>
                 <ul className="list-disc space-y-1.5 pl-5 marker:text-accent">
                   {project.caseStudy.implementation.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
               </Block>
-              <Block title="My contribution">
-                <p className="mb-2 text-sm text-fg">Role: {project.role}</p>
+              <Block title={ui.caseStudyHeadings.contribution}>
+                <p className="mb-2 text-sm text-fg">{ui.roleInline} {project.role}</p>
                 {project.caseStudy.contribution}
               </Block>
-              <Block title="Challenges">{project.caseStudy.challenges}</Block>
+              <Block title={ui.caseStudyHeadings.challenges}>{project.caseStudy.challenges}</Block>
               <p className="border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-muted">
-                Text in [brackets] is placeholder content. No results or metrics are claimed for this project.
+                {ui.disclaimer}
               </p>
             </div>
           </motion.div>

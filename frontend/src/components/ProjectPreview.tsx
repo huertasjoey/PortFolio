@@ -1,5 +1,6 @@
 import { Flame, FishSymbol, NotebookPen, Sprout, type LucideIcon } from 'lucide-react'
-import type { IconName, Project } from '../data/projects'
+import { content } from '../content'
+import type { IconName, Project } from '../types'
 
 const icons: Record<IconName, LucideIcon> = {
   flame: Flame,
@@ -64,7 +65,7 @@ export function ProjectPreview({ project, className = '' }: Props) {
         <ProjectIcon name={project.icon} />
       </div>
       <span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[0.15em] text-muted uppercase">
-        {project.previewKind === 'hardware' ? 'Hardware / Firmware' : 'Software / Web'}
+        {project.previewKind === 'hardware' ? content.projectUi.hardwarePreviewLabel : content.projectUi.softwarePreviewLabel}
       </span>
     </div>
   )

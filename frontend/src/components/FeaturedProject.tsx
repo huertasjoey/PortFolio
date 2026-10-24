@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react'
-import type { Project } from '../data/projects'
+import { content } from '../content'
+import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
 import { Button } from './ui/Button'
 import { Tag } from './ui/Tag'
@@ -10,17 +11,17 @@ export function FeaturedProject({ project, onOpen }: { project: Project; onOpen:
       <ProjectPreview project={project} className="min-h-64 border-b border-line md:min-h-[26rem] md:border-r md:border-b-0" />
       <div className="flex flex-col justify-center gap-5 p-6 sm:p-10">
         <p className="font-mono text-xs tracking-[0.15em] text-accent uppercase">
-          Featured · {project.classification}
+          {content.projectUi.featuredLabel} · {project.classification}
         </p>
         <h3 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{project.title}</h3>
         <p className="leading-relaxed text-fg2">{project.summary}</p>
         <dl className="space-y-1 text-sm">
           <div className="flex gap-2">
-            <dt className="font-mono text-xs text-muted">STATUS</dt>
+            <dt className="font-mono text-xs text-muted">{content.projectUi.statusLabel}</dt>
             <dd className="text-fg2">{project.status}</dd>
           </div>
           <div className="flex gap-2">
-            <dt className="font-mono text-xs text-muted">ROLE</dt>
+            <dt className="font-mono text-xs text-muted">{content.projectUi.roleLabel}</dt>
             <dd className="text-fg2">{project.role}</dd>
           </div>
         </dl>
@@ -33,7 +34,7 @@ export function FeaturedProject({ project, onOpen }: { project: Project; onOpen:
         </ul>
         <div>
           <Button onClick={() => onOpen(project)} aria-haspopup="dialog">
-            Read the case study
+            {content.projectUi.caseStudyButton}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </Button>
         </div>

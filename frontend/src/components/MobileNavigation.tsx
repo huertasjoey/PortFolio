@@ -1,11 +1,14 @@
 import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
-import { profile, type SectionId } from '../data/profile'
+import { content } from '../content'
+import type { SectionId } from '../types'
 import { ResumeButton } from './ResumeButton'
 import { NavLinks, StatusDot } from './Sidebar'
 import { SocialLinks } from './SocialLinks'
 import { ThemeToggle } from './ThemeToggle'
+
+const { profile } = content
 
 interface Props {
   active: SectionId

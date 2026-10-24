@@ -1,34 +1,37 @@
 import { Brain, Code2, Cpu, Database, type LucideIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
+import { SiCss, SiHtml5, SiJavascript, SiPython, SiReact, SiSupabase, SiTailwindcss } from 'react-icons/si'
 import { LogoLoop } from '../components/LogoLoop'
 import { SectionHeading } from '../components/SectionHeading'
 import { Reveal } from '../components/ui/Reveal'
 import { Tag } from '../components/ui/Tag'
-import { SiCss, SiHtml5, SiJavascript, SiPython, SiReact, SiSupabase, SiTailwindcss } from 'react-icons/si'
-import { skillGroups, type SkillGroup } from '../data/skills'
+import { content } from '../content'
+import type { SkillGroup, TechIcon } from '../types'
 
-const techLogos = [
-  { node: <SiReact />, title: 'React', href: 'https://react.dev', hoverColor: '#61dafb' },
-  { node: <SiJavascript />, title: 'JavaScript', href: 'https://developer.mozilla.org/docs/Web/JavaScript', hoverColor: '#f7df1e' },
-  { node: <SiHtml5 />, title: 'HTML', href: 'https://developer.mozilla.org/docs/Web/HTML', hoverColor: '#e34f26' },
-  { node: <SiCss />, title: 'CSS', href: 'https://developer.mozilla.org/docs/Web/CSS', hoverColor: '#1572b6' },
-  { node: <SiTailwindcss />, title: 'Tailwind CSS', href: 'https://tailwindcss.com', hoverColor: '#38bdf8' },
-  { node: <SiSupabase />, title: 'Supabase', href: 'https://supabase.com', hoverColor: '#3ecf8e' },
-  { node: <SiPython />, title: 'Python', href: 'https://www.python.org', hoverColor: '#3776ab' },
-]
+const { skills } = content
+
+/** Add a new logo here, then use its key in `skills.logos` in src/content.ts. */
+const techIcons: Record<TechIcon, ReactNode> = {
+  react: <SiReact />,
+  javascript: <SiJavascript />,
+  html: <SiHtml5 />,
+  css: <SiCss />,
+  tailwind: <SiTailwindcss />,
+  supabase: <SiSupabase />,
+  python: <SiPython />,
+}
+
+const logos = skills.logos.map(({ icon, ...rest }) => ({ node: techIcons[icon], ...rest }))
 
 const icons: Record<SkillGroup['icon'], LucideIcon> = { code: Code2, database: Database, cpu: Cpu, brain: Brain }
 
 export function SkillsSection() {
   return (
     <section id="skills" aria-labelledby="skills-title" className="py-24 lg:py-28">
-      <SectionHeading number="04" label="Skills">
-        <span id="skills-title">
-          Tools I <strong>work with.</strong>
-        </span>
-      </SectionHeading>
+      <SectionHeading number="04" label="Skills" id="skills-title" title={skills.heading} />
       <div className="theme-fade mb-10 rounded-[18px] border border-line bg-card py-6 text-muted">
         <LogoLoop
-          logos={techLogos}
+          logos={logos}
           speed={60}
           direction="left"
           logoHeight={40}
@@ -36,11 +39,11 @@ export function SkillsSection() {
           hoverSpeed={0}
           scaleOnHover
           fadeOut
-          ariaLabel="Technologies I use"
+          ariaLabel={skills.logosLabel}
         />
       </div>
       <div className="grid gap-5 md:grid-cols-2">
-        {skillGroups.map((group, i) => {
+        {skills.groups.map((group, i) => {
           const Icon = icons[group.icon]
           return (
             <Reveal key={group.title} delay={i * 0.05}>

@@ -1,10 +1,12 @@
 import { Cpu, Globe, Wifi, type LucideIcon } from 'lucide-react'
-import { countByCategory, type CategoryId, categories } from '../data/projects'
+import { content } from '../content'
+import { countByCategory } from '../lib/utils'
+import type { Category, CategoryId } from '../types'
 
-const icons: Record<(typeof categories)[number]['icon'], LucideIcon> = { cpu: Cpu, wifi: Wifi, globe: Globe }
+const icons: Record<Category['icon'], LucideIcon> = { cpu: Cpu, wifi: Wifi, globe: Globe }
 
 interface Props {
-  category: (typeof categories)[number]
+  category: Category
   selected: boolean
   onSelect: (id: CategoryId) => void
 }
@@ -29,7 +31,7 @@ export function ProjectCategory({ category, selected, onSelect }: Props) {
         <span className="mt-1 block text-sm leading-relaxed text-fg2">{category.description}</span>
       </span>
       <span className="mt-auto font-mono text-xs text-muted">
-        {count} {count === 1 ? 'project' : 'projects'}
+        {count} {count === 1 ? content.projectUi.projectSingular : content.projectUi.projectPlural}
       </span>
     </button>
   )

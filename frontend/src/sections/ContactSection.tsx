@@ -4,7 +4,11 @@ import { GithubIcon, LinkedinIcon } from '../components/BrandIcons'
 import { SectionHeading } from '../components/SectionHeading'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
-import { gmailComposeUrl, profile } from '../data/profile'
+import { content } from '../content'
+import { gmailComposeUrl } from '../lib/utils'
+
+const { profile, contact } = content
+const { form } = contact
 
 type Fields = { name: string; email: string; subject: string; message: string }
 type Errors = Partial<Record<keyof Fields, string>>
@@ -19,11 +23,11 @@ const empty: Fields = { name: '', email: '', subject: '', message: '' }
 
 function validate(f: Fields): Errors {
   const e: Errors = {}
-  if (!f.name.trim()) e.name = 'Please enter your name.'
-  if (!f.email.trim()) e.email = 'Please enter your email.'
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = 'Enter a valid email address.'
-  if (!f.subject.trim()) e.subject = 'Please add a subject.'
-  if (f.message.trim().length < 10) e.message = 'Message should be at least 10 characters.'
+  if (!f.name.trim()) e.name = form.errors.name
+  if (!f.email.trim()) e.email = form.errors.emailMissing
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = form.errors.emailInvalid
+  if (!f.subject.trim()) e.subject = form.errors.subject
+  if (f.message.trim().length < 10) e.message = form.errors.message
   return e
 }
 
@@ -88,7 +92,7 @@ export function ContactSection() {
       setStatus({ kind: 'sent' })
       setFields(empty)
     } catch {
-      setStatus({ kind: 'error', text: 'Your message could not be sent. Please try again or email me directly.' })
+      setStatus({ kind: 'error', text: form.failed })
     }
   }
 
@@ -99,15 +103,7 @@ export function ContactSection() {
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="py-24 lg:py-28">
-      <SectionHeading
-        number="06"
-        label="Contact"
-        description="I'm open to opportunities, freelance projects, and collaborations involving web development, IoT, embedded systems, and emerging technologies."
-      >
-        <span id="contact-title">
-          Have something worth <strong>building?</strong>
-        </span>
-      </SectionHeading>
+      <SectionHeading number="06" label="Contact" id="contact-title" title={contact.heading} description={contact.description} />
 
       <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
         <Reveal className="flex flex-col items-start gap-3">
@@ -115,12 +111,12 @@ export function ContactSection() {
             <Mail size={16} /> {profile.email}
           </ButtonLink>
           <ButtonLink href={profile.github} variant="secondary" target="_blank" rel="noopener noreferrer">
-            <GithubIcon /> GitHub
+            <GithubIcon /> {contact.githubButton}
           </ButtonLink>
           <ButtonLink href={profile.linkedin} variant="secondary" target="_blank" rel="noopener noreferrer">
-            <LinkedinIcon /> LinkedIn
+            <LinkedinIcon /> {contact.linkedinButton}
           </ButtonLink>
-          <p className="mt-2 font-mono text-xs text-muted">The LinkedIn link is a placeholder until set in src/data/profile.ts.</p>
+          {contact.note && <p className="mt-2 font-mono text-xs text-muted">{contact.note}</p>}
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -130,35 +126,34 @@ export function ContactSection() {
             className="theme-fade space-y-5 rounded-[18px] border border-line bg-card p-6 sm:p-8"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field id="name" label="Name" error={errors.name}>
+              <Field id="name" label={form.nameLabel} error={errors.name}>
                 <input id="name" autoComplete="name" className={inputClass} value={fields.name} onChange={set('name')} {...a11y('name')} />
               </Field>
-              <Field id="email" label="Email" error={errors.email}>
+              <Field id="email" label={form.emailLabel} error={errors.email}>
                 <input id="email" type="email" autoComplete="email" className={inputClass} value={fields.email} onChange={set('email')} {...a11y('email')} />
               </Field>
             </div>
-            <Field id="subject" label="Subject" error={errors.subject}>
+            <Field id="subject" label={form.subjectLabel} error={errors.subject}>
               <input id="subject" className={inputClass} value={fields.subject} onChange={set('subject')} {...a11y('subject')} />
             </Field>
-            <Field id="message" label="Message" error={errors.message}>
+            <Field id="message" label={form.messageLabel} error={errors.message}>
               <textarea id="message" rows={6} className={`${inputClass} resize-y`} value={fields.message} onChange={set('message')} {...a11y('message')} />
             </Field>
 
             <Button type="submit" disabled={status.kind === 'sending'}>
-              <Send size={16} /> {status.kind === 'sending' ? 'Sending…' : 'Send message'}
+              <Send size={16} /> {status.kind === 'sending' ? form.sending : form.submit}
             </Button>
 
             <div role="status" aria-live="polite" className="text-sm">
-              {status.kind === 'sent' && <p className="text-accent">Message sent. Thank you — I'll reply by email.</p>}
+              {status.kind === 'sent' && <p className="text-accent">{form.sent}</p>}
               {status.kind === 'error' && <p className="text-red-400">{status.text}</p>}
               {status.kind === 'unconfigured' && (
                 <div className="rounded-xl border border-line bg-bg p-4 text-fg2">
-                  <p className="mb-2 text-fg">Your message was not sent.</p>
+                  <p className="mb-2 text-fg">{form.notConnectedTitle}</p>
                   <p>
-                    This form isn't connected to an email service yet, so nothing has been delivered. Set{' '}
-                    <code className="font-mono text-xs text-accent">VITE_CONTACT_ENDPOINT</code> to enable it, or{' '}
+                    {form.notConnectedBody}{' '}
                     <a className="text-accent underline underline-offset-2" href={mailto} target="_blank" rel="noopener noreferrer">
-                      send this message from Gmail
+                      {form.gmailFallback}
                     </a>
                     .
                   </p>
