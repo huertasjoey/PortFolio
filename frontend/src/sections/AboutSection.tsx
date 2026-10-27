@@ -2,6 +2,7 @@ import { ArrowDown, Mail } from 'lucide-react'
 import { RichText } from '../components/RichText'
 import { ButtonLink } from '../components/ui/Button'
 import { Reveal } from '../components/ui/Reveal'
+import { ZoomableImage } from '../components/ZoomableImage'
 import { content } from '../content'
 
 const { about } = content
@@ -55,13 +56,12 @@ export function AboutSection() {
           <Reveal delay={0.15} className="mx-auto w-full max-w-[340px] xl:max-w-none">
             <figure className="theme-fade overflow-hidden rounded-[20px] border border-line bg-card">
               <div className="dot-grid p-3">
-                <img
+                <ZoomableImage
                   src={about.photo.src}
                   alt={about.photo.alt}
-                  width={900}
-                  height={1350}
-                  fetchPriority="high"
-                  className="aspect-[2/3] w-full rounded-[14px] object-cover"
+                  caption={about.photo.caption}
+                  className="w-full overflow-hidden rounded-[14px]"
+                  imgClassName="aspect-[2/3] w-full object-cover"
                 />
               </div>
               {about.photo.caption && (

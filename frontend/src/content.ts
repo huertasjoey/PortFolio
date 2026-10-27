@@ -109,6 +109,10 @@ const projectUi = {
     implementation: 'Technical implementation',
     contribution: 'My contribution',
     challenges: 'Challenges',
+    gallery: 'Gallery',
+    results: 'Results',
+    team: 'Team',
+    futureWork: 'Future work',
   },
   roleInline: 'Role:',
   disclaimer: 'Text in [brackets] is placeholder content. No results or metrics are claimed for this project.',
@@ -148,29 +152,64 @@ const projects: Project[] = [
   {
     id: 'lycodry',
     title: 'LycoDry',
-    classification: 'Embedded Systems · Automation',
+    classification: 'Embedded Systems · Computer Vision',
     categories: ['embedded', 'iot'],
     previewKind: 'hardware',
     icon: 'flame',
-    status: 'Concept',
+    image: '/images/lycodry/cover.jpg',
+    status: 'Completed',
     featured: true,
-    summary: 'An automated Solanum lycopersicum (tomato) quality grading and dehydration system.',
-    role: `System design — ${ROLE_PLACEHOLDER}`,
-    tags: ['Embedded Systems', 'Automation', 'Sensors', 'Hardware'],
+    summary:
+      'An automated Solanum lycopersicum (tomato) quality grading and dehydration system — a BS Computer Engineering design project (Pampanga State University, 2026) pairing a custom YOLOv11 grader on a Raspberry Pi 5 with an ESP32-controlled slicer and 24-hour dehydration chamber.',
+    role: `Co-researcher, team of five — ${ROLE_PLACEHOLDER}`,
+    tags: ['YOLOv11', 'Raspberry Pi 5', 'ESP32', 'Python', 'C++', 'Computer Vision'],
     caseStudy: {
       overview:
-        'LycoDry is an automated system that grades the quality of tomatoes (Solanum lycopersicum) and dehydrates them. [Edit: confirm project status.]',
-      problem:
-        'Manual grading of tomatoes is slow and inconsistent, and dehydration quality depends on careful monitoring. [Edit: confirm and refine the problem you set out to solve.]',
-      solution:
-        'Combine automated quality grading with a controlled dehydration process in a single system. [Edit: describe how it works.]',
-      implementation: [
-        '[Edit: grading method, e.g. sensors or camera, and the quality criteria used.]',
-        '[Edit: dehydrator control, e.g. temperature and airflow.]',
-        '[Edit: microcontroller, firmware and any connectivity.]',
+        'LycoDry is a fully automated post-harvest unit for tomatoes (Solanum lycopersicum). Raw fruit goes into a funnel; a custom YOLOv11 model grades each tomato as Market, Processing or Reject, a pneumatic actuator slices the processing-grade fruit into 2 cm pieces, and the slices are sterilised with UV-C and dried in an enclosed forced-convection chamber held at 45–55 °C for 24 hours. It was developed as a design project for the Bachelor of Science in Computer Engineering at Pampanga State University (June 2026) and passed oral examination.',
+      metrics: [
+        { value: '0.876', label: 'mAP@0.5 of the custom YOLOv11 model' },
+        { value: '82–93%', label: 'sorting accuracy per grade on 300 farmer-graded tomatoes' },
+        { value: '24 h vs 8 days', label: 'machine drying vs sun drying (about 8× faster)' },
+        { value: '11.66%', label: 'mass retention after the machine cycle (sun-dried: 13.51%)' },
+        { value: 'No Salmonella', label: 'detected in the machine-dried sample in the DOST microbial test; the sun-dried sample tested positive' },
+        { value: '4.55 / 5.00', label: 'ISO 9241-11 usability score from a local farm owner' },
       ],
-      contribution: CONTRIBUTION_PLACEHOLDER,
-      challenges: '[Edit: add real challenges. No results are claimed for this project.]',
+      gallery: [
+        { src: '/images/lycodry/prototype.jpg', alt: 'The built LycoDry prototype with its stainless-steel enclosure and dehydration chamber', caption: 'The LycoDry prototype' },
+        { src: '/images/lycodry/render.jpg', alt: '3D render of the enclosed LycoDry machine', caption: '3D render of the enclosed unit' },
+        { src: '/images/lycodry/model-isometric.jpg', alt: 'Isometric 3D model of the frame with funnel, ramp, cutting module and dehydrator chamber', caption: '3D model: funnel, gravity ramp, cutting module, conveyor and dehydration chamber' },
+        { src: '/images/lycodry/dashboard.jpg', alt: 'LycoDry kiosk dashboard with live camera feed and production counters', caption: 'Kiosk dashboard: live feed, counters and alerts' },
+        { src: '/images/lycodry/history.jpg', alt: 'LycoDry processing history page listing completed cycles', caption: 'Processing history page' },
+      ],
+      problem:
+        'Tomatoes in the Philippines are harvested in simultaneous batches, which causes seasonal gluts, dumped produce and farmers selling at a loss. Sun drying is slow (8 days in the team’s control test), depends on the weather, exposes the fruit to dust, pests and mould, and degrades lycopene. Separating rotten fruit from good fruit by eye is inconsistent, and dryness is judged by touch and fixed timing rather than measurement.',
+      solution:
+        'Combine automated grading, slicing and dehydration in one machine that runs without cloud connectivity. Computer vision separates safe processing-grade fruit from market-grade and rejected fruit before anything reaches the chamber. The enclosed chamber uses UV-C sterilisation, a Peltier dehumidifier, heating coils and fans, with a dual-controller design (Raspberry Pi 5 for vision and UI, ESP32 for real-time control) to keep temperatures in a lycopene-safe 45–55 °C range regardless of weather.',
+      implementation: [
+        'Vision: custom YOLOv11 (Ultralytics) trained in Google Colab on a Roboflow-annotated dataset — about 2,891 original images expanded to 22,548 with flip/rotation augmentation, 640×640 input, early stopping (patience 25). It runs on-device on the Raspberry Pi 5 with a Camera Module 3 (detection threshold about 0.40, near the F1 peak of 0.84).',
+        'Control: ESP32 firmware (C++/Arduino) drives sorting servos, a pneumatic slicing actuator, the conveyor and solid-state relays for the UV-C lamp, heating coil, fans and Peltier module, and reads IR break-beam sensors and a DS18B20 temperature probe. It talks to the Pi over USB serial.',
+        'Process flow: tray interlock → 3–5 s image decision → servo diversion of Market/Reject fruit → 2 cm pneumatic slicing → batch of 5 (or 3 with an empty funnel) → 15-minute UV-C sterilisation → 24-hour thermal cycle held at 45–55 °C → “Ready to Harvest” alert. Safety interlocks stop sorting when a bin reaches 10 tomatoes or while a batch is drying.',
+        'Dashboard: offline CustomTkinter kiosk on the Pi’s touchscreen with a live camera feed and YOLO overlays, production counters, alerts, emergency stop, a history log (local database) and a configuration page for drying time and temperature limits.',
+        'Hardware: custom KiCad-designed PCB, 24 V supply with 12/6/5 V buck converters, BTS7960 motor driver, and a 47 × 40 × 25 in stainless-steel frame with a 40-litre drying chamber.',
+      ],
+      results: [
+        'Grading model: mAP@0.5 of 0.876 overall; per-class precision 0.983 (Reject), 0.951 (Processing), 0.920 (Market), and 0.650 for the small “black spot” defect class.',
+        'Physical sorting test with 300 tomatoes (100 per grade, pre-sorted by a local farmer): 87% of Market, 93% of Processing and 82% of Reject tomatoes were sorted correctly.',
+        'Thermal control over a 24-hour run: average chamber temperature 50.85 °C, ranging 45.56–56.25 °C (one reading briefly exceeded the 55 °C upper limit before the cooling logic corrected it).',
+        'Drying: 403 g of fresh slices dried to 47 g (11.66% mass retention) in 24 hours, versus 592 g to 80 g (13.51%) in 8 days (192 hours) of sun drying — both within the 10–15% target.',
+        'Lycopene (semi-quantitative oil-extraction colour test against a colour-grade chart): the machine-dried and fresh samples both graded Orange-Red/Moderate; the sun-dried sample graded Yellow/Low-or-none.',
+        'Microbial test results come from the Department of Science and Technology (DOST) Regional Standards and Testing Laboratory, Region III (San Fernando, Pampanga), which issued official Certificates of Analysis (one sample each): machine-dried — aerobic plate count 2.4×10³ CFU/g, yeast and moulds 4.2×10³ CFU/g, coliforms and E. coli below 10 CFU/g, Salmonella not detected. Sun-dried — aerobic plate count 2.5×10⁴ CFU/g, yeast and moulds estimated above 3.0×10⁵ CFU/g, coliforms 3.2×10³ CFU/g, Salmonella detected.',
+        'Usability (ISO 9241-11, evaluated by one local farm owner): effectiveness 4.33, efficiency 5.00, satisfaction 4.33 — overall 4.55 out of 5.00 (“Very Reliable”).',
+        'Prototype build cost: ₱78,517, including ₱8,000 of laboratory testing.',
+      ],
+      team: ['Adam I. Gatus', 'Eli Mishael G. Dela Cruz', 'Renz Carlo L. Dela Cruz', 'Jon Michael S. Lugtu', 'Joey P. Huertas'],
+      contribution:
+        'LycoDry was built by a team of five Computer Engineering students. [Edit: describe the parts you personally designed or built — for example firmware, PCB design, wiring, dataset collection or testing.]',
+      challenges:
+        'Small, highly variable defects (“black spots”) were much harder for the model to detect than whole-fruit grades (0.650 precision). Reject-grade sorting was the weakest on the physical test at 82%. Chamber temperature briefly overshot the 55 °C limit once during the 24-hour run. The prototype is deliberately slow and small — a 3–5 second decision per tomato and batches of 5 — to prioritise accuracy, and it was validated on a single crop with single-sample lab tests and a single farm-owner evaluator.',
+      futureWork:
+        'Reduce decision latency and scale capacity (the thesis suggests up to about 100 tomatoes per batch), add an adjustable or replaceable slicing blade matrix, use food-grade antimicrobial plastics for conveyors, add solar power for off-grid farms, build an ESP32 Wi-Fi mobile app for SMS/push alerts, and extend the vision model to other perishable crops such as mangoes and bell peppers.',
+      note: 'Source: “LycoDry: An Automated Solanum Lycopersicum Quality Grading and Dehydration System”, BS Computer Engineering design project, Pampanga State University, June 2026. Text in [brackets] is placeholder content.',
     },
   },
   {

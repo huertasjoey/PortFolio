@@ -1,6 +1,7 @@
 import { Flame, FishSymbol, NotebookPen, Sprout, type LucideIcon } from 'lucide-react'
 import { content } from '../content'
 import type { IconName, Project } from '../types'
+import { ZoomableImage } from './ZoomableImage'
 
 const icons: Record<IconName, LucideIcon> = {
   flame: Flame,
@@ -51,6 +52,19 @@ interface Props {
 
 /** Dotted-grid preview. Place inside an element with the Tailwind `group` class to get the hover swap. */
 export function ProjectPreview({ project, className = '' }: Props) {
+  if (project.image) {
+    return (
+      <div className={`relative overflow-hidden bg-bg ${className}`}>
+        <ZoomableImage
+          src={project.image}
+          alt={`${project.title} cover illustration`}
+          caption={project.title}
+          className="absolute inset-0 size-full"
+          imgClassName="size-full object-cover transition duration-700 group-hover:scale-105"
+        />
+      </div>
+    )
+  }
   return (
     <div
       className={`dot-grid relative grid place-items-center overflow-hidden bg-bg/50 ${className}`}

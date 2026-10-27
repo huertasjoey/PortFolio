@@ -60,11 +60,10 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
     <AnimatePresence>
       {project && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+          className="fixed inset-0 z-50 bg-bg"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onMouseDown={(e) => e.target === e.currentTarget && onClose()}
         >
           <motion.div
             ref={panelRef}
@@ -76,20 +75,20 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 30, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative max-h-[92dvh] w-full max-w-3xl overflow-y-auto rounded-t-[20px] border border-line bg-card outline-none sm:rounded-[20px]"
+            className="relative h-dvh w-full overflow-y-auto bg-bg outline-none"
           >
             <button
               type="button"
               onClick={onClose}
               aria-label={ui.closeLabel}
-              className="absolute top-4 right-4 z-10 grid size-10 place-items-center rounded-xl border border-line bg-card/80 text-fg backdrop-blur transition hover:border-accent hover:text-accent"
+              className="fixed top-4 right-4 z-10 inline-flex min-h-11 items-center gap-2 rounded-xl border border-line bg-card/80 px-3 text-sm text-fg backdrop-blur transition hover:border-accent hover:text-accent"
             >
-              <X size={18} />
+              <X size={18} /> <span className="hidden sm:inline">Close</span>
             </button>
             <div className="group">
-              <ProjectPreview project={project} className="h-44 border-b border-line" />
+              <ProjectPreview project={project} className="h-52 border-b border-line sm:h-72" />
             </div>
-            <div className="space-y-8 p-6 sm:p-10">
+            <div className="mx-auto max-w-4xl space-y-10 px-6 py-10 sm:px-10 sm:py-14">
               <header className="space-y-3">
                 <p className="font-mono text-xs tracking-[0.15em] text-accent uppercase">
                   {project.classification} · {project.status}
@@ -106,6 +105,16 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                 </ul>
               </header>
               <Block title={ui.caseStudyHeadings.overview}>{project.caseStudy.overview}</Block>
+              {project.caseStudy.metrics && (
+                <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {project.caseStudy.metrics.map((m) => (
+                    <div key={m.label} className="theme-fade flex flex-col-reverse justify-end rounded-xl border border-line bg-bg p-4">
+                      <dt className="mt-1 text-xs leading-snug text-fg2">{m.label}</dt>
+                      <dd className="font-mono text-xl font-medium text-accent">{m.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
               <Block title={ui.caseStudyHeadings.problem}>{project.caseStudy.problem}</Block>
               <Block title={ui.caseStudyHeadings.solution}>{project.caseStudy.solution}</Block>
               <Block title={ui.caseStudyHeadings.implementation}>
@@ -115,13 +124,46 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                   ))}
                 </ul>
               </Block>
+              {project.caseStudy.gallery && (
+                <Block title={ui.caseStudyHeadings.gallery}>
+                  <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {project.caseStudy.gallery.map((g) => (
+                      <li key={g.src}>
+                        <figure className="theme-fade overflow-hidden rounded-xl border border-line bg-bg">
+                          <img src={g.src} alt={g.alt} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+                          <figcaption className="border-t border-line px-3 py-2 font-mono text-[11px] leading-snug text-muted">
+                            {g.caption}
+                          </figcaption>
+                        </figure>
+                      </li>
+                    ))}
+                  </ul>
+                </Block>
+              )}
+              {project.caseStudy.results && (
+                <Block title={ui.caseStudyHeadings.results}>
+                  <ul className="list-disc space-y-1.5 pl-5 marker:text-accent">
+                    {project.caseStudy.results.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </Block>
+              )}
               <Block title={ui.caseStudyHeadings.contribution}>
                 <p className="mb-2 text-sm text-fg">{ui.roleInline} {project.role}</p>
+                {project.caseStudy.team && (
+                  <p className="mb-2 text-sm">
+                    {ui.caseStudyHeadings.team}: {project.caseStudy.team.join(', ')}
+                  </p>
+                )}
                 {project.caseStudy.contribution}
               </Block>
               <Block title={ui.caseStudyHeadings.challenges}>{project.caseStudy.challenges}</Block>
+              {project.caseStudy.futureWork && (
+                <Block title={ui.caseStudyHeadings.futureWork}>{project.caseStudy.futureWork}</Block>
+              )}
               <p className="border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-muted">
-                {ui.disclaimer}
+                {project.caseStudy.note ?? ui.disclaimer}
               </p>
             </div>
           </motion.div>
