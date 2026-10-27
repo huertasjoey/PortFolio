@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { content } from '../content'
 import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
+import { ZoomableImage } from './ZoomableImage'
 import { Tag } from './ui/Tag'
 
 const ui = content.projectUi
@@ -130,7 +131,13 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                     {project.caseStudy.gallery.map((g) => (
                       <li key={g.src}>
                         <figure className="theme-fade overflow-hidden rounded-xl border border-line bg-bg">
-                          <img src={g.src} alt={g.alt} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+                          <ZoomableImage
+                            src={g.src}
+                            alt={g.alt}
+                            caption={g.caption}
+                            className="w-full"
+                            imgClassName="aspect-[4/3] w-full object-cover"
+                          />
                           <figcaption className="border-t border-line px-3 py-2 font-mono text-[11px] leading-snug text-muted">
                             {g.caption}
                           </figcaption>

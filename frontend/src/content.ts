@@ -171,7 +171,7 @@ const projects: Project[] = [
         { value: '82–93%', label: 'sorting accuracy per grade on 300 farmer-graded tomatoes' },
         { value: '24 h vs 8 days', label: 'machine drying vs sun drying (about 8× faster)' },
         { value: '11.66%', label: 'mass retention after the machine cycle (sun-dried: 13.51%)' },
-        { value: 'No Salmonella', label: 'detected in the machine-dried sample in the DOST microbial test; the sun-dried sample tested positive' },
+        { value: 'No Salmonella', label: 'detected in the prototype’s dried sample in a microbial test the team requested from DOST Pampanga; the sun-dried sample tested positive' },
         { value: '4.55 / 5.00', label: 'ISO 9241-11 usability score from a local farm owner' },
       ],
       gallery: [
@@ -198,7 +198,7 @@ const projects: Project[] = [
         'Thermal control over a 24-hour run: average chamber temperature 50.85 °C, ranging 45.56–56.25 °C (one reading briefly exceeded the 55 °C upper limit before the cooling logic corrected it).',
         'Drying: 403 g of fresh slices dried to 47 g (11.66% mass retention) in 24 hours, versus 592 g to 80 g (13.51%) in 8 days (192 hours) of sun drying — both within the 10–15% target.',
         'Lycopene (semi-quantitative oil-extraction colour test against a colour-grade chart): the machine-dried and fresh samples both graded Orange-Red/Moderate; the sun-dried sample graded Yellow/Low-or-none.',
-        'Microbial test results come from the Department of Science and Technology (DOST) Regional Standards and Testing Laboratory, Region III (San Fernando, Pampanga), which issued official Certificates of Analysis (one sample each): machine-dried — aerobic plate count 2.4×10³ CFU/g, yeast and moulds 4.2×10³ CFU/g, coliforms and E. coli below 10 CFU/g, Salmonella not detected. Sun-dried — aerobic plate count 2.5×10⁴ CFU/g, yeast and moulds estimated above 3.0×10⁵ CFU/g, coliforms 3.2×10³ CFU/g, Salmonella detected.',
+        'Microbial testing: the team submitted samples dried by the LycoDry prototype, along with a sun-dried control sample, to the Department of Science and Technology (DOST) Regional Standards and Testing Laboratory in San Fernando, Pampanga, and requested a microbial analysis. DOST issued the Certificates of Analysis (one sample each): machine-dried — aerobic plate count 2.4×10³ CFU/g, yeast and moulds 4.2×10³ CFU/g, coliforms and E. coli below 10 CFU/g, Salmonella not detected. Sun-dried — aerobic plate count 2.5×10⁴ CFU/g, yeast and moulds estimated above 3.0×10⁵ CFU/g, coliforms 3.2×10³ CFU/g, Salmonella detected.',
         'Usability (ISO 9241-11, evaluated by one local farm owner): effectiveness 4.33, efficiency 5.00, satisfaction 4.33 — overall 4.55 out of 5.00 (“Very Reliable”).',
         'Prototype build cost: ₱78,517, including ₱8,000 of laboratory testing.',
       ],
