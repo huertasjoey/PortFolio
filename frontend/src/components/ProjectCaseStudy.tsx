@@ -133,6 +133,22 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                   ))}
                 </dl>
               )}
+              {project.caseStudy.video && (
+                <Block title={project.caseStudy.video.title}>
+                  <figure>
+                    <video
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster={project.caseStudy.video.poster}
+                      className="aspect-video w-full rounded-xl border border-line bg-black"
+                    >
+                      <source src={project.caseStudy.video.src} type="video/mp4" />
+                    </video>
+                    <figcaption className="mt-2 font-mono text-xs text-fg2">{project.caseStudy.video.caption}</figcaption>
+                  </figure>
+                </Block>
+              )}
               <Block title={ui.caseStudyHeadings.problem}>{project.caseStudy.problem}</Block>
               <Block title={ui.caseStudyHeadings.solution}>{project.caseStudy.solution}</Block>
               {project.caseStudy.features && (

@@ -44,7 +44,9 @@ export interface Project {
     challenges: string
     /** Optional headline numbers shown as stat tiles. Only use measured figures. */
     metrics?: { value: string; label: string }[]
-    /** Optional figures, e.g. { src: '/images/x.jpg', alt: '…', caption: '…' }. Files live in public/images/. */
+    /** Optional video shown under the metrics. Files live in public/videos/. */
+    video?: { title: string; src: string; poster: string; caption: string }
+    /** Optional figures, e.g.{ src: '/images/x.jpg', alt: '…', caption: '…' }. Files live in public/images/. */
     gallery?: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain'; full?: string }[]
     /** Optional extra carousels, each with its own heading. `full` is a larger image for full screen. */
     galleries?: {

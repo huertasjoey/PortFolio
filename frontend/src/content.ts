@@ -316,6 +316,12 @@ const projects: Project[] = [
         'Kaizen — a Habit Tracker & Daily Journal — started as a weekly habit grid and grew into a small personal planner. You sign in, tick habits across the week, plan today’s tasks, track goals with deadlines, and write a daily diary — all synced to your own account through Supabase and kept private by database-level security. It was built from a to-do list project and has been extended feature by feature.',
       banner: false,
       background: 'fading-stars',
+      video: {
+        title: 'Promo video',
+        src: '/videos/kaizen-promo.mp4',
+        poster: '/videos/kaizen-promo-poster.jpg',
+        caption: '29-second promo with sound. Press play.',
+      },
       metrics: [
         { value: '5', label: 'Supabase tables (weeks, week tasks, goals, diary entries, day tasks), all with Row Level Security' },
         { value: '3', label: 'themes: Light, Dark and Night' },
