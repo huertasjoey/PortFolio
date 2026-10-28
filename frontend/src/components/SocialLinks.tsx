@@ -20,7 +20,7 @@ export function SocialLinks() {
             href={href}
             aria-label={label}
             {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            className="grid size-10 place-items-center rounded-xl border border-line text-fg2 transition hover:border-accent hover:text-accent"
+            className="grid size-11 place-items-center rounded-xl border border-line text-fg2 transition hover:border-accent hover:text-accent"
           >
             <Icon size={16} />
           </a>

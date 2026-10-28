@@ -7,8 +7,11 @@ export interface Slide {
   alt: string
   caption: string
   fit?: 'cover' | 'contain'
+  /** Larger version opened in the full-screen viewer (defaults to `src`). */
+  full?: string
 }
 
+const MAX_DOTS = 18 // beyond this the dots are hidden and only the counter shows
 const VISIBLE = 3 // how many neighbours show on each side of the active slide
 const SWIPE = 45 // px of horizontal drag that counts as a swipe
 
@@ -76,7 +79,7 @@ export function Carousel({ slides, label }: { slides: Slide[]; label: string }) 
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
         onPointerCancel={() => (drag.current = null)}
-        className="relative -mx-6 aspect-[16/10] touch-pan-y overflow-hidden select-none sm:-mx-10 sm:aspect-[16/9]"
+        className="relative -mx-5 aspect-[16/10] touch-pan-y overflow-hidden select-none sm:-mx-10 sm:aspect-[16/9]"
         style={{ perspective: '1300px', perspectiveOrigin: '50% 45%' }}
       >
         {slides.map((s, i) => {
@@ -108,6 +111,7 @@ export function Carousel({ slides, label }: { slides: Slide[]; label: string }) 
                 alt={active ? s.alt : ''}
                 draggable={false}
                 decoding="async"
+                loading={Math.abs(d) <= VISIBLE + 1 ? 'eager' : 'lazy'}
                 className={`size-full ${s.fit === 'contain' ? 'bg-white object-contain' : 'object-cover'}`}
               />
               {active && (
@@ -132,7 +136,7 @@ export function Carousel({ slides, label }: { slides: Slide[]; label: string }) 
           <p aria-live="polite" className="truncate font-mono text-xs text-fg2">
             {slides[index]?.caption}
           </p>
-          <div className="mt-2 flex items-center justify-center gap-2">
+          <div className={`mt-2 items-center justify-center gap-2 ${slides.length > MAX_DOTS ? 'hidden' : 'flex'}`}>
             {slides.map((s, i) => (
               <button
                 key={s.src}
@@ -157,7 +161,7 @@ export function Carousel({ slides, label }: { slides: Slide[]; label: string }) 
       </div>
 
       <Lightbox
-        slides={slides}
+        slides={slides.map((s) => ({ src: s.full ?? s.src, alt: s.alt, caption: s.caption }))}
         index={viewer}
         onChange={(i) => {
           setViewer(i)

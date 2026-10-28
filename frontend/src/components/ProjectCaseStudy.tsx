@@ -1,11 +1,14 @@
 import { X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { content } from '../content'
 import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
 import { useTheme } from '../hooks/useTheme'
+import { BinaryOrbit } from './BinaryOrbit'
 import { Carousel } from './Carousel'
+import { FadingStars } from './FadingStars'
 import { ThemeToggle } from './ThemeToggle'
 import { Tag } from './ui/Tag'
 
@@ -60,7 +63,7 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
     }
   }, [project, onClose])
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {project && (
         <motion.div
@@ -69,6 +72,8 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
+          {project.caseStudy.background === 'binary-orbit' && <BinaryOrbit />}
+          {project.caseStudy.background === 'fading-stars' && <FadingStars />}
           <motion.div
             ref={panelRef}
             role="dialog"
@@ -79,23 +84,29 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 30, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative h-dvh w-full overflow-y-auto bg-bg outline-none"
+            className="relative z-10 h-dvh w-full overflow-y-auto outline-none"
           >
-            <div className="fixed top-4 right-4 z-10 flex items-center gap-2">
+            <div className="fixed top-3 right-3 z-10 flex items-center gap-2 rounded-2xl border border-line bg-bg/80 p-1 backdrop-blur sm:top-4 sm:right-4">
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
               <button
                 type="button"
                 onClick={onClose}
                 aria-label={ui.closeLabel}
-                className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-line bg-card/80 px-3 text-sm text-fg backdrop-blur transition hover:border-accent hover:text-accent"
+                className="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-xl border border-line bg-card/80 px-3 text-sm text-fg transition hover:border-accent hover:text-accent"
               >
                 <X size={18} /> <span className="hidden sm:inline">Close</span>
               </button>
             </div>
-            <div className="group">
-              <ProjectPreview project={project} className="h-52 border-b border-line sm:h-72" />
-            </div>
-            <div className="mx-auto max-w-4xl space-y-10 px-6 py-10 sm:px-10 sm:py-14">
+            {project.caseStudy.banner !== false && (
+              <div className="group">
+                <ProjectPreview project={project} className="h-52 border-b border-line sm:h-72" />
+              </div>
+            )}
+            <div
+              className={`mx-auto max-w-4xl space-y-8 px-5 pt-16 pb-10 sm:space-y-10 sm:px-10 sm:pb-14 ${
+                project.caseStudy.background ? 'my-6 rounded-3xl bg-bg/80 backdrop-blur-[6px]' : ''
+              }`}
+            >
               <header className="space-y-3">
                 <p className="font-mono text-xs tracking-[0.15em] text-accent uppercase">
                   {project.classification} · {project.status}
@@ -113,11 +124,11 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
               </header>
               <Block title={ui.caseStudyHeadings.overview}>{project.caseStudy.overview}</Block>
               {project.caseStudy.metrics && (
-                <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <dl className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3">
                   {project.caseStudy.metrics.map((m) => (
                     <div key={m.label} className="theme-fade flex flex-col-reverse justify-end rounded-xl border border-line bg-bg p-4">
                       <dt className="mt-1 text-xs leading-snug text-fg2">{m.label}</dt>
-                      <dd className="font-mono text-xl font-medium text-accent">{m.value}</dd>
+                      <dd className="font-mono text-lg font-medium break-words text-accent sm:text-xl">{m.value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -152,6 +163,11 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                   <Carousel slides={project.caseStudy.gallery} label={ui.caseStudyHeadings.gallery} />
                 </Block>
               )}
+              {project.caseStudy.galleries?.map((g) => (
+                <Block key={g.title} title={g.title}>
+                  <Carousel slides={g.slides} label={g.title} />
+                </Block>
+              ))}
               {project.caseStudy.results && (
                 <Block title={ui.caseStudyHeadings.results}>
                   <ul className="list-disc space-y-1.5 pl-5 marker:text-accent">
@@ -188,6 +204,7 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }

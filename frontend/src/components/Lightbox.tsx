@@ -86,7 +86,7 @@ export function Lightbox({ slides, index, onChange, onClose }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label={slide.alt}
-          className="fixed inset-0 z-[70] flex cursor-zoom-out flex-col items-center justify-center bg-black/95 px-3 pt-16 pb-24 sm:px-24"
+          className="fixed inset-0 z-[70] flex cursor-zoom-out flex-col items-center justify-center bg-black/95 px-3 pt-16 pb-24 sm:px-24 sm:pb-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -129,7 +129,7 @@ export function Lightbox({ slides, index, onChange, onClose }: Props) {
                   e.stopPropagation()
                   onChange(current - 1)
                 }}
-                className={`${round} fixed top-1/2 left-3 z-10 -translate-y-1/2 cursor-pointer sm:left-6`}
+                className={`${round} fixed bottom-4 left-4 z-10 cursor-pointer sm:top-1/2 sm:bottom-auto sm:left-6 sm:-translate-y-1/2`}
               >
                 <ChevronLeft size={22} />
               </button>
@@ -142,7 +142,7 @@ export function Lightbox({ slides, index, onChange, onClose }: Props) {
                   e.stopPropagation()
                   onChange(current + 1)
                 }}
-                className={`${round} fixed top-1/2 right-3 z-10 -translate-y-1/2 cursor-pointer sm:right-6`}
+                className={`${round} fixed right-4 bottom-4 z-10 cursor-pointer sm:top-1/2 sm:right-6 sm:bottom-auto sm:-translate-y-1/2`}
               >
                 <ChevronRight size={22} />
               </button>
@@ -160,7 +160,7 @@ export function Lightbox({ slides, index, onChange, onClose }: Props) {
             className="max-h-full max-w-full cursor-default rounded-lg object-contain"
           />
 
-          <div className="fixed inset-x-0 bottom-5 z-10 px-4 text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed inset-x-0 bottom-5 z-10 px-20 text-center" onClick={(e) => e.stopPropagation()}>
             {slide.caption && <p className="font-mono text-xs text-white/80">{slide.caption}</p>}
             {many && (
               <p aria-live="polite" className="mt-1 font-mono text-[11px] tracking-widest text-white/50">

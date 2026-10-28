@@ -2,6 +2,7 @@ import { MotionConfig } from 'motion/react'
 import { Footer } from './components/Footer'
 import { MobileNavigation } from './components/MobileNavigation'
 import { Sidebar } from './components/Sidebar'
+import { ThreadsBackground } from './components/ThreadsBackground'
 import { useActiveSection } from './hooks/useActiveSection'
 import { useTheme } from './hooks/useTheme'
 import { AboutSection } from './sections/AboutSection'
@@ -23,9 +24,10 @@ export default function App() {
       >
         Skip to content
       </a>
+      <ThreadsBackground />
       <Sidebar active={active} theme={theme} onToggleTheme={toggle} />
       <MobileNavigation active={active} theme={theme} onToggleTheme={toggle} />
-      <main id="main" className="px-4 pt-16 sm:px-8 lg:ml-[245px] lg:px-12 lg:pt-0">
+      <main id="main" className="relative z-10 px-4 pt-16 sm:px-8 lg:ml-[245px] lg:px-12 lg:pt-0">
         <div className="mx-auto max-w-[1260px]">
           <AboutSection />
           <WorkSection />

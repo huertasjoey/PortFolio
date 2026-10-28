@@ -45,7 +45,12 @@ export interface Project {
     /** Optional headline numbers shown as stat tiles. Only use measured figures. */
     metrics?: { value: string; label: string }[]
     /** Optional figures, e.g. { src: '/images/x.jpg', alt: '…', caption: '…' }. Files live in public/images/. */
-    gallery?: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain' }[]
+    gallery?: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain'; full?: string }[]
+    /** Optional extra carousels, each with its own heading. `full` is a larger image for full screen. */
+    galleries?: {
+      title: string
+      slides: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain'; full?: string }[]
+    }[]
     /** Optional grouped feature list, e.g. { group: 'Habits', items: ['…'] }. */
     features?: { group: string; items: string[] }[]
     /** Optional bullet list of results and findings. */
@@ -54,6 +59,10 @@ export interface Project {
     team?: string[]
     /** Optional planned improvements. */
     futureWork?: string
+    /** Set to false to hide the picture banner at the top of the case study. Default: shown. */
+    banner?: boolean
+    /** Optional animated background behind the full-screen case study. */
+    background?: 'binary-orbit' | 'fading-stars'
     /** Optional note shown at the bottom instead of the default disclaimer. */
     note?: string
   }

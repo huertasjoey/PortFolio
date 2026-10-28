@@ -165,6 +165,7 @@ const projects: Project[] = [
     role: 'Hardware engineer & project architect (team of five)',
     tags: ['YOLOv11', 'Raspberry Pi 5', 'ESP32', 'Python', 'C++', 'Computer Vision'],
     caseStudy: {
+      banner: false,
       overview:
         'LycoDry is a fully automated post-harvest unit for tomatoes (Solanum lycopersicum). Raw fruit goes into a funnel; a custom YOLOv11 model grades each tomato as Market, Processing or Reject, a pneumatic actuator slices the processing-grade fruit into 2 cm pieces, and the slices are sterilised with UV-C and dried in an enclosed forced-convection chamber held at 45–55 °C for 24 hours. It was developed as a design project for the Bachelor of Science in Computer Engineering at Pampanga State University (June 2026) and passed oral examination.',
       metrics: [
@@ -183,6 +184,52 @@ const projects: Project[] = [
         { src: '/images/lycodry/pcb.png', alt: 'KiCad PCB layout of the LycoDry control board with top and bottom copper traces', caption: 'Custom PCB layout (KiCad)', fit: 'contain' },
         { src: '/images/lycodry/dashboard.jpg', alt: 'LycoDry kiosk dashboard with live camera feed and production counters', caption: 'Kiosk dashboard: live feed, counters and alerts' },
         { src: '/images/lycodry/history.jpg', alt: 'LycoDry processing history page listing completed cycles', caption: 'Processing history page' },
+      ],
+      galleries: [
+        {
+          title: 'Created by hand',
+          slides: [
+            { src: '/images/lycodry/process/01.jpg', full: '/images/lycodry/process/01-full.jpg', alt: 'LycoDry build photo: planning: researching parts and requirements', caption: 'Planning: researching parts and requirements' },
+            { src: '/images/lycodry/process/02.jpg', full: '/images/lycodry/process/02-full.jpg', alt: 'LycoDry build photo: frame: cutting and welding the stainless-steel frame', caption: 'Frame: cutting and welding the stainless-steel frame' },
+            { src: '/images/lycodry/process/03.jpg', full: '/images/lycodry/process/03-full.jpg', alt: 'LycoDry build photo: frame: welding the main structure', caption: 'Frame: welding the main structure' },
+            { src: '/images/lycodry/process/04.jpg', full: '/images/lycodry/process/04-full.jpg', alt: 'LycoDry build photo: frame: welding late into the evening', caption: 'Frame: welding late into the evening' },
+            { src: '/images/lycodry/process/05.jpg', full: '/images/lycodry/process/05-full.jpg', alt: 'LycoDry build photo: frame: cutting steel with an angle grinder', caption: 'Frame: cutting steel with an angle grinder' },
+            { src: '/images/lycodry/process/06.jpg', full: '/images/lycodry/process/06-full.jpg', alt: 'LycoDry build photo: frame: grinding joints smooth', caption: 'Frame: grinding joints smooth' },
+            { src: '/images/lycodry/process/07.jpg', full: '/images/lycodry/process/07-full.jpg', alt: 'LycoDry build photo: frame: first assembly with the conveyor belt in place', caption: 'Frame: first assembly with the conveyor belt in place' },
+            { src: '/images/lycodry/process/08.jpg', full: '/images/lycodry/process/08-full.jpg', alt: 'LycoDry build photo: frame: assembling the upper structure', caption: 'Frame: assembling the upper structure' },
+            { src: '/images/lycodry/process/09.jpg', full: '/images/lycodry/process/09-full.jpg', alt: 'LycoDry build photo: frame: measuring and fitting panels', caption: 'Frame: measuring and fitting panels' },
+            { src: '/images/lycodry/process/10.jpg', full: '/images/lycodry/process/10-full.jpg', alt: 'LycoDry build photo: conveyor: aligning the roller frame', caption: 'Conveyor: aligning the roller frame' },
+            { src: '/images/lycodry/process/11.jpg', full: '/images/lycodry/process/11-full.jpg', alt: 'LycoDry build photo: conveyor: preparing the roller pipes', caption: 'Conveyor: preparing the roller pipes' },
+            { src: '/images/lycodry/process/12.jpg', full: '/images/lycodry/process/12-full.jpg', alt: 'LycoDry build photo: conveyor: cutting parts by hand', caption: 'Conveyor: cutting parts by hand' },
+            { src: '/images/lycodry/process/13.jpg', full: '/images/lycodry/process/13-full.jpg', alt: 'LycoDry build photo: conveyor: fitting the pulley on a roller shaft', caption: 'Conveyor: fitting the pulley on a roller shaft' },
+            { src: '/images/lycodry/process/14.jpg', full: '/images/lycodry/process/14-full.jpg', alt: 'LycoDry build photo: conveyor: mounting the rollers', caption: 'Conveyor: mounting the rollers' },
+            { src: '/images/lycodry/process/15.jpg', full: '/images/lycodry/process/15-full.jpg', alt: 'LycoDry build photo: conveyor: fitting the belt', caption: 'Conveyor: fitting the belt' },
+            { src: '/images/lycodry/process/16.jpg', full: '/images/lycodry/process/16-full.jpg', alt: 'LycoDry build photo: conveyor: shaping the belt mat', caption: 'Conveyor: shaping the belt mat' },
+            { src: '/images/lycodry/process/17.jpg', full: '/images/lycodry/process/17-full.jpg', alt: 'LycoDry build photo: cutting module: test-fitting the slicer parts', caption: 'Cutting module: test-fitting the slicer parts' },
+            { src: '/images/lycodry/process/18.jpg', full: '/images/lycodry/process/18-full.jpg', alt: 'LycoDry build photo: cutting module: parts and tools on the workbench', caption: 'Cutting module: parts and tools on the workbench' },
+            { src: '/images/lycodry/process/19.jpg', full: '/images/lycodry/process/19-full.jpg', alt: 'LycoDry build photo: funnel mounted on the frame', caption: 'Funnel mounted on the frame' },
+            { src: '/images/lycodry/process/20.jpg', full: '/images/lycodry/process/20-full.jpg', alt: 'LycoDry build photo: electronics: designing the PCB and prototyping the circuit', caption: 'Electronics: designing the PCB and prototyping the circuit' },
+            { src: '/images/lycodry/process/21.jpg', full: '/images/lycodry/process/21-full.jpg', alt: 'LycoDry build photo: electronics: the finished DIY PCB, component side', caption: 'Electronics: the finished DIY PCB, component side' },
+            { src: '/images/lycodry/process/22.jpg', full: '/images/lycodry/process/22-full.jpg', alt: 'LycoDry build photo: electronics: the DIY PCB, copper side', caption: 'Electronics: the DIY PCB, copper side' },
+            { src: '/images/lycodry/process/23.jpg', full: '/images/lycodry/process/23-full.jpg', alt: 'LycoDry build photo: electronics: preparing wire harnesses', caption: 'Electronics: preparing wire harnesses' },
+            { src: '/images/lycodry/process/24.jpg', full: '/images/lycodry/process/24-full.jpg', alt: 'LycoDry build photo: electronics: wiring the control system', caption: 'Electronics: wiring the control system' },
+            { src: '/images/lycodry/process/25.jpg', full: '/images/lycodry/process/25-full.jpg', alt: 'LycoDry build photo: electronics: controller board wired into the machine', caption: 'Electronics: controller board wired into the machine' },
+            { src: '/images/lycodry/process/26.jpg', full: '/images/lycodry/process/26-full.jpg', alt: 'LycoDry build photo: electronics: the machine with its wiring in place', caption: 'Electronics: the machine with its wiring in place' },
+            { src: '/images/lycodry/process/27.jpg', full: '/images/lycodry/process/27-full.jpg', alt: 'LycoDry build photo: electronics: testing and checking connections', caption: 'Electronics: testing and checking connections' },
+            { src: '/images/lycodry/process/28.jpg', full: '/images/lycodry/process/28-full.jpg', alt: 'LycoDry build photo: assembly: fitting the dehydration chamber', caption: 'Assembly: fitting the dehydration chamber' },
+            { src: '/images/lycodry/process/29.jpg', full: '/images/lycodry/process/29-full.jpg', alt: 'LycoDry build photo: assembly: chamber and UV lighting installed', caption: 'Assembly: chamber and UV lighting installed' },
+            { src: '/images/lycodry/process/30.jpg', full: '/images/lycodry/process/30-full.jpg', alt: 'LycoDry build photo: assembly: working on the enclosure', caption: 'Assembly: working on the enclosure' },
+            { src: '/images/lycodry/process/31.jpg', full: '/images/lycodry/process/31-full.jpg', alt: 'LycoDry build photo: assembly: late-night work on the build', caption: 'Assembly: late-night work on the build' },
+            { src: '/images/lycodry/process/32.jpg', full: '/images/lycodry/process/32-full.jpg', alt: 'LycoDry build photo: assembly: looking down into the drying chamber', caption: 'Assembly: looking down into the drying chamber' },
+            { src: '/images/lycodry/process/33.jpg', full: '/images/lycodry/process/33-full.jpg', alt: 'LycoDry build photo: assembly: the machine taking shape', caption: 'Assembly: the machine taking shape' },
+            { src: '/images/lycodry/process/34.jpg', full: '/images/lycodry/process/34-full.jpg', alt: 'LycoDry build photo: assembly: UV-C and fan section of the chamber', caption: 'Assembly: UV-C and fan section of the chamber' },
+            { src: '/images/lycodry/process/35.jpg', full: '/images/lycodry/process/35-full.jpg', alt: 'LycoDry build photo: the enclosed prototype', caption: 'The enclosed prototype' },
+            { src: '/images/lycodry/process/36.jpg', full: '/images/lycodry/process/36-full.jpg', alt: 'LycoDry build photo: the enclosed prototype from another angle', caption: 'The enclosed prototype from another angle' },
+            { src: '/images/lycodry/process/37.jpg', full: '/images/lycodry/process/37-full.jpg', alt: 'LycoDry build photo: testing: tomato slices on the drying tray', caption: 'Testing: tomato slices on the drying tray' },
+            { src: '/images/lycodry/process/38.jpg', full: '/images/lycodry/process/38-full.jpg', alt: 'LycoDry build photo: testing: slices going into the chamber', caption: 'Testing: slices going into the chamber' },
+            { src: '/images/lycodry/process/39.jpg', full: '/images/lycodry/process/39-full.jpg', alt: 'LycoDry build photo: testing: weighing the dried tomatoes', caption: 'Testing: weighing the dried tomatoes' },
+          ],
+        },
       ],
       problem:
         'Tomatoes in the Philippines are harvested in simultaneous batches, which causes seasonal gluts, dumped produce and farmers selling at a loss. Sun drying is slow (8 days in the team’s control test), depends on the weather, exposes the fruit to dust, pests and mould, and degrades lycopene. Separating rotten fruit from good fruit by eye is inconsistent, and dryness is judged by touch and fixed timing rather than measurement.',
@@ -208,7 +255,7 @@ const projects: Project[] = [
       team: [
         'Joey P. Huertas — hardware engineer and project architect',
         'Eli Mishael G. Dela Cruz — AI model training, and my general partner in building the whole project',
-        'Renz Carlo L. Dela Cruz — documentation',
+        'Renz Carlo L. Dela Cruz — documentation and logistics',
         'Jon Michael S. Lugtu — project support',
         'Adam I. Gatus — team leader',
       ],
@@ -267,6 +314,8 @@ const projects: Project[] = [
     caseStudy: {
       overview:
         'Kaizen — a Habit Tracker & Daily Journal — started as a weekly habit grid and grew into a small personal planner. You sign in, tick habits across the week, plan today’s tasks, track goals with deadlines, and write a daily diary — all synced to your own account through Supabase and kept private by database-level security. It was built from a to-do list project and has been extended feature by feature.',
+      banner: false,
+      background: 'fading-stars',
       metrics: [
         { value: '5', label: 'Supabase tables (weeks, week tasks, goals, diary entries, day tasks), all with Row Level Security' },
         { value: '3', label: 'themes: Light, Dark and Night' },
@@ -358,34 +407,6 @@ const projects: Project[] = [
       futureWork:
         'Live updates between devices with Supabase Realtime, and setting up a custom email sender for production sign-ups. [Edit: add your own ideas, for example streaks and reminders for habits.]',
       note: 'Details come from the project’s source code and setup notes. Screenshots show sample data, not real entries, and the AI suggestions shown are sample output. Text in [brackets] is placeholder content.',
-    },
-  },
-  {
-    id: 'recoir',
-    title: 'ReCoir',
-    classification: 'Smart Agriculture · IoT',
-    categories: ['iot', 'embedded'],
-    previewKind: 'hardware',
-    icon: 'sprout',
-    status: 'Concept',
-    summary:
-      'A proposed smart coconut husk processing machine concept exploring the conversion of agricultural waste into useful coir materials.',
-    role: `Concept & system design — ${ROLE_PLACEHOLDER}`,
-    tags: ['IoT', 'Embedded Systems', 'Automation', 'Sustainability'],
-    caseStudy: {
-      overview:
-        'ReCoir is a proposed machine concept for turning coconut husks, a common agricultural by-product, into useful coir materials.',
-      problem:
-        'Coconut husks are often discarded as waste even though the fibre inside has value. Processing is typically labour-intensive.',
-      solution:
-        'A smart, partly automated machine that handles husk processing with sensing and control to make the process more efficient.',
-      implementation: [
-        'Mechanical processing stage (design to be defined).',
-        'Microcontroller-based control and safety interlocks.',
-        'Sensors for monitoring the machine state.',
-      ],
-      contribution: CONTRIBUTION_PLACEHOLDER,
-      challenges: '[Edit: add real challenges. This is a proposed concept; no results are claimed.]',
     },
   },
 ]
