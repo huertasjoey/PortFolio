@@ -45,7 +45,7 @@ export interface Project {
     /** Optional headline numbers shown as stat tiles. Only use measured figures. */
     metrics?: { value: string; label: string }[]
     /** Optional figures, e.g. { src: '/images/x.jpg', alt: '…', caption: '…' }. Files live in public/images/. */
-    gallery?: { src: string; alt: string; caption: string }[]
+    gallery?: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain' }[]
     /** Optional bullet list of results and findings. */
     results?: string[]
     /** Optional co-authors / team members. */

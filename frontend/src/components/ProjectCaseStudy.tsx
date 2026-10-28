@@ -4,7 +4,9 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { content } from '../content'
 import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
-import { ZoomableImage } from './ZoomableImage'
+import { useTheme } from '../hooks/useTheme'
+import { Carousel } from './Carousel'
+import { ThemeToggle } from './ThemeToggle'
 import { Tag } from './ui/Tag'
 
 const ui = content.projectUi
@@ -26,6 +28,7 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
 /** Accessible modal case study: Esc to close, focus trap, focus restored, background scroll locked. */
 export function ProjectCaseStudy({ project, onClose }: Props) {
   const panelRef = useRef<HTMLDivElement>(null)
+  const { theme, toggle: toggleTheme } = useTheme()
 
   useEffect(() => {
     if (!project) return
@@ -78,14 +81,17 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="relative h-dvh w-full overflow-y-auto bg-bg outline-none"
           >
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label={ui.closeLabel}
-              className="fixed top-4 right-4 z-10 inline-flex min-h-11 items-center gap-2 rounded-xl border border-line bg-card/80 px-3 text-sm text-fg backdrop-blur transition hover:border-accent hover:text-accent"
-            >
-              <X size={18} /> <span className="hidden sm:inline">Close</span>
-            </button>
+            <div className="fixed top-4 right-4 z-10 flex items-center gap-2">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label={ui.closeLabel}
+                className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-line bg-card/80 px-3 text-sm text-fg backdrop-blur transition hover:border-accent hover:text-accent"
+              >
+                <X size={18} /> <span className="hidden sm:inline">Close</span>
+              </button>
+            </div>
             <div className="group">
               <ProjectPreview project={project} className="h-52 border-b border-line sm:h-72" />
             </div>
@@ -127,24 +133,7 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
               </Block>
               {project.caseStudy.gallery && (
                 <Block title={ui.caseStudyHeadings.gallery}>
-                  <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {project.caseStudy.gallery.map((g) => (
-                      <li key={g.src}>
-                        <figure className="theme-fade overflow-hidden rounded-xl border border-line bg-bg">
-                          <ZoomableImage
-                            src={g.src}
-                            alt={g.alt}
-                            caption={g.caption}
-                            className="w-full"
-                            imgClassName="aspect-[4/3] w-full object-cover"
-                          />
-                          <figcaption className="border-t border-line px-3 py-2 font-mono text-[11px] leading-snug text-muted">
-                            {g.caption}
-                          </figcaption>
-                        </figure>
-                      </li>
-                    ))}
-                  </ul>
+                  <Carousel slides={project.caseStudy.gallery} label={ui.caseStudyHeadings.gallery} />
                 </Block>
               )}
               {project.caseStudy.results && (
@@ -159,9 +148,16 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
               <Block title={ui.caseStudyHeadings.contribution}>
                 <p className="mb-2 text-sm text-fg">{ui.roleInline} {project.role}</p>
                 {project.caseStudy.team && (
-                  <p className="mb-2 text-sm">
-                    {ui.caseStudyHeadings.team}: {project.caseStudy.team.join(', ')}
-                  </p>
+                  <div className="mb-3 text-sm">
+                    <p className="mb-1 text-fg">{ui.caseStudyHeadings.team}:</p>
+                    <ul className="space-y-1 pl-4">
+                      {project.caseStudy.team.map((member) => (
+                        <li key={member} className="list-disc marker:text-accent">
+                          {member}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
                 {project.caseStudy.contribution}
               </Block>

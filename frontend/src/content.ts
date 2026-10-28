@@ -161,7 +161,7 @@ const projects: Project[] = [
     featured: true,
     summary:
       'An automated Solanum lycopersicum (tomato) quality grading and dehydration system — a BS Computer Engineering design project (Pampanga State University, 2026) pairing a custom YOLOv11 grader on a Raspberry Pi 5 with an ESP32-controlled slicer and 24-hour dehydration chamber.',
-    role: `Co-researcher, team of five — ${ROLE_PLACEHOLDER}`,
+    role: 'Hardware engineer & project architect (team of five)',
     tags: ['YOLOv11', 'Raspberry Pi 5', 'ESP32', 'Python', 'C++', 'Computer Vision'],
     caseStudy: {
       overview:
@@ -178,6 +178,8 @@ const projects: Project[] = [
         { src: '/images/lycodry/prototype.jpg', alt: 'The built LycoDry prototype with its stainless-steel enclosure and dehydration chamber', caption: 'The LycoDry prototype' },
         { src: '/images/lycodry/render.jpg', alt: '3D render of the enclosed LycoDry machine', caption: '3D render of the enclosed unit' },
         { src: '/images/lycodry/model-isometric.jpg', alt: 'Isometric 3D model of the frame with funnel, ramp, cutting module and dehydrator chamber', caption: '3D model: funnel, gravity ramp, cutting module, conveyor and dehydration chamber' },
+        { src: '/images/lycodry/schematic.png', alt: 'KiCad schematic of the LycoDry control board: ESP32, sensor, servo, relay and motor-driver headers', caption: 'Circuit schematic (KiCad): ESP32 control board', fit: 'contain' },
+        { src: '/images/lycodry/pcb.png', alt: 'KiCad PCB layout of the LycoDry control board with top and bottom copper traces', caption: 'Custom PCB layout (KiCad)', fit: 'contain' },
         { src: '/images/lycodry/dashboard.jpg', alt: 'LycoDry kiosk dashboard with live camera feed and production counters', caption: 'Kiosk dashboard: live feed, counters and alerts' },
         { src: '/images/lycodry/history.jpg', alt: 'LycoDry processing history page listing completed cycles', caption: 'Processing history page' },
       ],
@@ -202,9 +204,15 @@ const projects: Project[] = [
         'Usability (ISO 9241-11, evaluated by one local farm owner): effectiveness 4.33, efficiency 5.00, satisfaction 4.33 — overall 4.55 out of 5.00 (“Very Reliable”).',
         'Prototype build cost: ₱78,517, including ₱8,000 of laboratory testing.',
       ],
-      team: ['Adam I. Gatus', 'Eli Mishael G. Dela Cruz', 'Renz Carlo L. Dela Cruz', 'Jon Michael S. Lugtu', 'Joey P. Huertas'],
+      team: [
+        'Joey P. Huertas — hardware engineer and project architect',
+        'Eli Mishael G. Dela Cruz — AI model training, and my general partner in building the whole project',
+        'Renz Carlo L. Dela Cruz — documentation',
+        'Jon Michael S. Lugtu — project support',
+        'Adam I. Gatus — team leader',
+      ],
       contribution:
-        'LycoDry was built by a team of five Computer Engineering students. [Edit: describe the parts you personally designed or built — for example firmware, PCB design, wiring, dataset collection or testing.]',
+        'I was the architect of the whole project and the engineer behind all of its hardware. I personally designed and built the physical prototype, and I designed the custom DIY PCB in KiCad that carries the ESP32 control board. LycoDry was developed with a team of five Computer Engineering students; the roles of each member are listed above.',
       challenges:
         'Small, highly variable defects (“black spots”) were much harder for the model to detect than whole-fruit grades (0.650 precision). Reject-grade sorting was the weakest on the physical test at 82%. Chamber temperature briefly overshot the 55 °C limit once during the 24-hour run. The prototype is deliberately slow and small — a 3–5 second decision per tomato and batches of 5 — to prioritise accuracy, and it was validated on a single crop with single-sample lab tests and a single farm-owner evaluator.',
       futureWork:
