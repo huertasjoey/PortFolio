@@ -46,6 +46,8 @@ export interface Project {
     metrics?: { value: string; label: string }[]
     /** Optional figures, e.g. { src: '/images/x.jpg', alt: '…', caption: '…' }. Files live in public/images/. */
     gallery?: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain' }[]
+    /** Optional grouped feature list, e.g. { group: 'Habits', items: ['…'] }. */
+    features?: { group: string; items: string[] }[]
     /** Optional bullet list of results and findings. */
     results?: string[]
     /** Optional co-authors / team members. */

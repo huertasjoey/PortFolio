@@ -110,6 +110,7 @@ const projectUi = {
     contribution: 'My contribution',
     challenges: 'Challenges',
     gallery: 'Gallery',
+    features: 'Features',
     results: 'Results',
     team: 'Team',
     futureWork: 'Future work',
@@ -252,30 +253,111 @@ const projects: Project[] = [
   },
   {
     id: 'habit-journal',
-    title: 'Habit Tracker & Daily Journal',
-    classification: 'Full-Stack Web Application',
+    title: 'Kaizen',
+    classification: 'Habit Tracker & Daily Journal · Full-Stack',
     categories: ['fullstack'],
     previewKind: 'software',
     icon: 'notebook',
     status: 'In progress',
     summary:
-      'A personal productivity application for tracking daily habits, managing goals, writing journal entries, and reviewing progress over time.',
-    role: `Full-stack developer — ${ROLE_PLACEHOLDER}`,
-    tags: ['React', 'Tailwind CSS', 'Supabase', 'Full-Stack'],
+      'Kaizen is a personal productivity web app (Habit Tracker & Daily Journal) that combines weekly habit tracking, a daily plan, goals and a private diary with an optional AI writing assistant — built with React and Supabase, with every user’s data protected by Row Level Security.',
+    role: 'Designer & full-stack developer (personal project)',
+    image: '/images/kaizen/week.jpg',
+    tags: ['React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Vite', 'Full-Stack'],
     caseStudy: {
       overview:
-        'A web app that brings habit tracking, goals and journaling into one place so progress is easy to review.',
-      problem:
-        'Habits, goals and reflections are often scattered across separate tools, which makes it hard to see the bigger picture.',
-      solution:
-        'A single application where daily habits are checked off, goals are managed, entries are written, and progress is reviewed over time.',
-      implementation: [
-        'React front end styled with Tailwind CSS.',
-        'Supabase for authentication and data storage.',
-        'Views for daily check-ins, journal entries and progress review.',
+        'Kaizen — a Habit Tracker & Daily Journal — started as a weekly habit grid and grew into a small personal planner. You sign in, tick habits across the week, plan today’s tasks, track goals with deadlines, and write a daily diary — all synced to your own account through Supabase and kept private by database-level security. It was built from a to-do list project and has been extended feature by feature.',
+      metrics: [
+        { value: '5', label: 'Supabase tables (weeks, week tasks, goals, diary entries, day tasks), all with Row Level Security' },
+        { value: '3', label: 'themes: Light, Dark and Night' },
+        { value: '4', label: 'optional AI writing tools: correct, make natural, explain mistakes, vocabulary' },
       ],
-      contribution: '[Edit: describe what you built — UI, data model, auth, etc.]',
-      challenges: '[Edit: add real challenges, e.g. data modelling, state management or auth flow.]',
+      gallery: [
+        { src: '/images/kaizen/week.jpg', alt: 'Kaizen weekly planner with daily plan, goals, diary markers and habit grid', caption: 'Weekly planner: daily plan, goals, diary markers and the habit grid' },
+        { src: '/images/kaizen/habits.jpg', alt: 'Kaizen habit grid with a check for each day and a weekly count per habit', caption: 'Habit grid: tick each day, with a weekly count for every habit' },
+        { src: '/images/kaizen/daily-plan.jpg', alt: 'Kaizen daily plan with today’s tasks and an optional Tomorrow list', caption: 'Daily plan: today’s tasks and an optional Tomorrow list' },
+        { src: '/images/kaizen/goals.jpg', alt: 'Kaizen goals list with progress bars and Active, Overdue and Completed statuses', caption: 'Goals with progress, deadlines and Active / Overdue / Completed status' },
+        { src: '/images/kaizen/goal-details.jpg', alt: 'Kaizen goal details dialog with dates, target, current value, unit and completion', caption: 'Goal details: dates, target, current value, unit and completion' },
+        { src: '/images/kaizen/month.jpg', alt: 'Kaizen month view with daily and weekly progress charts and every habit by day', caption: 'Month view: daily and weekly progress charts, and every habit by day' },
+        { src: '/images/kaizen/diary.jpg', alt: 'Kaizen diary history with search, date range and mood filters', caption: 'Diary history: newest first, with search, date range and mood filters' },
+        { src: '/images/kaizen/editor.jpg', alt: 'Kaizen diary editor with title, mood, journal text and word goal', caption: 'Diary editor: title, mood, journal, word goal and reflections' },
+        { src: '/images/kaizen/assistant-tools.jpg', alt: 'Kaizen Improve my writing panel with four AI tools and a consent checkbox', caption: 'Improve my writing: four AI tools, with consent before anything is sent' },
+        { src: '/images/kaizen/assistant-result.jpg', alt: 'Kaizen writing assistant showing a corrected version and explanations', caption: 'Suggestions with explanations — apply them (with undo) or copy' },
+        { src: '/images/kaizen/progress.jpg', alt: 'Kaizen writing progress page with totals, streak, weekly activity and a heatmap', caption: 'Writing progress: totals, streaks, weekly activity and a 26-week heatmap' },
+        { src: '/images/kaizen/theme-dark.jpg', alt: 'Kaizen planner in the Dark theme', caption: 'Dark theme' },
+        { src: '/images/kaizen/theme-night.jpg', alt: 'Kaizen planner in the Night theme', caption: 'Night theme' },
+        { src: '/images/kaizen/login.jpg', alt: 'Kaizen sign-in page', caption: 'Sign in: email accounts with confirmation and password reset' },
+      ],
+      problem:
+        'Habits, goals, daily to-dos and journaling usually live in separate apps, so it is hard to see how your days add up. Many planners also lose data when a tab closes, and keeping personal notes in an online tool raises privacy questions.',
+      solution:
+        'One planner where the week, the month, today’s tasks, goals and the diary sit side by side, saved to the cloud per account, with careful handling so writing is never silently lost or overwritten, and a privacy model where the database itself refuses to show one person’s rows to another.',
+      features: [
+        {
+          group: 'Habits & planner',
+          items: [
+            'Weekly habit grid (Monday–Sunday): add habits, tick the days you did them, and add notes for the week.',
+            'Browse any week with the arrows or a mini calendar; today is marked and the selected week is highlighted.',
+            'Month view with a daily progress chart and every habit against every day, plus a weekly average for each week of the month.',
+            'Sidebar with the live date and time, a month calendar, the week’s progress and the tools.',
+            'Print the planner, export the week to a CSV file that opens cleanly in Excel (formula-safe), or reset the week’s marks after confirming.',
+          ],
+        },
+        {
+          group: 'Daily plan',
+          items: [
+            'Small tasks for a specific date, up to 30 per day, kept separate from the weekly habit grid.',
+            'An optional “Tomorrow” list that automatically becomes today’s list at midnight.',
+          ],
+        },
+        {
+          group: 'Goals',
+          items: [
+            'Goals with a start date, end date and an optional target, current value and unit (for example “Read 12 books”).',
+            'A progress bar and percentage when a target is set; a goal completes itself when it reaches the target, or you can mark it done by hand.',
+            'Automatic status — Active, Completed or Overdue — with the nearest deadlines listed first, and goal lanes shown inside the week view.',
+          ],
+        },
+        {
+          group: 'Daily diary',
+          items: [
+            'One diary entry per date: write a journal, save a draft or the finished entry, and edit it later.',
+            'Optional mood (Happy, Productive, Grateful, Calm, Tired, Sad, Anxious, Frustrated) and four guided reflections: highlights, challenges, lessons learned and tomorrow’s plan.',
+            'A daily word goal with a live progress bar, and writing progress by day with current and longest writing streaks. It counts words written, not English ability.',
+            'Diary history, newest first, with search, a date range and a mood filter; days with an entry get a marker on the calendars.',
+          ],
+        },
+        {
+          group: 'Improve my writing (optional AI assistant)',
+          items: [
+            'Four tools: correct my writing, make it sound more natural, explain my mistakes, and suggest vocabulary.',
+            'Nothing is sent anywhere until you tick an agreement box and press a tool; your text is never changed until you press Apply, which has a one-click undo.',
+            'Runs as a Supabase Edge Function that holds the AI API key as a secret, accepts only signed-in users and limits each request to 6,000 characters.',
+          ],
+        },
+        {
+          group: 'Accounts, privacy & polish',
+          items: [
+            'Email sign-up with confirmation, sign-in, password reset and sign-out; signed-out visitors are redirected to the login page.',
+            'Every table has Row Level Security so an account can only read and change its own rows.',
+            'Light, Dark and Night themes with a keyboard-friendly switcher; native dialogs for modals and confirmations, and accessible labels throughout.',
+          ],
+        },
+      ],
+      implementation: [
+        'Front end: React 19 with Vite, React Router for pages and route guards, Tailwind CSS v4 for styling, and react-hot-toast for notifications.',
+        'Backend as a service: Supabase Auth for accounts and a Postgres database for weeks, habits, goals, diary entries and day tasks. The browser talks to Supabase directly with only the public anon key; the schema lives in versioned SQL migrations.',
+        'Security: Row Level Security with four policies per table; the service-role key is never in the front end. The AI key lives only in a Supabase Edge Function secret.',
+        'Saving: changes are saved per row (one habit, one checkbox, the notes) so two devices editing different habits do not overwrite each other. The app re-checks the database when a tab regains focus, if there are no unsaved edits.',
+        'Hosting: a small Express server serves the built site, or the front end can be deployed to any static host (build command npm run build, output folder dist) with all paths rewritten to index.html.',
+      ],
+      contribution:
+        'I designed and built the app end to end — the interface, the database schema and security policies, the Supabase integration, and each feature above. It lives in my GitHub repository, diy-todo-list. [Edit: add anything else you want to credit, such as a live demo link.]',
+      challenges:
+        'The hard parts were trust and safety rather than layout: never losing writing (the diary warns before you leave with unsaved text and asks whether to keep your version or load another device’s if both changed the same entry), keeping private notes private with Row Level Security, and keeping an AI key off the front end. Syncing is deliberately simple: there is no live push between devices, and two devices editing the very same field is last-write-wins.',
+      futureWork:
+        'Live updates between devices with Supabase Realtime, and setting up a custom email sender for production sign-ups. [Edit: add your own ideas, for example streaks and reminders for habits.]',
+      note: 'Details come from the project’s source code and setup notes. Screenshots show sample data, not real entries, and the AI suggestions shown are sample output. Text in [brackets] is placeholder content.',
     },
   },
   {

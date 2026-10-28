@@ -124,6 +124,22 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
               )}
               <Block title={ui.caseStudyHeadings.problem}>{project.caseStudy.problem}</Block>
               <Block title={ui.caseStudyHeadings.solution}>{project.caseStudy.solution}</Block>
+              {project.caseStudy.features && (
+                <Block title={ui.caseStudyHeadings.features}>
+                  <div className="space-y-5">
+                    {project.caseStudy.features.map((f) => (
+                      <div key={f.group}>
+                        <h4 className="mb-1.5 text-sm font-semibold text-fg">{f.group}</h4>
+                        <ul className="list-disc space-y-1.5 pl-5 marker:text-accent">
+                          {f.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </Block>
+              )}
               <Block title={ui.caseStudyHeadings.implementation}>
                 <ul className="list-disc space-y-1.5 pl-5 marker:text-accent">
                   {project.caseStudy.implementation.map((item) => (
