@@ -1,6 +1,6 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { ZoomableImage } from './ZoomableImage'
+import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react'
+import { useCallback, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react'
+import { Lightbox } from './Lightbox'
 
 export interface Slide {
   src: string
@@ -9,65 +9,59 @@ export interface Slide {
   fit?: 'cover' | 'contain'
 }
 
-const reduceMotion = () =>
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const VISIBLE = 3 // how many neighbours show on each side of the active slide
+const SWIPE = 45 // px of horizontal drag that counts as a swipe
 
-/** Swipeable scroll-snap carousel. Slides open full screen on click. Arrow keys work when focused. */
+/** Where a slide sits, given its distance `d` from the active one (0 = centre). */
+const place = (d: number): CSSProperties => {
+  const a = Math.abs(d)
+  const side = Math.sign(d)
+  if (a > VISIBLE) {
+    return { transform: `translate(-50%, -50%) translateX(${side * 150}%) scale(0.5)`, opacity: 0, pointerEvents: 'none', zIndex: 0 }
+  }
+  return {
+    transform:
+      a === 0
+        ? 'translate(-50%, -50%)'
+        : `translate(-50%, -50%) translateX(${side * (46 + (a - 1) * 20)}%) translateZ(${-a * 130}px) rotateY(${-side * 42}deg) scale(${1 - a * 0.06})`,
+    opacity: a === 0 ? 1 : Math.max(0.25, 0.85 - (a - 1) * 0.3),
+    filter: a === 0 ? 'none' : `brightness(${Math.max(0.35, 0.78 - (a - 1) * 0.2)})`,
+    zIndex: 10 - a,
+  }
+}
+
+/** 3D "depth" carousel (coverflow). Click a side image to bring it forward, the centre one to open it full screen. */
 export function Carousel({ slides, label }: { slides: Slide[]; label: string }) {
-  const trackRef = useRef<HTMLUListElement>(null)
-  const raf = useRef(0)
   const [index, setIndex] = useState(0)
+  const [viewer, setViewer] = useState<number | null>(null)
+  const openerRef = useRef<HTMLButtonElement | null>(null)
+  const drag = useRef<{ x: number; moved: boolean } | null>(null)
   const last = slides.length - 1
 
-  const goTo = useCallback(
-    (i: number) => {
-      const track = trackRef.current
-      const slide = track?.children[Math.min(Math.max(i, 0), last)] as HTMLElement | undefined
-      if (!track || !slide) return
-      track.scrollTo({
-        left: slide.offsetLeft - (track.clientWidth - slide.clientWidth) / 2,
-        behavior: reduceMotion() ? 'auto' : 'smooth',
-      })
-    },
-    [last],
-  )
-
-  // Track which slide is closest to the centre while scrolling or swiping.
-  const onScroll = () => {
-    cancelAnimationFrame(raf.current)
-    raf.current = requestAnimationFrame(() => {
-      const track = trackRef.current
-      if (!track) return
-      const centre = track.scrollLeft + track.clientWidth / 2
-      let best = 0
-      let bestDist = Infinity
-      Array.from(track.children).forEach((el, i) => {
-        const s = el as HTMLElement
-        const d = Math.abs(s.offsetLeft + s.clientWidth / 2 - centre)
-        if (d < bestDist) {
-          bestDist = d
-          best = i
-        }
-      })
-      setIndex(best)
-    })
-  }
-
-  useEffect(() => () => cancelAnimationFrame(raf.current), [])
+  const goTo = useCallback((i: number) => setIndex(Math.min(Math.max(i, 0), last)), [last])
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowRight') {
-      e.preventDefault()
-      goTo(index + 1)
-    } else if (e.key === 'ArrowLeft') {
-      e.preventDefault()
-      goTo(index - 1)
-    } else if (e.key === 'Home') {
-      e.preventDefault()
-      goTo(0)
-    } else if (e.key === 'End') {
-      e.preventDefault()
-      goTo(last)
+    const to = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: last }[e.key]
+    if (to === undefined) return
+    e.preventDefault()
+    goTo(to)
+  }
+
+  const onPointerDown = (e: PointerEvent) => {
+    drag.current = { x: e.clientX, moved: false }
+  }
+  const onPointerUp = (e: PointerEvent) => {
+    const d = drag.current
+    drag.current = null
+    if (!d) return
+    const dx = e.clientX - d.x
+    if (Math.abs(dx) >= SWIPE) {
+      d.moved = true
+      goTo(index + (dx < 0 ? 1 : -1))
+      // swallow the click that follows a swipe
+      const stop = (ev: Event) => ev.stopPropagation()
+      window.addEventListener('click', stop, { capture: true, once: true })
+      setTimeout(() => window.removeEventListener('click', stop, true), 0)
     }
   }
 
@@ -76,32 +70,58 @@ export function Carousel({ slides, label }: { slides: Slide[]; label: string }) 
 
   return (
     <div role="region" aria-roledescription="carousel" aria-label={label} onKeyDown={onKeyDown}>
-      <ul
-        ref={trackRef}
-        onScroll={onScroll}
+      <div
         tabIndex={0}
         aria-label={`${label} — use left and right arrow keys`}
-        className="relative -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 py-2 [scrollbar-width:none] sm:-mx-10 sm:px-10 [&::-webkit-scrollbar]:hidden"
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => (drag.current = null)}
+        className="relative -mx-6 aspect-[16/10] touch-pan-y overflow-hidden select-none sm:-mx-10 sm:aspect-[16/9]"
+        style={{ perspective: '1300px', perspectiveOrigin: '50% 45%' }}
       >
-        {slides.map((s, i) => (
-          <li
-            key={s.src}
-            aria-roledescription="slide"
-            aria-label={`${i + 1} of ${slides.length}`}
-            className={`aspect-[16/10] w-[88%] shrink-0 snap-center overflow-hidden rounded-2xl border bg-bg transition duration-500 sm:w-[72%] ${
-              i === index ? 'scale-100 border-accent/40 opacity-100' : 'scale-[0.96] border-line opacity-50'
-            }`}
-          >
-            <ZoomableImage
-              src={s.src}
-              alt={s.alt}
-              caption={s.caption}
-              className="size-full"
-              imgClassName={`size-full ${s.fit === 'contain' ? 'bg-white object-contain' : 'object-cover'}`}
-            />
-          </li>
-        ))}
-      </ul>
+        {slides.map((s, i) => {
+          const d = i - index
+          const active = d === 0
+          return (
+            <button
+              key={s.src}
+              type="button"
+              aria-roledescription="slide"
+              aria-label={active ? `View ${s.alt} full screen` : `Show image ${i + 1} of ${slides.length}: ${s.caption}`}
+              aria-haspopup={active ? 'dialog' : undefined}
+              tabIndex={active ? 0 : -1}
+              onClick={(e) => {
+                if (active) {
+                  openerRef.current = e.currentTarget
+                  setViewer(i)
+                } else {
+                  goTo(i)
+                }
+              }}
+              style={place(d)}
+              className={`group/zoom absolute top-1/2 left-1/2 block aspect-[16/10] w-[78%] overflow-hidden rounded-2xl border bg-bg transition duration-700 ease-[cubic-bezier(0.22,0.8,0.3,1)] will-change-transform motion-reduce:transition-none sm:w-[62%] ${
+                active ? 'cursor-zoom-in border-accent/40 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.7)]' : 'cursor-pointer border-line'
+              }`}
+            >
+              <img
+                src={s.src}
+                alt={active ? s.alt : ''}
+                draggable={false}
+                decoding="async"
+                className={`size-full ${s.fit === 'contain' ? 'bg-white object-contain' : 'object-cover'}`}
+              />
+              {active && (
+                <span
+                  aria-hidden
+                  className="absolute right-3 bottom-3 grid size-9 place-items-center rounded-lg border border-white/20 bg-black/50 text-white opacity-0 backdrop-blur transition group-hover/zoom:opacity-100 group-focus-visible/zoom:opacity-100 max-sm:opacity-100"
+                >
+                  <Maximize2 size={16} />
+                </span>
+              )}
+            </button>
+          )
+        })}
+      </div>
 
       <div className="mt-4 flex items-center justify-between gap-4">
         <button type="button" onClick={() => goTo(index - 1)} disabled={index === 0} aria-label="Previous image" className={arrow}>
@@ -135,6 +155,19 @@ export function Carousel({ slides, label }: { slides: Slide[]; label: string }) 
           <ChevronRight size={18} />
         </button>
       </div>
+
+      <Lightbox
+        slides={slides}
+        index={viewer}
+        onChange={(i) => {
+          setViewer(i)
+          goTo(i)
+        }}
+        onClose={() => {
+          setViewer(null)
+          openerRef.current?.focus()
+        }}
+      />
     </div>
   )
 }

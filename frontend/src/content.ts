@@ -262,7 +262,7 @@ const projects: Project[] = [
     summary:
       'Kaizen is a personal productivity web app (Habit Tracker & Daily Journal) that combines weekly habit tracking, a daily plan, goals and a private diary with an optional AI writing assistant — built with React and Supabase, with every user’s data protected by Row Level Security.',
     role: 'Designer & full-stack developer (personal project)',
-    image: '/images/kaizen/week.jpg',
+    image: '/images/kaizen/cover.jpg',
     tags: ['React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Vite', 'Full-Stack'],
     caseStudy: {
       overview:
