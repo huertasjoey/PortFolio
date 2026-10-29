@@ -432,6 +432,12 @@ const projects: Project[] = [
       overview:
         'Fieldnote is a magazine-style blog. Signed-in readers get a featured story, a grid of recent stories they can filter by category or search, full article pages and a newsletter signup. Administrators get a private area to upload, edit, feature and delete articles. The React site and the Express API are built to ship as one service, so login cookies stay on a single origin.',
       banner: false,
+      video: {
+        title: 'Promo video',
+        src: '/videos/fieldnote-promo.mp4',
+        poster: '/videos/fieldnote-promo-poster.jpg',
+        caption: '29-second promo with sound. Press play.',
+      },
       metrics: [
         { value: '13', label: 'automated backend tests covering sign-up, login, sessions, CSRF, roles and rate limiting — all passing' },
         { value: '2', label: 'roles: readers can read and subscribe; only administrators can create, edit, feature or delete articles' },
