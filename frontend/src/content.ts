@@ -415,6 +415,104 @@ const projects: Project[] = [
       note: 'Details come from the project’s source code and setup notes. Screenshots show sample data, not real entries, and the AI suggestions shown are sample output. Text in [brackets] is placeholder content.',
     },
   },
+  {
+    id: 'fieldnote',
+    title: 'Fieldnote',
+    classification: 'Editorial Blog Platform · Full-Stack',
+    categories: ['fullstack'],
+    previewKind: 'software',
+    icon: 'notebook',
+    status: 'Completed',
+    summary:
+      'Fieldnote is a full-stack editorial blog: a React front end and an Express + MongoDB API with featured stories, category filters, search, a newsletter, an admin area for publishing articles, and secure session-based login with CSRF protection and rate limiting.',
+    role: 'Designer & full-stack developer (personal project)',
+    image: '/images/fieldnote/cover.jpg',
+    tags: ['React', 'Express', 'MongoDB', 'Node.js', 'Tailwind CSS', 'Full-Stack'],
+    caseStudy: {
+      overview:
+        'Fieldnote is a magazine-style blog. Signed-in readers get a featured story, a grid of recent stories they can filter by category or search, full article pages and a newsletter signup. Administrators get a private area to upload, edit, feature and delete articles. The React site and the Express API are built to ship as one service, so login cookies stay on a single origin.',
+      banner: false,
+      metrics: [
+        { value: '13', label: 'automated backend tests covering sign-up, login, sessions, CSRF, roles and rate limiting — all passing' },
+        { value: '2', label: 'roles: readers can read and subscribe; only administrators can create, edit, feature or delete articles' },
+        { value: '4', label: 'MongoDB collections: articles, users, sessions and newsletter subscribers' },
+      ],
+      gallery: [
+        { src: '/images/fieldnote/home.jpg', alt: 'Fieldnote homepage with a featured story, search box and category filters', caption: 'Homepage: featured story, search and category filters' },
+        { src: '/images/fieldnote/stories.jpg', alt: 'Fieldnote recent stories grid with cover images, categories and read times', caption: 'Recent stories: cover, category, author, date and read time' },
+        { src: '/images/fieldnote/category.jpg', alt: 'Fieldnote stories filtered to the Places category', caption: 'Category filter: Culture, Places, Ideas, Lifestyle, Technology, Stories' },
+        { src: '/images/fieldnote/search.jpg', alt: 'Fieldnote search results for the word morning', caption: 'Search: results update as you type' },
+        { src: '/images/fieldnote/article.jpg', alt: 'Fieldnote article page with title, author, date and cover image', caption: 'Article page: category, author, date, read time and cover' },
+        { src: '/images/fieldnote/article-body.jpg', alt: 'Fieldnote article body text in a serif reading layout', caption: 'Reading layout built for long text' },
+        { src: '/images/fieldnote/newsletter.jpg', alt: 'Fieldnote newsletter signup with a thank-you message', caption: 'Newsletter signup with validation and a confirmation message' },
+        { src: '/images/fieldnote/about.jpg', alt: 'Fieldnote About page', caption: 'About page' },
+        { src: '/images/fieldnote/login.jpg', alt: 'Fieldnote log in page with a remember-me option', caption: 'Log in: show password and “Remember me for 30 days”' },
+        { src: '/images/fieldnote/register-rules.jpg', alt: 'Fieldnote create account page with live password rules', caption: 'Create account: password rules update as you type' },
+        { src: '/images/fieldnote/admin.jpg', alt: 'Fieldnote Manage articles page listing every article with View, Feature, Edit and Delete', caption: 'Admin: view, feature, edit or delete any article' },
+        { src: '/images/fieldnote/delete-confirm.jpg', alt: 'Fieldnote delete confirmation dialog', caption: 'Deleting asks for confirmation first' },
+        { src: '/images/fieldnote/editor.jpg', alt: 'Fieldnote Upload a blog form with a live cover preview', caption: 'Upload a blog: title, excerpt, category, author, cover preview and content' },
+        { src: '/images/fieldnote/mobile-menu.jpg', alt: 'Fieldnote mobile navigation menu', caption: 'Mobile: full navigation in a menu', fit: 'contain' },
+      ],
+      problem:
+        'Many small blogs either have no way to publish without touching code, or bolt on a login that is easy to get wrong. A publishing site needs readers to browse quickly, authors to add articles safely, and write access that can never be reached by an ordinary account.',
+      solution:
+        'A single application with a clean reading experience on the front and a small, locked-down API behind it. Articles live in MongoDB; an admin page replaces editing files; and authentication uses server-side sessions, so a logout or a database change takes effect immediately.',
+      features: [
+        {
+          group: 'Reading',
+          items: [
+            'A featured story on the homepage (one at a time, falling back to the newest article) above a grid of recent stories, nine per page with Previous / Next.',
+            'Six category filters (Culture, Places, Ideas, Lifestyle, Technology, Stories), also reachable from the top navigation, and a search box that waits for you to stop typing.',
+            'Article pages with category, author, date and estimated read time; articles open by database ID or by a readable slug.',
+            'An About page, a 404 page, and clear loading, error and empty states; broken cover images fall back gracefully.',
+            'Responsive layout with a mobile menu.',
+          ],
+        },
+        {
+          group: 'Newsletter',
+          items: [
+            'Email signup with validation; a duplicate address is recognised instead of stored twice.',
+            'Subscribers are saved in MongoDB.',
+          ],
+        },
+        {
+          group: 'Admin: manage and publish',
+          items: [
+            'A Manage articles page listing every article with View, Feature, Edit and Delete.',
+            'An Upload a blog form: title, excerpt, category, author, cover image URL with a live preview, and content where a blank line starts a new paragraph.',
+            'Read time is calculated automatically, slugs are kept unique, and only one article can be featured at a time.',
+            'Deleting opens a confirmation dialog that keeps keyboard focus inside it and closes with Esc.',
+          ],
+        },
+        {
+          group: 'Accounts & security',
+          items: [
+            'Create an account with live password rules, or log in with a show-password toggle and an optional “Remember me for 30 days”.',
+            'The whole site requires login, and public registration can only ever create an ordinary reader. Administrators are created with a command-line script.',
+            'Server-side sessions in an HttpOnly cookie; only a SHA-256 hash of the session token is stored, and logging out deletes the session on the server.',
+            'Passwords are hashed with bcrypt. The login check takes the same path whether or not the email exists, so response time does not reveal registered emails.',
+            'CSRF protection: each session has its own token that every write request must send, and requests from an unexpected origin are rejected.',
+            'Rate limiting on login and sign-up to slow down guessing.',
+          ],
+        },
+      ],
+      implementation: [
+        'Front end: React 19 with Vite, React Router for pages and route guards (signed-in, then admin-only), Tailwind CSS v4, Lucide icons, and small hooks for async loading and debouncing.',
+        'Back end: Node.js and Express 5 with Mongoose models for articles, users, sessions and subscribers. Controllers and routes are separated, with centralised error handling and input validation.',
+        'Authorization is enforced on the server: every read needs a session and every write needs the admin role, regardless of what the front end shows.',
+        'Data tooling: an idempotent seed script that adds seven sample articles without overwriting edits, plus scripts to create or promote an administrator.',
+        'Testing: 13 automated tests with Node’s built-in test runner against an in-memory MongoDB, covering registration, login, sessions, logout, role checks, CSRF and rate limiting.',
+        'Deployment: one Render web service serves both the API and the built React site on the same origin, with a health-check endpoint and a render.yaml blueprint; MongoDB Atlas holds the data.',
+      ],
+      contribution:
+        'I designed and built the whole project: the React interface, the Express API, the MongoDB data models, the authentication and security layer, the admin tools, the tests and the deployment setup. [Edit: add your GitHub repository link and a live demo link if you have them.]',
+      challenges:
+        'The hard part was authentication done properly rather than the blog itself: keeping write access away from ordinary accounts, making cookies safe against cross-site requests, letting logout truly end a session, and making a separate front end and API work together in development while shipping as one same-origin service in production.',
+      futureWork:
+        'Password reset and email verification, security headers and request logging, Markdown or rich-text articles, double opt-in confirmation emails (subscribers are stored, but no emails are sent yet), and real image uploads instead of image URLs.',
+      note: 'Details come from the project’s source code, README and test run. Screenshots were taken from a local copy running on a temporary database with the project’s seven sample articles (placeholder text, stock photos and fictional authors) and demo accounts, not real content or users. Text in [brackets] is placeholder content.',
+    },
+  },
 ]
 
 /* ─────────────────────────── 03 Experience ────────────────────────── */
