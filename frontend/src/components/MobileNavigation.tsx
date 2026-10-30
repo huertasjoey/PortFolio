@@ -34,7 +34,7 @@ export function MobileNavigation({ active, theme, onToggleTheme }: Props) {
   }, [open])
 
   return (
-    <header className="theme-fade fixed inset-x-0 top-0 z-40 border-b border-line bg-sidebar/90 backdrop-blur lg:hidden">
+    <header className="theme-fade fixed inset-x-0 top-0 z-40 border-b border-line bg-bg/90 backdrop-blur lg:hidden">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6">
         <a href="#about" className="flex items-center gap-3 font-semibold text-fg">
           {profile.name}
@@ -49,7 +49,7 @@ export function MobileNavigation({ active, theme, onToggleTheme }: Props) {
           aria-controls="mobile-menu"
           aria-label={open ? 'Close menu' : 'Open menu'}
           onClick={() => setOpen((o) => !o)}
-          className="grid size-11 place-items-center rounded-xl border border-line text-fg"
+          className="-mr-3 grid size-11 place-items-center rounded-md text-fg"
         >
           {open ? <X size={18} /> : <Menu size={18} />}
         </button>

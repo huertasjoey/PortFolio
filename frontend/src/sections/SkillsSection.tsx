@@ -1,4 +1,3 @@
-import { Brain, Code2, Cpu, Database, type LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { SiCss, SiHtml5, SiJavascript, SiPython, SiReact, SiSupabase, SiTailwindcss } from 'react-icons/si'
 import { LogoLoop } from '../components/LogoLoop'
@@ -6,7 +5,7 @@ import { SectionHeading } from '../components/SectionHeading'
 import { Reveal } from '../components/ui/Reveal'
 import { Tag } from '../components/ui/Tag'
 import { content } from '../content'
-import type { SkillGroup, TechIcon } from '../types'
+import type { TechIcon } from '../types'
 
 const { skills } = content
 
@@ -23,13 +22,11 @@ const techIcons: Record<TechIcon, ReactNode> = {
 
 const logos = skills.logos.map(({ icon, ...rest }) => ({ node: techIcons[icon], ...rest }))
 
-const icons: Record<SkillGroup['icon'], LucideIcon> = { code: Code2, database: Database, cpu: Cpu, brain: Brain }
-
 export function SkillsSection() {
   return (
-    <section id="skills" aria-labelledby="skills-title" className="py-24 lg:py-28">
+    <section id="skills" aria-labelledby="skills-title" className="py-28 lg:py-36">
       <SectionHeading number="04" label="Skills" id="skills-title" title={skills.heading} />
-      <div className="theme-fade mb-10 rounded-[18px] border border-line bg-card py-6 text-muted">
+      <div className="mb-20 border-y border-line py-8 text-muted">
         <LogoLoop
           logos={logos}
           speed={60}
@@ -42,29 +39,21 @@ export function SkillsSection() {
           ariaLabel={skills.logosLabel}
         />
       </div>
-      <div className="grid gap-5 md:grid-cols-2">
-        {skills.groups.map((group, i) => {
-          const Icon = icons[group.icon]
-          return (
-            <Reveal key={group.title} delay={i * 0.05}>
-              <div className="theme-fade h-full rounded-[18px] border border-line bg-card p-6 transition-colors hover:border-accent/50">
-                <div className="mb-5 flex items-center gap-3">
-                  <span className="grid size-10 place-items-center rounded-full border border-accent/30 bg-accent/10 text-accent">
-                    <Icon size={18} />
-                  </span>
-                  <h3 className="text-lg font-semibold text-fg">{group.title}</h3>
-                </div>
-                <ul className="flex flex-wrap gap-2">
-                  {group.items.map((s) => (
-                    <li key={s}>
-                      <Tag>{s}</Tag>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          )
-        })}
+      <div className="grid gap-x-12 gap-y-12 md:grid-cols-2">
+        {skills.groups.map((group, i) => (
+          <Reveal key={group.title} delay={i * 0.05}>
+            <div className="h-full border-t border-line pt-6">
+              <h3 className="mb-5 text-lg font-medium text-fg">{group.title}</h3>
+              <ul className="flex flex-wrap gap-x-4 gap-y-2">
+                {group.items.map((s) => (
+                  <li key={s}>
+                    <Tag>{s}</Tag>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </section>
   )

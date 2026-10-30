@@ -7,25 +7,25 @@ import { Tag } from './ui/Tag'
 
 export function FeaturedProject({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
   return (
-    <article className="group theme-fade grid overflow-hidden rounded-[20px] border border-line bg-card shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)] transition-colors duration-300 hover:border-accent/50 md:grid-cols-2">
-      <ProjectPreview project={project} className="min-h-64 border-b border-line md:min-h-[26rem] md:border-r md:border-b-0" />
-      <div className="flex flex-col justify-center gap-5 p-6 sm:p-10">
-        <p className="font-mono text-xs tracking-[0.15em] text-accent uppercase">
+    <article className="group grid items-center gap-10 md:grid-cols-[1.15fr_1fr] md:gap-14">
+      <ProjectPreview project={project} className="aspect-[4/3] rounded-md md:aspect-auto md:min-h-[28rem]" />
+      <div className="flex flex-col gap-6">
+        <p className="font-mono text-[11px] tracking-[0.15em] text-muted uppercase">
           {content.projectUi.featuredLabel} · {project.classification}
         </p>
-        <h3 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{project.title}</h3>
+        <h3 className="text-3xl font-medium tracking-tight text-fg sm:text-4xl">{project.title}</h3>
         <p className="leading-relaxed text-fg2">{project.summary}</p>
         <dl className="space-y-1 text-sm">
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <dt className="font-mono text-xs text-muted">{content.projectUi.statusLabel}</dt>
             <dd className="text-fg2">{project.status}</dd>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <dt className="font-mono text-xs text-muted">{content.projectUi.roleLabel}</dt>
             <dd className="text-fg2">{project.role}</dd>
           </div>
         </dl>
-        <ul className="flex flex-wrap gap-2" aria-label="Technologies">
+        <ul className="flex flex-wrap gap-x-4 gap-y-1" aria-label="Technologies">
           {project.tags.map((t) => (
             <li key={t}>
               <Tag>{t}</Tag>
@@ -33,7 +33,7 @@ export function FeaturedProject({ project, onOpen }: { project: Project; onOpen:
           ))}
         </ul>
         <div>
-          <Button onClick={() => onOpen(project)} aria-haspopup="dialog">
+          <Button variant="secondary" onClick={() => onOpen(project)} aria-haspopup="dialog">
             {content.projectUi.caseStudyButton}
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </Button>

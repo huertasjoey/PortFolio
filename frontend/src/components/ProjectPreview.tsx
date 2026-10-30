@@ -50,7 +50,7 @@ interface Props {
   className?: string
 }
 
-/** Dotted-grid preview. Place inside an element with the Tailwind `group` class to get the hover swap. */
+/** Cover image, or a quiet outlined placeholder. Place inside an element with the Tailwind `group` class to get the hover swap. */
 export function ProjectPreview({ project, className = '' }: Props) {
   if (project.image) {
     return (
@@ -60,23 +60,22 @@ export function ProjectPreview({ project, className = '' }: Props) {
           alt={`${project.title} cover illustration`}
           caption={project.title}
           className="absolute inset-0 size-full"
-          imgClassName="size-full object-cover transition duration-700 group-hover:scale-105"
+          imgClassName="size-full object-cover transition duration-700 group-hover:scale-[1.02]"
         />
       </div>
     )
   }
   return (
     <div
-      className={`dot-grid relative grid place-items-center overflow-hidden bg-bg/50 ${className}`}
+      className={`relative grid place-items-center overflow-hidden border border-line ${className}`}
       role="img"
       aria-label={`${project.title} preview illustration`}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--glow),transparent_65%)] opacity-70 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="absolute inset-6 text-accent/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+      <div className="absolute inset-6 text-muted/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
         {project.previewKind === 'hardware' ? <HardwareArt /> : <SoftwareArt />}
       </div>
-      <div className="relative grid size-16 place-items-center rounded-full border border-accent/30 bg-accent/10 text-accent transition duration-500 group-hover:scale-110 group-hover:bg-accent/20">
-        <ProjectIcon name={project.icon} />
+      <div className="relative text-muted transition duration-500 group-hover:opacity-0">
+        <ProjectIcon name={project.icon} size={32} />
       </div>
       <span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[0.15em] text-muted uppercase">
         {project.previewKind === 'hardware' ? content.projectUi.hardwarePreviewLabel : content.projectUi.softwarePreviewLabel}

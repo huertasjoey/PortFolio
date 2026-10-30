@@ -32,7 +32,7 @@ function validate(f: Fields): Errors {
 }
 
 const inputClass =
-  'w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm text-fg placeholder:text-muted transition focus:border-accent focus:outline-none aria-[invalid=true]:border-red-500'
+  'w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-3 text-sm text-fg placeholder:text-muted transition focus:border-fg focus:outline-none aria-[invalid=true]:border-red-500'
 
 function Field({
   id,
@@ -47,7 +47,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block font-mono text-xs tracking-wider text-muted uppercase">
+      <label htmlFor={id} className="mb-1 block font-mono text-[11px] tracking-wider text-muted uppercase">
         {label}
       </label>
       {children}
@@ -102,18 +102,18 @@ export function ContactSection() {
   })
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="py-24 lg:py-28">
+    <section id="contact" aria-labelledby="contact-title" className="py-28 lg:py-36">
       <SectionHeading number="06" label="Contact" id="contact-title" title={contact.heading} description={contact.description} />
 
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-        <Reveal className="flex flex-col items-start gap-3">
+      <div className="grid gap-14 lg:grid-cols-[1fr_1.4fr]">
+        <Reveal className="flex flex-col items-start gap-2">
           <ButtonLink href={gmailComposeUrl()} target="_blank" rel="noopener noreferrer">
             <Mail size={16} /> {profile.email}
           </ButtonLink>
-          <ButtonLink href={profile.github} variant="secondary" target="_blank" rel="noopener noreferrer">
+          <ButtonLink href={profile.github} variant="ghost" target="_blank" rel="noopener noreferrer">
             <GithubIcon /> {contact.githubButton}
           </ButtonLink>
-          <ButtonLink href={profile.linkedin} variant="secondary" target="_blank" rel="noopener noreferrer">
+          <ButtonLink href={profile.linkedin} variant="ghost" target="_blank" rel="noopener noreferrer">
             <LinkedinIcon /> {contact.linkedinButton}
           </ButtonLink>
           {contact.note && <p className="mt-2 font-mono text-xs text-muted">{contact.note}</p>}
@@ -123,7 +123,7 @@ export function ContactSection() {
           <form
             onSubmit={onSubmit}
             noValidate
-            className="theme-fade space-y-5 rounded-[18px] border border-line bg-card p-6 sm:p-8"
+            className="space-y-6"
           >
             <div className="grid gap-5 sm:grid-cols-2">
               <Field id="name" label={form.nameLabel} error={errors.name}>
@@ -145,14 +145,14 @@ export function ContactSection() {
             </Button>
 
             <div role="status" aria-live="polite" className="text-sm">
-              {status.kind === 'sent' && <p className="text-accent">{form.sent}</p>}
+              {status.kind === 'sent' && <p className="text-fg">{form.sent}</p>}
               {status.kind === 'error' && <p className="text-red-400">{status.text}</p>}
               {status.kind === 'unconfigured' && (
-                <div className="rounded-xl border border-line bg-bg p-4 text-fg2">
+                <div className="border-l border-line pl-4 text-fg2">
                   <p className="mb-2 text-fg">{form.notConnectedTitle}</p>
                   <p>
                     {form.notConnectedBody}{' '}
-                    <a className="text-accent underline underline-offset-2" href={mailto} target="_blank" rel="noopener noreferrer">
+                    <a className="text-fg underline underline-offset-2" href={mailto} target="_blank" rel="noopener noreferrer">
                       {form.gmailFallback}
                     </a>
                     .

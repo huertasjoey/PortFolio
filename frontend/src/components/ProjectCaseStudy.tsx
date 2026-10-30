@@ -114,7 +114,7 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                 <h2 id="case-study-title" className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
                   {project.title}
                 </h2>
-                <ul className="flex flex-wrap gap-2 pt-1" aria-label="Technologies">
+                <ul className="flex flex-wrap gap-x-4 gap-y-1 pt-1" aria-label="Technologies">
                   {project.tags.map((t) => (
                     <li key={t}>
                       <Tag>{t}</Tag>
@@ -126,7 +126,7 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
               {project.caseStudy.metrics && (
                 <dl className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3">
                   {project.caseStudy.metrics.map((m) => (
-                    <div key={m.label} className="theme-fade flex flex-col-reverse justify-end rounded-xl border border-line bg-bg p-4">
+                    <div key={m.label} className="theme-fade flex flex-col-reverse justify-end border-t border-line pt-4">
                       <dt className="mt-1 text-xs leading-snug text-fg2">{m.label}</dt>
                       <dd className="font-mono text-lg font-medium break-words text-accent sm:text-xl">{m.value}</dd>
                     </div>

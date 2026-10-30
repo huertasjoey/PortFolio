@@ -1,10 +1,11 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 
 const base =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 text-sm font-medium transition duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50'
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 text-sm font-medium transition duration-200 disabled:cursor-not-allowed disabled:opacity-50'
 const variants = {
-  primary: 'bg-accent text-accent-fg hover:brightness-110 hover:shadow-[0_0_24px_var(--glow)]',
-  secondary: 'border border-line text-fg hover:border-accent hover:text-accent',
+  primary: 'bg-fg text-bg hover:opacity-80',
+  secondary: 'border border-line text-fg hover:border-fg',
+  ghost: '!px-0 text-fg2 hover:text-fg',
 }
 
 type Variant = keyof typeof variants

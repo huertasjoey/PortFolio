@@ -13,14 +13,14 @@ const links = [
 
 export function SocialLinks() {
   return (
-    <ul className="flex gap-2">
+    <ul className="-ml-3 flex">
       {links.map(({ label, href, Icon, external }) => (
         <li key={label}>
           <a
             href={href}
             aria-label={label}
             {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            className="grid size-11 place-items-center rounded-xl border border-line text-fg2 transition hover:border-accent hover:text-accent"
+            className="grid size-11 place-items-center rounded-md text-muted transition hover:text-fg"
           >
             <Icon size={16} />
           </a>

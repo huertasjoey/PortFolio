@@ -307,20 +307,20 @@ const projects: Project[] = [
     icon: 'notebook',
     status: 'In progress',
     summary:
-      'Kaizen is a personal productivity web app (Habit Tracker & Daily Journal) that combines weekly habit tracking, a daily plan, goals and a private diary with an optional AI writing assistant — built with React and Supabase, with every user’s data protected by Row Level Security.',
+      'Kaizen is a personal productivity web app (Habit Tracker & Daily Journal) that combines weekly habit tracking with rest days and progress levels, a daily plan, goals and a private diary with an optional AI writing assistant — built with React and Supabase, with every user’s data protected by Row Level Security.',
     role: 'Designer & full-stack developer (personal project)',
     image: '/images/kaizen/cover.jpg',
     tags: ['React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Vite', 'Full-Stack'],
     caseStudy: {
       overview:
-        'Kaizen — a Habit Tracker & Daily Journal — started as a weekly habit grid and grew into a small personal planner. You sign in, tick habits across the week, plan today’s tasks, track goals with deadlines, and write a daily diary — all synced to your own account through Supabase and kept private by database-level security. It was built from a to-do list project and has been extended feature by feature.',
+        'Kaizen — a Habit Tracker & Daily Journal — started as a weekly habit grid and grew into a small personal planner. You sign in, tick habits across the week, take rest days without breaking your progress, plan today’s tasks, track goals with deadlines, and write a daily diary — all synced to your own account through Supabase and kept private by database-level security. It was built from a to-do list project and has been extended feature by feature.',
       banner: false,
       background: 'fading-stars',
       video: {
         title: 'Promo video',
         src: '/videos/kaizen-promo.mp4',
         poster: '/videos/kaizen-promo-poster.jpg',
-        caption: '29-second promo with sound. Press play.',
+        caption: '32-second promo with sound. Press play.',
       },
       metrics: [
         { value: '5', label: 'Supabase tables (weeks, week tasks, goals, diary entries, day tasks), all with Row Level Security' },
@@ -330,10 +330,15 @@ const projects: Project[] = [
       gallery: [
         { src: '/images/kaizen/week.jpg', alt: 'Kaizen weekly planner with daily plan, goals, diary markers and habit grid', caption: 'Weekly planner: daily plan, goals, diary markers and the habit grid' },
         { src: '/images/kaizen/habits.jpg', alt: 'Kaizen habit grid with a check for each day and a weekly count per habit', caption: 'Habit grid: tick each day, with a weekly count for every habit' },
+        { src: '/images/kaizen/rest-day.jpg', alt: 'Kaizen weekly habit grid with Saturday marked as a striped rest day', caption: 'Rest day: tap the moon under a weekday and the whole day is skipped' },
+        { src: '/images/kaizen/rest-menu.jpg', alt: 'Kaizen right-click menu offering Set as rest day for one habit on one day', caption: 'Right-click a box (or long-press on a phone) to rest just one habit' },
+        { src: '/images/kaizen/rest-habit.jpg', alt: 'Kaizen habit grid where one habit has a rest day and its count changes from 4 of 6 to 3 of 5', caption: 'One habit resting: its count becomes 3/5 instead of counting against you' },
         { src: '/images/kaizen/daily-plan.jpg', alt: 'Kaizen daily plan with today’s tasks and an optional Tomorrow list', caption: 'Daily plan: today’s tasks and an optional Tomorrow list' },
         { src: '/images/kaizen/goals.jpg', alt: 'Kaizen goals list with progress bars and Active, Overdue and Completed statuses', caption: 'Goals with progress, deadlines and Active / Overdue / Completed status' },
         { src: '/images/kaizen/goal-details.jpg', alt: 'Kaizen goal details dialog with dates, target, current value, unit and completion', caption: 'Goal details: dates, target, current value, unit and completion' },
-        { src: '/images/kaizen/month.jpg', alt: 'Kaizen month view with daily and weekly progress charts and every habit by day', caption: 'Month view: daily and weekly progress charts, and every habit by day' },
+        { src: '/images/kaizen/month.jpg', alt: 'Kaizen month view with daily and weekly progress charts and every habit by day', caption: 'Month view: daily and weekly progress charts, a progress level and the progress guide' },
+        { src: '/images/kaizen/month-rest.jpg', alt: 'Kaizen month view with a Rest day row and a striped rest day in the charts and grid', caption: 'Month view: a Rest day row, with striped days left out of every average' },
+        { src: '/images/kaizen/delete-habit.jpg', alt: 'Kaizen dialog asking to delete a removed habit for good', caption: 'Removed habits can be deleted for good, after a confirmation' },
         { src: '/images/kaizen/diary.jpg', alt: 'Kaizen diary history with search, date range and mood filters', caption: 'Diary history: newest first, with search, date range and mood filters' },
         { src: '/images/kaizen/editor.jpg', alt: 'Kaizen diary editor with title, mood, journal text and word goal', caption: 'Diary editor: title, mood, journal, word goal and reflections' },
         { src: '/images/kaizen/assistant-tools.jpg', alt: 'Kaizen Improve my writing panel with four AI tools and a consent checkbox', caption: 'Improve my writing: four AI tools, with consent before anything is sent' },
@@ -354,6 +359,9 @@ const projects: Project[] = [
             'Weekly habit grid (Monday–Sunday): add habits, tick the days you did them, and add notes for the week.',
             'Browse any week with the arrows or a mini calendar; today is marked and the selected week is highlighted.',
             'Month view with a daily progress chart and every habit against every day, plus a weekly average for each week of the month.',
+            'Rest days: tap the moon under any weekday to rest the whole day, or right-click a box (the menu key, or a long press on a phone) to rest just one habit on one day — handy for habits like drinking water that never take a day off. Rest days are striped, never count for or against you, and are left out of every percentage and average.',
+            'Progress levels: every weekly and monthly average gets a plain label — Just starting (0–29%), Building (30–49%), Steady (50–69%), Strong (70–84%) or Excellent (85–100%) — shown beside the week ring and the month average, with a Progress guide so months can be compared on the same scale.',
+            'In the Month view, a habit you removed from the Week view stays visible as “Removed” with its past marks, and can be deleted for good, with its marks for that month, after a confirmation.',
             'Sidebar with the live date and time, a month calendar, the week’s progress and the tools.',
             'Print the planner, export the week to a CSV file that opens cleanly in Excel (formula-safe), or reset the week’s marks after confirming.',
           ],
@@ -404,14 +412,15 @@ const projects: Project[] = [
         'Backend as a service: Supabase Auth for accounts and a Postgres database for weeks, habits, goals, diary entries and day tasks. The browser talks to Supabase directly with only the public anon key; the schema lives in versioned SQL migrations.',
         'Security: Row Level Security with four policies per table; the service-role key is never in the front end. The AI key lives only in a Supabase Edge Function secret.',
         'Saving: changes are saved per row (one habit, one checkbox, the notes) so two devices editing different habits do not overwrite each other. The app re-checks the database when a tab regains focus, if there are no unsaved edits.',
+        'Rest days: kept in the browser’s local storage for each account (a whole date, or a date plus one habit). Every calculation skips them — the week ring, the daily bars, the weekly and monthly averages and the “3/5”-style counts — so they are never treated as missed days.',
         'Hosting: a small Express server serves the built site, or the front end can be deployed to any static host (build command npm run build, output folder dist) with all paths rewritten to index.html.',
       ],
       contribution:
         'I designed and built the app end to end — the interface, the database schema and security policies, the Supabase integration, and each feature above. It lives in my GitHub repository, diy-todo-list. [Edit: add anything else you want to credit, such as a live demo link.]',
       challenges:
-        'The hard parts were trust and safety rather than layout: never losing writing (the diary warns before you leave with unsaved text and asks whether to keep your version or load another device’s if both changed the same entry), keeping private notes private with Row Level Security, and keeping an AI key off the front end. Syncing is deliberately simple: there is no live push between devices, and two devices editing the very same field is last-write-wins.',
+        'The hard parts were trust and safety rather than layout: never losing writing (the diary warns before you leave with unsaved text and asks whether to keep your version or load another device’s if both changed the same entry), keeping private notes private with Row Level Security, and keeping an AI key off the front end. Syncing is deliberately simple: there is no live push between devices, and two devices editing the very same field is last-write-wins. Rest days are saved in the browser rather than the database, so they do not follow you to another device yet.',
       futureWork:
-        'Live updates between devices with Supabase Realtime, and setting up a custom email sender for production sign-ups. [Edit: add your own ideas, for example streaks and reminders for habits.]',
+        'Saving rest days to the database so they sync between devices, live updates between devices with Supabase Realtime, and setting up a custom email sender for production sign-ups. [Edit: add your own ideas, for example streaks and reminders for habits.]',
       note: 'Details come from the project’s source code and setup notes. Screenshots show sample data, not real entries, and the AI suggestions shown are sample output. Text in [brackets] is placeholder content.',
     },
   },

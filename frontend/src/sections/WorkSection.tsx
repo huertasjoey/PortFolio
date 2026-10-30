@@ -25,7 +25,7 @@ export function WorkSection() {
   const categoryTitle = activeCategory?.title ?? ''
 
   return (
-    <section id="work" aria-labelledby="work-title" className="py-24 lg:py-28">
+    <section id="work" aria-labelledby="work-title" className="py-28 lg:py-36">
       <SectionHeading number="02" label="Work" id="work-title" title={work.heading} description={work.description} />
 
       {featured && (
@@ -34,9 +34,9 @@ export function WorkSection() {
         </Reveal>
       )}
 
-      <Reveal className="mt-16">
-        <h3 className="mb-5 font-mono text-xs tracking-[0.18em] text-muted uppercase">{work.browseTitle}</h3>
-        <div className="grid gap-4 md:grid-cols-3">
+      <Reveal className="mt-28">
+        <h3 className="mb-4 font-mono text-[11px] tracking-[0.18em] text-muted uppercase">{work.browseTitle}</h3>
+        <div className="flex flex-wrap gap-x-10 gap-y-1 border-b border-line">
           {categories.map((c) => (
             <ProjectCategory
               key={c.id}
@@ -48,29 +48,30 @@ export function WorkSection() {
         </div>
       </Reveal>
 
-      <div className="mt-10" aria-live="polite">
-        <div className="mb-5 flex min-h-8 items-center justify-between gap-4">
-          <h3 className="font-mono text-xs tracking-[0.18em] text-muted uppercase">
+      <div className="mt-12" aria-live="polite">
+        {activeCategory && <p className="mb-8 max-w-xl text-sm leading-relaxed text-fg2">{activeCategory.description}</p>}
+        <div className="mb-8 flex min-h-8 items-center justify-between gap-4">
+          <h3 className="font-mono text-[11px] tracking-[0.18em] text-muted uppercase">
             {activeCategory ? fill(work.moreTitleFiltered, { category: categoryTitle }) : work.moreTitle}
           </h3>
           {category && (
             <button
               type="button"
               onClick={() => setCategory(null)}
-              className="inline-flex items-center gap-1 text-sm text-fg2 transition hover:text-accent"
+              className="inline-flex min-h-11 items-center gap-1 text-sm text-muted transition hover:text-fg"
             >
               <X size={14} /> {work.clearFilter}
             </button>
           )}
         </div>
         {others.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-x-10 gap-y-16 sm:grid-cols-2 xl:grid-cols-3">
             {others.map((p) => (
               <ProjectCard key={p.id} project={p} onOpen={setOpenProject} />
             ))}
           </div>
         ) : (
-          <p className="rounded-[18px] border border-dashed border-line p-8 text-center text-sm text-fg2">
+          <p className="border-t border-line py-8 text-sm text-fg2">
             {featured.categories.includes(category as CategoryId)
               ? fill(work.emptyOnlyFeatured, { category: categoryTitle })
               : work.emptyNone}
