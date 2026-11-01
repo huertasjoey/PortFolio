@@ -2,41 +2,48 @@ import { ArrowRight } from 'lucide-react'
 import { content } from '../content'
 import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
-import { Button } from './ui/Button'
-import { Tag } from './ui/Tag'
 
 export function FeaturedProject({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
   return (
-    <article className="group grid items-center gap-10 md:grid-cols-[1.15fr_1fr] md:gap-14">
-      <ProjectPreview project={project} className="aspect-[4/3] rounded-md md:aspect-auto md:min-h-[28rem]" />
-      <div className="flex flex-col gap-6">
-        <p className="font-mono text-[11px] tracking-[0.15em] text-muted uppercase">
-          {content.projectUi.featuredLabel} · {project.classification}
+    <article className="group grid border-4 border-fg bg-card shadow-[10px_10px_0_0_var(--fg)] md:grid-cols-[1.15fr_1fr]">
+      <ProjectPreview
+        project={project}
+        className="aspect-[4/3] border-b-4 border-fg md:aspect-auto md:min-h-[28rem] md:border-r-4 md:border-b-0"
+      />
+      <div className="flex flex-col gap-6 p-6 sm:p-8">
+        <p className="flex flex-wrap gap-2 font-mono text-[11px] font-bold tracking-wider uppercase">
+          <span className="bg-brut px-2 py-1 text-black">{content.projectUi.featuredLabel}</span>
+          <span className="bg-fg px-2 py-1 text-bg">{project.classification}</span>
         </p>
-        <h3 className="text-3xl font-medium tracking-tight text-fg sm:text-4xl">{project.title}</h3>
-        <p className="leading-relaxed text-fg2">{project.summary}</p>
-        <dl className="space-y-1 text-sm">
-          <div className="flex gap-3">
-            <dt className="font-mono text-xs text-muted">{content.projectUi.statusLabel}</dt>
-            <dd className="text-fg2">{project.status}</dd>
+        <h3 className="text-5xl leading-[0.9] font-black tracking-tight text-fg uppercase sm:text-6xl">{project.title}</h3>
+        <p className="leading-relaxed text-fg">{project.summary}</p>
+        <dl className="border-y-4 border-fg font-mono text-sm">
+          <div className="flex gap-4 border-b-2 border-fg py-2">
+            <dt className="w-16 shrink-0 font-bold uppercase">{content.projectUi.statusLabel}</dt>
+            <dd>{project.status}</dd>
           </div>
-          <div className="flex gap-3">
-            <dt className="font-mono text-xs text-muted">{content.projectUi.roleLabel}</dt>
-            <dd className="text-fg2">{project.role}</dd>
+          <div className="flex gap-4 py-2">
+            <dt className="w-16 shrink-0 font-bold uppercase">{content.projectUi.roleLabel}</dt>
+            <dd>{project.role}</dd>
           </div>
         </dl>
-        <ul className="flex flex-wrap gap-x-4 gap-y-1" aria-label="Technologies">
+        <ul className="flex flex-wrap gap-2" aria-label="Technologies">
           {project.tags.map((t) => (
-            <li key={t}>
-              <Tag>{t}</Tag>
+            <li key={t} className="border-2 border-fg px-2 py-0.5 font-mono text-xs font-bold uppercase">
+              {t}
             </li>
           ))}
         </ul>
-        <div>
-          <Button variant="secondary" onClick={() => onOpen(project)} aria-haspopup="dialog">
+        <div className="mt-auto">
+          <button
+            type="button"
+            onClick={() => onOpen(project)}
+            aria-haspopup="dialog"
+            className="inline-flex min-h-12 items-center gap-3 border-4 border-fg bg-brut px-6 font-black tracking-wide text-black uppercase shadow-[6px_6px_0_0_var(--fg)] transition hover:translate-x-1.5 hover:translate-y-1.5 hover:shadow-none"
+          >
             {content.projectUi.caseStudyButton}
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </Button>
+            <ArrowRight size={20} strokeWidth={3} />
+          </button>
         </div>
       </div>
     </article>

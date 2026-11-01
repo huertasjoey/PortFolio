@@ -67,7 +67,7 @@ export function ProjectPreview({ project, className = '' }: Props) {
   }
   return (
     <div
-      className={`relative grid place-items-center overflow-hidden border border-line ${className}`}
+      className={`relative grid place-items-center overflow-hidden bg-[repeating-linear-gradient(135deg,transparent_0_10px,var(--border)_10px_12px)] ${className}`}
       role="img"
       aria-label={`${project.title} preview illustration`}
     >
