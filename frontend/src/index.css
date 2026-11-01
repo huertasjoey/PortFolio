@@ -12,7 +12,7 @@
   --accent: #ededed;
   --accent-fg: #0a0a0a;
   --glow: rgb(255 255 255 / 0.14);
-  --brut: #ffe600;
+  --gold: #c9ad7f;
   color-scheme: dark;
 }
 
@@ -27,7 +27,7 @@
   --accent: #111111;
   --accent-fg: #fafafa;
   --glow: rgb(0 0 0 / 0.12);
-  --brut: #ffe600;
+  --gold: #8a6a35;
   color-scheme: light;
 }
 
@@ -41,7 +41,8 @@
   --color-line: var(--border);
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
-  --color-brut: var(--brut);
+  --color-gold: var(--gold);
+  --font-serif: 'Cormorant Garamond', 'Iowan Old Style', Georgia, ui-serif, serif;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 }

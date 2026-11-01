@@ -25,16 +25,19 @@ export function WorkSection() {
   const categoryTitle = activeCategory?.title ?? ''
 
   return (
-    <section id="work" aria-labelledby="work-title" className="py-28 lg:py-36">
-      {/* Brutalist heading: stamped label, oversized uppercase type, a highlighter on the bold word, a heavy rule */}
-      <header className="mb-14 border-b-8 border-fg pb-8 md:mb-20">
-        <p className="mb-6 inline-block bg-fg px-3 py-1 font-mono text-xs font-bold tracking-[0.2em] text-bg">02 — WORK</p>
-        <h2 className="text-5xl leading-[0.9] font-black tracking-tight text-fg uppercase sm:text-7xl lg:text-8xl [&_strong]:bg-brut [&_strong]:px-2 [&_strong]:text-black">
+    <section id="work" aria-labelledby="work-title" className="py-28 lg:py-40">
+      <header className="mb-20 md:mb-28">
+        <p className="mb-8 flex items-center gap-4 text-[11px] tracking-[0.3em] text-muted uppercase">
+          <span className="font-serif text-lg tracking-normal text-gold italic lining-nums">02</span>
+          <span className="h-px w-12 bg-line" aria-hidden />
+          Work
+        </p>
+        <h2 className="font-serif text-6xl leading-[0.95] font-light tracking-tight text-fg sm:text-7xl lg:text-8xl [&_strong]:font-light [&_strong]:text-gold [&_strong]:italic">
           <span id="work-title">
             <RichText text={work.heading} />
           </span>
         </h2>
-        <p className="mt-8 max-w-xl border-l-8 border-fg pl-4 font-mono text-sm leading-relaxed text-fg">{work.description}</p>
+        <p className="mt-10 max-w-md text-base leading-[1.8] text-fg2">{work.description}</p>
       </header>
 
       {featured && (
@@ -43,9 +46,9 @@ export function WorkSection() {
         </Reveal>
       )}
 
-      <Reveal className="mt-24">
-        <h3 className="mb-4 font-mono text-xs font-bold tracking-[0.18em] text-fg uppercase">/ {work.browseTitle}</h3>
-        <div className="grid divide-y-4 divide-fg border-4 border-fg md:grid-cols-3 md:divide-x-4 md:divide-y-0">
+      <Reveal className="mt-32">
+        <h3 className="mb-6 text-[11px] tracking-[0.3em] text-muted uppercase">{work.browseTitle}</h3>
+        <div className="flex flex-wrap items-baseline gap-x-14 gap-y-2 border-y border-line py-3">
           {categories.map((c) => (
             <ProjectCategory
               key={c.id}
@@ -57,34 +60,30 @@ export function WorkSection() {
         </div>
       </Reveal>
 
-      <div className="mt-16" aria-live="polite">
-        {activeCategory && (
-          <p className="mb-8 max-w-xl border-l-8 border-brut pl-4 font-mono text-sm leading-relaxed text-fg">
-            {activeCategory.description}
-          </p>
-        )}
-        <div className="mb-8 flex min-h-11 items-center justify-between gap-4 border-b-4 border-fg pb-3">
-          <h3 className="font-mono text-xs font-bold tracking-[0.18em] text-fg uppercase">
-            / {activeCategory ? fill(work.moreTitleFiltered, { category: categoryTitle }) : work.moreTitle}
+      <div className="mt-20" aria-live="polite">
+        {activeCategory && <p className="mb-10 max-w-xl font-serif text-2xl leading-snug font-light text-fg2 italic">{activeCategory.description}</p>}
+        <div className="mb-12 flex min-h-8 items-center justify-between gap-4">
+          <h3 className="text-[11px] tracking-[0.3em] text-muted uppercase">
+            {activeCategory ? fill(work.moreTitleFiltered, { category: categoryTitle }) : work.moreTitle}
           </h3>
           {category && (
             <button
               type="button"
               onClick={() => setCategory(null)}
-              className="inline-flex min-h-11 items-center gap-2 border-2 border-fg px-3 font-mono text-xs font-bold uppercase transition hover:bg-fg hover:text-bg"
+              className="inline-flex min-h-11 items-center gap-2 text-xs tracking-[0.2em] text-muted uppercase transition hover:text-gold"
             >
-              <X size={14} strokeWidth={3} /> {work.clearFilter}
+              <X size={13} /> {work.clearFilter}
             </button>
           )}
         </div>
         {others.length ? (
-          <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 xl:grid-cols-3">
-            {others.map((p) => (
-              <ProjectCard key={p.id} project={p} onOpen={setOpenProject} />
+          <div className="grid gap-x-12 gap-y-24 sm:grid-cols-2 xl:grid-cols-3">
+            {others.map((p, i) => (
+              <ProjectCard key={p.id} project={p} index={i + 2} onOpen={setOpenProject} />
             ))}
           </div>
         ) : (
-          <p className="border-4 border-dashed border-fg p-8 font-mono text-sm font-bold uppercase">
+          <p className="border-t border-line py-10 font-serif text-2xl font-light text-fg2 italic">
             {featured.categories.includes(category as CategoryId)
               ? fill(work.emptyOnlyFeatured, { category: categoryTitle })
               : work.emptyNone}

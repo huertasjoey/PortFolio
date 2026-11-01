@@ -8,7 +8,7 @@ interface Props {
   onSelect: (id: CategoryId) => void
 }
 
-/** A slab of the category bar: huge uppercase title, project count, flat highlight when selected. */
+/** A quiet serif filter: title, count, and a thin gold line under the selected one. */
 export function ProjectCategory({ category, selected, onSelect }: Props) {
   const count = countByCategory(category.id)
   return (
@@ -16,12 +16,12 @@ export function ProjectCategory({ category, selected, onSelect }: Props) {
       type="button"
       onClick={() => onSelect(category.id)}
       aria-pressed={selected}
-      className={`flex min-h-32 flex-col justify-between gap-6 p-5 text-left transition-colors ${
-        selected ? 'bg-brut text-black' : 'bg-transparent text-fg hover:bg-fg hover:text-bg'
+      className={`group flex min-h-11 items-baseline gap-3 border-b py-2 text-left transition-colors duration-300 ${
+        selected ? 'border-gold text-fg' : 'border-transparent text-fg2 hover:text-fg'
       }`}
     >
-      <span className="text-2xl leading-none font-black tracking-tight uppercase">{category.title}</span>
-      <span className="font-mono text-xs font-bold uppercase">
+      <span className="font-serif text-2xl font-light">{category.title}</span>
+      <span className="text-[11px] tracking-[0.2em] uppercase">
         {count} {count === 1 ? content.projectUi.projectSingular : content.projectUi.projectPlural}
       </span>
     </button>
