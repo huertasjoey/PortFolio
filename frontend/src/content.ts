@@ -110,6 +110,7 @@ const projectUi = {
     contribution: 'My contribution',
     challenges: 'Challenges',
     gallery: 'Gallery',
+    pcb: 'PCB design',
     features: 'Features',
     results: 'Results',
     team: 'Team',
@@ -180,11 +181,19 @@ const projects: Project[] = [
         { src: '/images/lycodry/prototype.jpg', alt: 'The built LycoDry prototype with its stainless-steel enclosure and dehydration chamber', caption: 'The LycoDry prototype' },
         { src: '/images/lycodry/render.jpg', alt: '3D render of the enclosed LycoDry machine', caption: '3D render of the enclosed unit' },
         { src: '/images/lycodry/model-isometric.jpg', alt: 'Isometric 3D model of the frame with funnel, ramp, cutting module and dehydrator chamber', caption: '3D model: funnel, gravity ramp, cutting module, conveyor and dehydration chamber' },
-        { src: '/images/lycodry/schematic.png', alt: 'KiCad schematic of the LycoDry control board: ESP32, sensor, servo, relay and motor-driver headers', caption: 'Circuit schematic (KiCad): ESP32 control board', fit: 'contain' },
-        { src: '/images/lycodry/pcb.png', alt: 'KiCad PCB layout of the LycoDry control board with top and bottom copper traces', caption: 'Custom PCB layout (KiCad)', fit: 'contain' },
         { src: '/images/lycodry/dashboard.jpg', alt: 'LycoDry kiosk dashboard with live camera feed and production counters', caption: 'Kiosk dashboard: live feed, counters and alerts' },
         { src: '/images/lycodry/history.jpg', alt: 'LycoDry processing history page listing completed cycles', caption: 'Processing history page' },
       ],
+      pcb: {
+        description:
+          'I designed the ESP32 control board in KiCad and fabricated it by hand. It breaks out the sensor, servo, relay and motor-driver headers that run the sorting, slicing and dehydration hardware.',
+        views: [
+          { label: 'Layout', src: '/images/lycodry/pcb.png', alt: 'KiCad PCB layout of the LycoDry control board with top and bottom copper traces', caption: 'Custom PCB layout (KiCad)' },
+          { label: 'Built board', src: '/images/lycodry/pcb-built.png', alt: 'The finished LycoDry control board wired into the machine, with the ESP32, terminal blocks, relay module, solid-state relays and buck converters', caption: 'The finished board, wired into the machine with its relays and power converters', fit: 'cover' },
+          { label: 'Schematic', src: '/images/lycodry/schematic.png', alt: 'KiCad schematic of the LycoDry control board: ESP32, sensor, servo, relay and motor-driver headers', caption: 'Circuit schematic (KiCad): ESP32 control board' },
+        ],
+        model: { src: '/models/lycodry-pcb.glb', alt: 'Interactive 3D model of the LycoDry ESP32 control board' },
+      },
       galleries: [
         {
           title: 'Created by hand',
