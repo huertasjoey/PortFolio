@@ -53,6 +53,8 @@ export interface Project {
       title: string
       slides: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain'; full?: string }[]
     }[]
+    /** Optional interactive 3D models of the whole project, one tab each. `src` is a .glb file in public/models/. */
+    model3d?: { description: string; views: { label: string; src: string; alt: string; caption: string }[] }
     /**
      * Optional PCB design section with 2D views and an interactive 3D model.
      * `model` is a .glb file in public/models/ (KiCad 8+: PCB Editor → File → Export → GLB).

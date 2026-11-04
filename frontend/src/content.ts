@@ -111,6 +111,7 @@ const projectUi = {
     challenges: 'Challenges',
     gallery: 'Gallery',
     pcb: 'PCB design',
+    model3d: '3D model',
     features: 'Features',
     results: 'Results',
     team: 'Team',
@@ -182,8 +183,25 @@ const projects: Project[] = [
         { src: '/images/lycodry/render.jpg', alt: '3D render of the enclosed LycoDry machine', caption: '3D render of the enclosed unit' },
         { src: '/images/lycodry/model-isometric.jpg', alt: 'Isometric 3D model of the frame with funnel, ramp, cutting module and dehydrator chamber', caption: '3D model: funnel, gravity ramp, cutting module, conveyor and dehydration chamber' },
         { src: '/images/lycodry/dashboard.jpg', alt: 'LycoDry kiosk dashboard with live camera feed and production counters', caption: 'Kiosk dashboard: live feed, counters and alerts' },
-        { src: '/images/lycodry/history.jpg', alt: 'LycoDry processing history page listing completed cycles', caption: 'Processing history page' },
       ],
+      model3d: {
+        description:
+          'Explore the machine in 3D: the funnel and gravitational ramp feed the camera, the cutting module slices processing-grade fruit, and the conveyor carries the slices into the dehydration chamber.',
+        views: [
+          {
+            label: 'Finished prototype',
+            src: '/models/lycodry-prototype.glb',
+            alt: 'Interactive 3D model of the finished LycoDry prototype: stainless-steel enclosure, funnel, electronics housing, screen mount and dehydration chamber',
+            caption: 'Simplified 3D model of the finished, enclosed prototype',
+          },
+          {
+            label: 'Frame',
+            src: '/models/lycodry-machine.glb',
+            alt: 'Interactive 3D model of the LycoDry frame: funnel, ramp, electronics tray, screen mount, cutting module, conveyor and dehydration chamber',
+            caption: 'Simplified 3D model of the frame, built from the design drawing (47 × 25 × 40 in frame, 21 × 19.75 × 15.5 in chamber)',
+          },
+        ],
+      },
       pcb: {
         description:
           'I designed the ESP32 control board in KiCad and fabricated it by hand. It breaks out the sensor, servo, relay and motor-driver headers that run the sorting, slicing and dehydration hardware.',

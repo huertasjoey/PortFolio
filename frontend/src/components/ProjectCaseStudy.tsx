@@ -9,6 +9,7 @@ import { useTheme } from '../hooks/useTheme'
 import { BinaryOrbit } from './BinaryOrbit'
 import { Carousel } from './Carousel'
 import { FadingStars } from './FadingStars'
+import { ModelTabs } from './ModelViewer'
 import { PcbViewer } from './PcbViewer'
 import { ThemeToggle } from './ThemeToggle'
 import { Tag } from './ui/Tag'
@@ -175,6 +176,12 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
                   ))}
                 </ul>
               </Block>
+              {project.caseStudy.model3d && (
+                <Block title={ui.caseStudyHeadings.model3d}>
+                  <p className="mb-4">{project.caseStudy.model3d.description}</p>
+                  <ModelTabs views={project.caseStudy.model3d.views} orbit="30deg 65deg auto" />
+                </Block>
+              )}
               {project.caseStudy.pcb && (
                 <Block title={ui.caseStudyHeadings.pcb}>
                   <PcbViewer pcb={project.caseStudy.pcb} />
