@@ -408,6 +408,92 @@ const projects: Project[] = [
     },
   },
   {
+    id: 'adc-8bit',
+    title: '8-bit ADC',
+    classification: 'Mixed-Signal Circuit · PCB Design',
+    categories: ['iot', 'embedded'],
+    previewKind: 'hardware',
+    icon: 'flame',
+    status: 'In progress',
+    summary:
+      'A flash analog-to-digital converter built entirely from discrete chips — no microcontroller. A resistor ladder and four LM339 quad comparators sample an input voltage, two 74148 priority encoders turn the result into a binary code, and the code is shown on LEDs and a 7-segment display. Designed in KiCad as my midterm project.',
+    role: 'Circuit designer — schematic and PCB layout (midterm project)',
+    image: '/images/adc/cover.jpg',
+    tags: ['KiCad', 'PCB Design', 'Analog', 'Digital Logic', 'LM339', '74148'],
+    caseStudy: {
+      overview:
+        'This converter shows how an ADC works with nothing hidden in software. A potentiometer sets the input voltage, a UA741 op-amp conditions it, and a ladder of 1 kΩ resistors creates a set of reference voltages. Sixteen comparators (four LM339 chips) compare the input against every reference at once. Two cascaded 74148 priority encoders and three 74LS86 XOR gates turn the comparator outputs into a binary code, which drives four LEDs and, through a 7447 decoder, a 7-segment display.',
+      banner: false,
+      metrics: [
+        { value: '16', label: 'comparators (four LM339 quad comparators) checking the input against a resistor ladder' },
+        { value: '47', label: 'through-hole parts and no surface-mount parts, so it can be built by hand' },
+        { value: '153 × 86 mm', label: 'single-sided board, with all tracks on the bottom copper layer' },
+      ],
+      gallery: [
+        { src: '/images/adc/cover.jpg', alt: 'Angled 3D render of the 8-bit ADC board', caption: '3D render of the board (KiCad render)' },
+        { src: '/images/adc/render-top.jpg', alt: 'Top-down 3D render of the 8-bit ADC board', caption: 'Top view: comparators, encoders, decoder, LEDs and the input stage' },
+        { src: '/images/adc/render-bottom.jpg', alt: '3D render of the bottom of the 8-bit ADC board showing the copper tracks', caption: 'Bottom view: the single copper layer (KiCad render)' },
+      ],
+      pcb: {
+        description:
+          'I drew the schematic and laid out a single-sided board in KiCad, with 1 mm tracks for power and 0.5 mm tracks for signals. The layout is still a work in progress: the input stage, timer and part of the encoder section are routed, while the comparator outputs, the LED outputs and the ground connections are still to be routed.',
+        views: [
+          { label: 'Routing', src: '/images/adc/routing-full.jpg', alt: '8-bit ADC PCB routing on the bottom copper layer', caption: 'Routing in progress: every track is on the bottom layer' },
+          { label: 'Schematic', src: '/images/adc/schematic-full.jpg', alt: '8-bit ADC schematic in KiCad', caption: 'Schematic: input stage, resistor ladder, comparators, encoders, XOR logic and display driver' },
+        ],
+        model: { src: '/models/adc.glb', alt: 'Interactive 3D model of the 8-bit ADC board, exported from KiCad' },
+      },
+      problem:
+        'Analog-to-digital conversion usually happens inside a microcontroller, where it is easy to use and hard to see. The goal here was to build the whole conversion out of individual chips, so every stage — reference voltages, comparison, encoding and display — can be followed on the board.',
+      solution:
+        'A flash-type converter: the input is compared against every reference voltage at the same time, and priority encoders report the highest comparator that is switched on. That code is shown directly on LEDs and decoded for a 7-segment display.',
+      features: [
+        {
+          group: 'Input and timing',
+          items: [
+            'A 10 kΩ potentiometer sets the input voltage, conditioned by a UA741 op-amp with offset-adjust resistors.',
+            'A 2N7000 MOSFET in the input stage, and an LM555 timer circuit with its own resistors and capacitor.',
+            'Power through a two-way screw terminal.',
+          ],
+        },
+        {
+          group: 'Comparison',
+          items: [
+            'A ladder of 1 kΩ resistors divides the reference into evenly spaced voltages.',
+            'Sixteen comparators — four LM339 quad comparators — each compare the input with one ladder voltage.',
+          ],
+        },
+        {
+          group: 'Encoding and display',
+          items: [
+            'Two 74148 8-to-3 priority encoders, each handling eight comparators and cascaded through their enable pins.',
+            'Three 74LS86 XOR gates combine the two encoders into one binary code.',
+            'Four LEDs (with 220 Ω resistors) show the code, and a 7447 BCD-to-7-segment decoder drives a D198K common-cathode display.',
+          ],
+        },
+        {
+          group: 'PCB layout',
+          items: [
+            'Single-sided: every track on the bottom copper layer, 1 mm wide for power and 0.5 mm for signals.',
+            'All 47 parts are through-hole, with the chips in DIP packages for easy soldering and replacement.',
+          ],
+        },
+      ],
+      implementation: [
+        'Schematic drawn in KiCad with the standard libraries plus imported symbols and footprints for the LM339 and UA741.',
+        'Board laid out in the KiCad PCB editor on a 153 × 86 mm outline.',
+        'The schematic, routing and 3D renders shown here were exported straight from the project files with KiCad. The four LM339s, the 7-segment display and the potentiometer have no 3D models in their footprints, so they appear as outlines in the 3D views.',
+      ],
+      contribution:
+        'I designed the circuit and drew the schematic and PCB layout in KiCad. [Edit: add whether it was built and tested on a breadboard or board, and who you worked with.]',
+      challenges:
+        'Fitting sixteen comparators, two encoders and the display logic onto one copper layer without jumpers is the hard part of the layout, which is why the routing is still being finished. [Edit: add what was hardest for you, for example calibrating the ladder or cascading the encoders.]',
+      futureWork:
+        'Finish routing the comparator outputs, the LED outputs and the ground, then etch and test the board. [Edit: add your own next steps.]',
+      note: 'The schematic, routing and 3D views are exported directly from the KiCad project. The 3D views are KiCad renders, not photographs. Text in [brackets] is placeholder content.',
+    },
+  },
+  {
     id: 'habit-journal',
     title: 'Kaizen',
     classification: 'Habit Tracker & Daily Journal · Full-Stack',
