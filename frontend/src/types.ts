@@ -46,8 +46,6 @@ export interface Project {
     metrics?: { value: string; label: string }[]
     /** Optional video shown under the metrics. Files live in public/videos/. */
     video?: { title: string; src: string; poster: string; caption: string }
-    /** Optional interactive 3D model (.glb in public/models/), shown under the gallery. */
-    model3d?: { title: string; src: string; poster: string; alt: string; caption: string }
     /** Optional figures, e.g.{ src: '/images/x.jpg', alt: '…', caption: '…' }. Files live in public/images/. */
     gallery?: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain'; full?: string }[]
     /** Optional extra carousels, each with its own heading. `full` is a larger image for full screen. */
@@ -55,6 +53,16 @@ export interface Project {
       title: string
       slides: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain'; full?: string }[]
     }[]
+    /**
+     * Optional PCB design section with 2D views and an interactive 3D model.
+     * `model` is a .glb file in public/models/ (KiCad 8+: PCB Editor → File → Export → GLB).
+     */
+    pcb?: {
+      description: string
+      /** fit: 'contain' (default, on white, for diagrams) or 'cover' (fills the frame, for photos). */
+      views: { label: string; src: string; alt: string; caption: string; fit?: 'cover' | 'contain' }[]
+      model?: { src: string; alt: string }
+    }
     /** Optional grouped feature list, e.g. { group: 'Habits', items: ['…'] }. */
     features?: { group: string; items: string[] }[]
     /** Optional bullet list of results and findings. */

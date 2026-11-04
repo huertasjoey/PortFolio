@@ -36,10 +36,10 @@ export function FeaturedProject({ project, onOpen }: { project: Project; onOpen:
           type="button"
           onClick={() => onOpen(project)}
           aria-haspopup="dialog"
-          className="mt-10 inline-flex min-h-11 items-center gap-3 border-b border-fg/30 pb-1 text-sm tracking-wide text-fg transition-all duration-300 hover:gap-5 hover:border-gold hover:text-gold"
+          className="group/cta mt-10 inline-flex min-h-12 items-center gap-3 rounded-md bg-gold px-6 text-sm font-medium tracking-wide text-bg shadow-lg shadow-gold/20 transition-all duration-300 hover:-translate-y-0.5 hover:gap-5 hover:shadow-xl hover:shadow-gold/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
         >
           {content.projectUi.caseStudyButton}
-          <ArrowRight size={16} strokeWidth={1.5} />
+          <ArrowRight size={18} strokeWidth={2} className="transition-transform duration-300 group-hover/cta:translate-x-0.5" />
         </button>
       </div>
     </article>

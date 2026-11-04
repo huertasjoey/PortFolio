@@ -110,6 +110,7 @@ const projectUi = {
     contribution: 'My contribution',
     challenges: 'Challenges',
     gallery: 'Gallery',
+    pcb: 'PCB design',
     features: 'Features',
     results: 'Results',
     team: 'Team',
@@ -180,11 +181,19 @@ const projects: Project[] = [
         { src: '/images/lycodry/prototype.jpg', alt: 'The built LycoDry prototype with its stainless-steel enclosure and dehydration chamber', caption: 'The LycoDry prototype' },
         { src: '/images/lycodry/render.jpg', alt: '3D render of the enclosed LycoDry machine', caption: '3D render of the enclosed unit' },
         { src: '/images/lycodry/model-isometric.jpg', alt: 'Isometric 3D model of the frame with funnel, ramp, cutting module and dehydrator chamber', caption: '3D model: funnel, gravity ramp, cutting module, conveyor and dehydration chamber' },
-        { src: '/images/lycodry/schematic.png', alt: 'KiCad schematic of the LycoDry control board: ESP32, sensor, servo, relay and motor-driver headers', caption: 'Circuit schematic (KiCad): ESP32 control board', fit: 'contain' },
-        { src: '/images/lycodry/pcb.png', alt: 'KiCad PCB layout of the LycoDry control board with top and bottom copper traces', caption: 'Custom PCB layout (KiCad)', fit: 'contain' },
         { src: '/images/lycodry/dashboard.jpg', alt: 'LycoDry kiosk dashboard with live camera feed and production counters', caption: 'Kiosk dashboard: live feed, counters and alerts' },
         { src: '/images/lycodry/history.jpg', alt: 'LycoDry processing history page listing completed cycles', caption: 'Processing history page' },
       ],
+      pcb: {
+        description:
+          'I designed the ESP32 control board in KiCad and fabricated it by hand. It breaks out the sensor, servo, relay and motor-driver headers that run the sorting, slicing and dehydration hardware.',
+        views: [
+          { label: 'Layout', src: '/images/lycodry/pcb.png', alt: 'KiCad PCB layout of the LycoDry control board with top and bottom copper traces', caption: 'Custom PCB layout (KiCad)' },
+          { label: 'Built board', src: '/images/lycodry/pcb-built.png', alt: 'The finished LycoDry control board wired into the machine, with the ESP32, terminal blocks, relay module, solid-state relays and buck converters', caption: 'The finished board, wired into the machine with its relays and power converters', fit: 'cover' },
+          { label: 'Schematic', src: '/images/lycodry/schematic.png', alt: 'KiCad schematic of the LycoDry control board: ESP32, sensor, servo, relay and motor-driver headers', caption: 'Circuit schematic (KiCad): ESP32 control board' },
+        ],
+        model: { src: '/models/lycodry-pcb.glb', alt: 'Interactive 3D model of the LycoDry ESP32 control board' },
+      },
       galleries: [
         {
           title: 'Created by hand',
@@ -323,16 +332,16 @@ const projects: Project[] = [
       gallery: [
         { src: '/images/arduino/cover.jpg', alt: 'Angled 3D render of the Aquarium Monitor board', caption: '3D render: the assembled board (KiCad render)' },
         { src: '/images/arduino/render-top.jpg', alt: 'Top-down 3D render of the Aquarium Monitor board with every part placed', caption: 'Top view: ATmega328P, ESP-01 socket, sensor headers and load terminals' },
-        { src: '/images/arduino/schematic.jpg', full: '/images/arduino/schematic-full.jpg', alt: 'Aquarium Monitor schematic in KiCad', caption: 'Schematic: MCU core, ESP-01, sensor inputs, power and loads', fit: 'contain' },
-        { src: '/images/arduino/routing.jpg', full: '/images/arduino/routing-full.jpg', alt: 'Aquarium Monitor PCB routing on the bottom copper layer with a ground pour', caption: 'Routing: every track on the bottom layer, with a ground pour', fit: 'contain' },
         { src: '/images/arduino/render-bottom.jpg', alt: '3D render of the bottom of the Aquarium Monitor board showing the copper tracks', caption: 'Bottom view: the single copper layer (KiCad render)' },
       ],
-      model3d: {
-        title: '3D model',
-        src: '/models/arduino.glb',
-        poster: '/images/arduino/cover.jpg',
-        alt: 'Interactive 3D model of the Aquarium Monitor board',
-        caption: 'Interactive model exported from KiCad: drag to rotate, scroll or pinch to zoom.',
+      pcb: {
+        description:
+          'I designed the schematic and the single-sided board in KiCad. Every track is on the bottom copper layer, with a digital-ground pour filling the rest, and every part is through-hole so the board can be etched and soldered by hand.',
+        views: [
+          { label: 'Routing', src: '/images/arduino/routing-full.jpg', alt: 'Aquarium Monitor PCB routing on the bottom copper layer with a ground pour', caption: 'Routing: every track on the bottom layer, with a ground pour' },
+          { label: 'Schematic', src: '/images/arduino/schematic-full.jpg', alt: 'Aquarium Monitor schematic in KiCad', caption: 'Schematic: MCU core, ESP-01, sensor inputs, power and loads' },
+        ],
+        model: { src: '/models/arduino.glb', alt: 'Interactive 3D model of the Aquarium Monitor board, exported from KiCad' },
       },
       problem:
         'An off-the-shelf Arduino with a breadboard gets messy fast once a project needs several sensors, Wi-Fi and 12 V loads: loose jumper wires, noisy analog readings, and nowhere solid to connect a pump or fans.',
