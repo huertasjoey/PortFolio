@@ -52,6 +52,10 @@ export function ModelViewer({ src, alt, orbit = '30deg 60deg auto' }: Props) {
 
   useEffect(() => {
     let alive = true
+    // Draco-compressed models are decoded with the copy in public/draco/. model-viewer reads this
+    // global config when it loads, so it has to be set before the import.
+    const w = window as Window & { ModelViewerElement?: Record<string, string> }
+    w.ModelViewerElement = { ...w.ModelViewerElement, dracoDecoderLocation: '/draco/' }
     import('@google/model-viewer').catch(() => alive && setState('error'))
     const el = ref.current
     const onLoad = () => setState('ready')

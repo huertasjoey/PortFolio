@@ -326,6 +326,100 @@ const projects: Project[] = [
     },
   },
   {
+    id: 'aquarium-monitor-board',
+    title: 'Aquarium Monitor',
+    classification: 'Custom ATmega328P Board · PCB Design',
+    categories: ['iot'],
+    previewKind: 'hardware',
+    icon: 'sprout',
+    status: 'In progress',
+    summary:
+      'Aquarium Monitor is a custom Arduino-compatible controller board I designed in KiCad for monitoring an aquarium: an ATmega328P with an ESP-01 Wi-Fi module, inputs for pH, TDS and DS18B20 temperature sensors, and outputs for a relay, two fans and a water pump — on a single-sided, all through-hole PCB that can be etched and soldered by hand.',
+    role: 'Hardware designer — schematic and PCB layout (personal project)',
+    image: '/images/arduino/cover.jpg',
+    tags: ['KiCad', 'PCB Design', 'ATmega328P', 'ESP-01', 'Sensors', 'Hardware'],
+    caseStudy: {
+      overview:
+        'Aquarium Monitor puts everything a small monitoring-and-control project needs onto one board. At its centre is an ATmega328P with its own crystal, reset circuit and decoupling, broken out to Arduino-style headers. Around it sit an ESP-01 for Wi-Fi, sensor inputs for pH, TDS and temperature, an OLED header, a relay header, and screw terminals for two fans and a water pump powered from a 12 V jack. The board is single-sided with only through-hole parts, so it can be made at home.',
+      banner: false,
+      metrics: [
+        { value: '46', label: 'through-hole parts and no surface-mount parts, so it can be soldered by hand' },
+        { value: '296', label: 'tracks, all on the bottom copper layer (0.5 mm) — a single-sided board' },
+        { value: '91 × 125 mm', label: 'board, with a digital-ground copper pour on the bottom layer' },
+      ],
+      gallery: [
+        { src: '/images/arduino/cover.jpg', alt: 'Angled 3D render of the Aquarium Monitor board', caption: '3D render: the assembled board (KiCad render)' },
+        { src: '/images/arduino/render-top.jpg', alt: 'Top-down 3D render of the Aquarium Monitor board with every part placed', caption: 'Top view: ATmega328P, ESP-01 socket, sensor headers and load terminals' },
+        { src: '/images/arduino/render-bottom.jpg', alt: '3D render of the bottom of the Aquarium Monitor board showing the copper tracks', caption: 'Bottom view: the single copper layer (KiCad render)' },
+      ],
+      pcb: {
+        description:
+          'I designed the schematic and the single-sided board in KiCad. Every track is on the bottom copper layer, with a digital-ground pour filling the rest, and every part is through-hole so the board can be etched and soldered by hand.',
+        views: [
+          { label: 'Routing', src: '/images/arduino/routing-full.jpg', alt: 'Aquarium Monitor PCB routing on the bottom copper layer with a ground pour', caption: 'Routing: every track on the bottom layer, with a ground pour' },
+          { label: 'Schematic', src: '/images/arduino/schematic-full.jpg', alt: 'Aquarium Monitor schematic in KiCad', caption: 'Schematic: MCU core, ESP-01, sensor inputs, power and loads' },
+        ],
+        model: { src: '/models/arduino.glb', alt: 'Interactive 3D model of the Aquarium Monitor board, exported from KiCad' },
+      },
+      problem:
+        'An off-the-shelf Arduino with a breadboard gets messy fast once a project needs several sensors, Wi-Fi and 12 V loads: loose jumper wires, noisy analog readings, and nowhere solid to connect a pump or fans.',
+      solution:
+        'One purpose-built board: the microcontroller, Wi-Fi module, sensor inputs and power all in one place, with screw terminals for the loads, a filtered supply and separate ground for the analog sensors, and labelled headers that keep the familiar Arduino pin names.',
+      features: [
+        {
+          group: 'Microcontroller core',
+          items: [
+            'ATmega328P (DIP-28) with an external crystal and 22 pF load capacitors, a reset button with a 10 kΩ pull-up, and 0.1 µF decoupling on the supply pins.',
+            'Arduino-style headers breaking out A0–A5, D2–D7 and D8–D13.',
+            'An interrupt push button on D2 with a debounce capacitor, and indicator LEDs on D5 and D8.',
+          ],
+        },
+        {
+          group: 'Wi-Fi and display',
+          items: [
+            'ESP-01 socket on a 3.3 V supply header, with its own reset button and a 10 kΩ / 4.7 kΩ divider that drops the 5 V serial line to a safe level for the ESP-01.',
+            'A 4-pin OLED header wired to A4/A5 (the I²C pins).',
+          ],
+        },
+        {
+          group: 'Sensors',
+          items: [
+            'pH (A1) and TDS (A0) inputs, each with a 100 Ω series resistor and a 0.1 µF filter capacitor.',
+            'A DS18B20 temperature-probe header on D7 with a 4.7 kΩ pull-up.',
+            'The analog sensors run from their own supply (VCC_ANA), filtered from 5 V by a 10 Ω resistor with 0.1 µF and 10 µF capacitors.',
+          ],
+        },
+        {
+          group: 'Power and loads',
+          items: [
+            'A 12 V DC barrel jack feeding screw terminals for two fans and a water pump.',
+            'A separate 5 V screw-terminal input, and a header for a 5 V relay module driven from D6.',
+          ],
+        },
+        {
+          group: 'PCB layout',
+          items: [
+            'Single-sided: every track is on the bottom copper layer, 0.5 mm wide, with a digital-ground copper pour filling the rest.',
+            'Separate digital and analog grounds that meet at a single star point.',
+            'All through-hole parts, with the power and load connectors grouped along one edge of the 91 × 125 mm board.',
+          ],
+        },
+      ],
+      implementation: [
+        'Schematic drawn in KiCad using the standard symbol libraries plus an ESP-01 symbol and footprint.',
+        'Board laid out in the KiCad PCB editor as a two-layer file with all routing on the bottom copper, so it can be made as a single-sided board.',
+        'The schematic, routing and 3D renders shown here were exported straight from the project files with KiCad.',
+      ],
+      contribution:
+        'I designed the schematic and the PCB layout in KiCad. [Edit: add whether the board was etched, assembled and tested, and what it was used for.]',
+      challenges:
+        'The design goal was to fit every connection onto one copper layer so the board can be made at home, while keeping the low-level pH and TDS signals clean — hence the filtered analog supply, the separate analog ground with a star point, and the 12 V load wiring kept along its own edge of the board. [Edit: add what was actually hardest for you.]',
+      futureWork:
+        '[Edit: add next steps, for example the firmware, test results, or photos of the etched board.]',
+      note: 'The schematic, routing and 3D views are exported directly from the KiCad project. The 3D views are KiCad renders, not photographs. Text in [brackets] is placeholder content.',
+    },
+  },
+  {
     id: 'habit-journal',
     title: 'Kaizen',
     classification: 'Habit Tracker & Daily Journal · Full-Stack',
