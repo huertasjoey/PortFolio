@@ -9,6 +9,7 @@ import { useTheme } from '../hooks/useTheme'
 import { BinaryOrbit } from './BinaryOrbit'
 import { Carousel } from './Carousel'
 import { FadingStars } from './FadingStars'
+import { ModelViewer3D } from './ModelViewer3D'
 import { ThemeToggle } from './ThemeToggle'
 import { Tag } from './ui/Tag'
 
@@ -177,6 +178,18 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
               {project.caseStudy.gallery && (
                 <Block title={ui.caseStudyHeadings.gallery}>
                   <Carousel slides={project.caseStudy.gallery} label={ui.caseStudyHeadings.gallery} />
+                </Block>
+              )}
+              {project.caseStudy.model3d && (
+                <Block title={project.caseStudy.model3d.title}>
+                  <figure>
+                    <ModelViewer3D
+                      src={project.caseStudy.model3d.src}
+                      poster={project.caseStudy.model3d.poster}
+                      alt={project.caseStudy.model3d.alt}
+                    />
+                    <figcaption className="mt-2 font-mono text-xs text-fg2">{project.caseStudy.model3d.caption}</figcaption>
+                  </figure>
                 </Block>
               )}
               {project.caseStudy.galleries?.map((g) => (

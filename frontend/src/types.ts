@@ -46,6 +46,8 @@ export interface Project {
     metrics?: { value: string; label: string }[]
     /** Optional video shown under the metrics. Files live in public/videos/. */
     video?: { title: string; src: string; poster: string; caption: string }
+    /** Optional interactive 3D model (.glb in public/models/), shown under the gallery. */
+    model3d?: { title: string; src: string; poster: string; alt: string; caption: string }
     /** Optional figures, e.g.{ src: '/images/x.jpg', alt: '…', caption: '…' }. Files live in public/images/. */
     gallery?: { src: string; alt: string; caption: string; fit?: 'cover' | 'contain'; full?: string }[]
     /** Optional extra carousels, each with its own heading. `full` is a larger image for full screen. */
