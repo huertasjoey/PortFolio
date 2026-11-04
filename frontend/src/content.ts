@@ -142,9 +142,6 @@ const categories: Category[] = [
   },
 ]
 
-const ROLE_PLACEHOLDER = '[Edit: describe your exact role]'
-const CONTRIBUTION_PLACEHOLDER = '[Edit: describe what you designed, built or researched on this project.]'
-
 /**
  * Projects. Add, edit or remove entries freely. The one with `featured: true`
  * gets the large card; the rest appear in the grid below it.
@@ -297,47 +294,17 @@ const projects: Project[] = [
   },
   {
     id: 'aquarium-monitor',
-    title: 'Aquarium Monitoring System',
-    classification: 'IoT · Environmental Monitoring',
+    title: 'Aquarium Monitor',
+    classification: 'IoT · Water-Quality Monitoring · PCB Design',
     categories: ['iot', 'embedded'],
     previewKind: 'hardware',
     icon: 'fish',
-    status: 'Concept',
-    summary:
-      'A smart aquarium monitoring concept that tracks water pH, temperature, and conductivity, with automated filtration and notifications when water conditions remain abnormal.',
-    role: `System design — ${ROLE_PLACEHOLDER}`,
-    tags: ['IoT', 'Sensors', 'Automation', 'Embedded Systems'],
-    caseStudy: {
-      overview:
-        'A concept for continuously monitoring aquarium water quality and reacting when conditions drift out of range.',
-      problem:
-        'Water parameters like pH, temperature and conductivity change gradually and are easy to miss, yet they directly affect aquatic life.',
-      solution:
-        'Measure the three parameters with sensors, trigger automated filtration, and send a notification if abnormal readings persist.',
-      implementation: [
-        'pH, temperature and conductivity sensors connected to a microcontroller.',
-        'Threshold logic that only alerts when abnormal conditions persist.',
-        'Relay-driven filtration control.',
-        'Notification channel (to be selected).',
-      ],
-      contribution: CONTRIBUTION_PLACEHOLDER,
-      challenges:
-        'Likely challenges include sensor calibration and drift, waterproofing, and avoiding false alarms. [Edit: replace with what you actually encountered.]',
-    },
-  },
-  {
-    id: 'aquarium-monitor-board',
-    title: 'Aquarium Monitor',
-    classification: 'Custom ATmega328P Board · PCB Design',
-    categories: ['iot'],
-    previewKind: 'hardware',
-    icon: 'sprout',
     status: 'In progress',
     summary:
       'Aquarium Monitor is a custom Arduino-compatible controller board I designed in KiCad for monitoring an aquarium: an ATmega328P with an ESP-01 Wi-Fi module, inputs for pH, TDS and DS18B20 temperature sensors, and outputs for a relay, two fans and a water pump — on a single-sided, all through-hole PCB that can be etched and soldered by hand.',
     role: 'Hardware designer — schematic and PCB layout (personal project)',
     image: '/images/arduino/cover.jpg',
-    tags: ['KiCad', 'PCB Design', 'ATmega328P', 'ESP-01', 'Sensors', 'Hardware'],
+    tags: ['IoT', 'KiCad', 'PCB Design', 'ATmega328P', 'ESP-01', 'Sensors'],
     caseStudy: {
       overview:
         'Aquarium Monitor puts everything a small monitoring-and-control project needs onto one board. At its centre is an ATmega328P with its own crystal, reset circuit and decoupling, broken out to Arduino-style headers. Around it sit an ESP-01 for Wi-Fi, sensor inputs for pH, TDS and temperature, an OLED header, a relay header, and screw terminals for two fans and a water pump powered from a 12 V jack. The board is single-sided with only through-hole parts, so it can be made at home.',
@@ -361,8 +328,29 @@ const projects: Project[] = [
         ],
         model: { src: '/models/arduino.glb', alt: 'Interactive 3D model of the Aquarium Monitor board, exported from KiCad' },
       },
+      galleries: [
+        {
+          title: 'Documentation',
+          slides: [
+            { src: '/images/aquarium/process/01.jpg', full: '/images/aquarium/process/01-full.jpg', alt: 'Aquarium Monitor build photo: laying out the board in KiCad', caption: 'Design: laying out the board in KiCad' },
+            { src: '/images/aquarium/process/02.jpg', full: '/images/aquarium/process/02-full.jpg', alt: 'Aquarium Monitor build photo: printing the board artwork', caption: 'Printing: printing the board artwork' },
+            { src: '/images/aquarium/process/03.jpg', full: '/images/aquarium/process/03-full.jpg', alt: 'Aquarium Monitor build photo: the routing printed as a negative on transparent film', caption: 'Artwork: the routing printed as a negative on transparent film' },
+            { src: '/images/aquarium/process/04.jpg', full: '/images/aquarium/process/04-full.jpg', alt: 'Aquarium Monitor build photo: the board under a UV lamp in a cardboard exposure box', caption: 'Exposure: the board under a UV lamp in a cardboard exposure box' },
+            { src: '/images/aquarium/process/05.jpg', full: '/images/aquarium/process/05-full.jpg', alt: 'Aquarium Monitor build photo: lining up the film and board under the UV light', caption: 'Exposure: lining up the film and board under the UV light' },
+            { src: '/images/aquarium/process/06.jpg', full: '/images/aquarium/process/06-full.jpg', alt: 'Aquarium Monitor build photo: checking the developed board against the light', caption: 'Developing: checking the developed board against the light' },
+            { src: '/images/aquarium/process/07.jpg', full: '/images/aquarium/process/07-full.jpg', alt: 'Aquarium Monitor build photo: screw terminals and headers ready for assembly', caption: 'Parts: screw terminals and headers ready for assembly' },
+            { src: '/images/aquarium/process/08.jpg', full: '/images/aquarium/process/08-full.jpg', alt: 'Aquarium Monitor build photo: fitting the parts at the desk, with the layout on screen', caption: 'Soldering: fitting the parts at the desk, with the layout on screen' },
+            { src: '/images/aquarium/process/09.jpg', full: '/images/aquarium/process/09-full.jpg', alt: 'Aquarium Monitor build photo: close-up of the soldered capacitors and a screw terminal', caption: 'Soldering: close-up of the soldered capacitors and a screw terminal' },
+            { src: '/images/aquarium/process/10.jpg', full: '/images/aquarium/process/10-full.jpg', alt: 'Aquarium Monitor build photo: the populated board, top view', caption: 'Assembly: the populated board, top view' },
+            { src: '/images/aquarium/process/11.jpg', full: '/images/aquarium/process/11-full.jpg', alt: 'Aquarium Monitor build photo: the board with its jumper wires in place', caption: 'Assembly: the board with its jumper wires in place' },
+            { src: '/images/aquarium/process/12.jpg', full: '/images/aquarium/process/12-full.jpg', alt: 'Aquarium Monitor build photo: wiring the board up for a test', caption: 'Testing: wiring the board up for a test' },
+            { src: '/images/aquarium/process/13.jpg', full: '/images/aquarium/process/13-full.jpg', alt: 'Aquarium Monitor build photo: trying parts on a breadboard with the Arduino IDE', caption: 'Testing: trying parts on a breadboard with the Arduino IDE' },
+            { src: '/images/aquarium/process/14.jpg', full: '/images/aquarium/process/14-full.jpg', alt: 'Aquarium Monitor build photo: the board with its printed aquarium-themed top layer and labelled connectors', caption: 'Finished: the board with its printed aquarium-themed top layer and labelled connectors' },
+          ],
+        },
+      ],
       problem:
-        'An off-the-shelf Arduino with a breadboard gets messy fast once a project needs several sensors, Wi-Fi and 12 V loads: loose jumper wires, noisy analog readings, and nowhere solid to connect a pump or fans.',
+        'Water parameters like pH, temperature and conductivity (TDS) change gradually and are easy to miss, yet they directly affect aquatic life. Watching them takes several sensors, Wi-Fi and 12 V loads like a pump and fans — which gets messy fast on an off-the-shelf Arduino and breadboard: loose jumper wires, noisy analog readings, and nowhere solid to connect the loads.',
       solution:
         'One purpose-built board: the microcontroller, Wi-Fi module, sensor inputs and power all in one place, with screw terminals for the loads, a filtered supply and separate ground for the analog sensors, and labelled headers that keep the familiar Arduino pin names.',
       features: [
@@ -415,7 +403,7 @@ const projects: Project[] = [
       challenges:
         'The design goal was to fit every connection onto one copper layer so the board can be made at home, while keeping the low-level pH and TDS signals clean — hence the filtered analog supply, the separate analog ground with a star point, and the 12 V load wiring kept along its own edge of the board. [Edit: add what was actually hardest for you.]',
       futureWork:
-        '[Edit: add next steps, for example the firmware, test results, or photos of the etched board.]',
+        'Firmware that alerts over Wi-Fi when readings stay out of range (rather than on every brief spike), and automatic filtration control through the relay — the original goals of the project. [Edit: add test results and anything already working.]',
       note: 'The schematic, routing and 3D views are exported directly from the KiCad project. The 3D views are KiCad renders, not photographs. Text in [brackets] is placeholder content.',
     },
   },
