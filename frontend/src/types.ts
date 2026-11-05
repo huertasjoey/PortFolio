@@ -19,6 +19,31 @@ export interface Category {
   icon: 'cpu' | 'wifi' | 'globe'
 }
 
+/**
+ * One tab of a 2D image viewer (PCB views, flowcharts).
+ * fit: 'contain' (default, 16:9 on white, for diagrams), 'cover' (fills the frame, for photos)
+ * or 'natural' (keeps the image's own shape, for tall diagrams).
+ */
+export interface ImageView {
+  label: string
+  src: string
+  alt: string
+  caption: string
+  fit?: 'cover' | 'contain' | 'natural'
+}
+
+/** One step of a "How it works" walkthrough. `video` is a short muted clip; `poster` is its first frame (or the image to show). */
+export interface ProcessStep {
+  title: string
+  text: string
+  /** Short engineering stage name, e.g. 'Inference'. */
+  stage?: string
+  /** Up to three [label, value] facts shown under the player, e.g. ['Model', 'YOLOv11']. */
+  specs?: [string, string][]
+  video?: string
+  poster: string
+}
+
 export interface Project {
   id: string
   title: string
@@ -39,7 +64,23 @@ export interface Project {
     overview: string
     problem: string
     solution: string
-    implementation: string[]
+    /**
+     * Optional head-to-head benchmark, e.g. machine vs sun drying. `a` is this project, `b` the baseline.
+     * `bars` are raw values for a linear bar pair; `better` says which side wins.
+     */
+    comparison?: {
+      a: string
+      b: string
+      highlights?: { value: string; label: string }[]
+      rows: { metric: string; a: string; b: string; gap: string; better?: 'a' | 'b'; bars?: [number, number]; note?: string }[]
+      note?: string
+    }
+    /** Optional thesis / paper this project comes from, shown at the top of the case study. */
+    thesis?: { title: string; meta: string; label?: string }
+    /** Optional "How it works" walkthrough, start to finish: one short clip (or image) per step. */
+    howItWorks?: ProcessStep[]
+    /** Optional "Technical implementation" bullet list. */
+    implementation?: string[]
     contribution: string
     challenges: string
     /** Optional headline numbers shown as stat tiles. Only use measured figures. */
@@ -61,10 +102,15 @@ export interface Project {
      */
     pcb?: {
       description: string
-      /** fit: 'contain' (default, on white, for diagrams) or 'cover' (fills the frame, for photos). */
-      views: { label: string; src: string; alt: string; caption: string; fit?: 'cover' | 'contain' }[]
+      views: ImageView[]
       model?: { src: string; alt: string }
     }
+    /**
+     * Optional system flowchart(s), one tab each (e.g. start-up, sorting, drying).
+     * live: show the animated LycoDry simulation (components/LiveFlowchart.tsx) instead,
+     * with the images behind a "View the original flowcharts" button.
+     */
+    flowchart?: { description: string; views: ImageView[]; live?: boolean }
     /** Optional grouped feature list, e.g. { group: 'Habits', items: ['…'] }. */
     features?: { group: string; items: string[] }[]
     /** Optional bullet list of results and findings. */
