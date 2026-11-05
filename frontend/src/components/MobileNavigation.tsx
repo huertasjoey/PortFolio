@@ -2,6 +2,7 @@ import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../content'
+import { Link } from './Link'
 import type { SectionId } from '../types'
 import { ResumeButton } from './ResumeButton'
 import { NavLinks, StatusDot } from './Sidebar'
@@ -36,12 +37,12 @@ export function MobileNavigation({ active, theme, onToggleTheme }: Props) {
   return (
     <header className="theme-fade fixed inset-x-0 top-0 z-40 border-b border-line bg-bg/90 backdrop-blur lg:hidden">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6">
-        <a href="#about" className="flex items-center gap-3 font-semibold text-fg">
+        <Link href="/#about" className="flex items-center gap-3 font-semibold text-fg">
           {profile.name}
           <span className="flex items-center gap-1.5 font-mono text-[10px] font-normal tracking-wider text-muted">
             <StatusDot /> OPEN
           </span>
-        </a>
+        </Link>
         <button
           ref={buttonRef}
           type="button"

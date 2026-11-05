@@ -82,13 +82,18 @@ const work = {
   heading: 'Selected **builds.**',
   description:
     'From connected hardware to full-stack applications, a selection of projects I’ve designed and built.',
-  browseTitle: 'Browse by category',
-  moreTitle: 'More projects',
-  /** {category} is replaced with the selected category name. */
-  moreTitleFiltered: '{category} — more projects',
-  clearFilter: 'Clear filter',
-  emptyOnlyFeatured: 'The featured project above is the only one in {category}.',
-  emptyNone: 'No other projects in this category yet.',
+  /** {count} is replaced with the total number of projects. */
+  viewAll: 'View all {count} projects',
+}
+
+/** The separate /work page with every project, filterable by category. */
+const workPage = {
+  title: 'Work',
+  heading: 'All **work.**',
+  description: 'Every project I’ve designed and built, from circuit boards and embedded firmware to full-stack web apps.',
+  backLabel: 'Back to home',
+  allLabel: 'All projects',
+  emptyNone: 'No projects in this category yet.',
 }
 
 /** Wording used on project cards, the featured card and the case-study dialog. */
@@ -130,13 +135,25 @@ const categories: Category[] = [
   },
   {
     id: 'iot',
-    title: 'IoT & Hardware',
+    title: 'IoT',
     description: 'Connected devices, monitoring and automation in the real world.',
     icon: 'wifi',
   },
   {
+    id: 'pcb',
+    title: 'PCB Design',
+    description: 'Custom circuit boards designed in KiCad, from schematic to routed, hand-built board.',
+    icon: 'cpu',
+  },
+  {
+    id: 'ai',
+    title: 'AI & Computer Vision',
+    description: 'Trained models that see and decide, running on real hardware.',
+    icon: 'cpu',
+  },
+  {
     id: 'fullstack',
-    title: 'Full-Stack Applications',
+    title: 'Full-Stack Web',
     description: 'Web apps with interfaces, data and APIs end to end.',
     icon: 'globe',
   },
@@ -153,7 +170,7 @@ const projects: Project[] = [
     id: 'lycodry',
     title: 'LycoDry',
     classification: 'Embedded Systems · Computer Vision',
-    categories: ['embedded', 'iot'],
+    categories: ['embedded', 'iot', 'pcb', 'ai'],
     previewKind: 'hardware',
     icon: 'flame',
     image: '/images/lycodry/cover.jpg',
@@ -296,7 +313,7 @@ const projects: Project[] = [
     id: 'aquarium-monitor',
     title: 'Aquarium Monitor',
     classification: 'IoT · Water-Quality Monitoring · PCB Design',
-    categories: ['iot', 'embedded'],
+    categories: ['iot', 'embedded', 'pcb'],
     previewKind: 'hardware',
     icon: 'fish',
     status: 'In progress',
@@ -411,7 +428,7 @@ const projects: Project[] = [
     id: 'adc-8bit',
     title: '8-bit ADC',
     classification: 'Mixed-Signal Circuit · PCB Design',
-    categories: ['iot', 'embedded'],
+    categories: ['embedded', 'pcb'],
     previewKind: 'hardware',
     icon: 'flame',
     status: 'In progress',
@@ -764,7 +781,7 @@ const skillGroups: SkillGroup[] = [
   {
     title: 'Computer Engineering',
     icon: 'cpu',
-    items: ['Embedded Systems', 'Microcontrollers', 'Sensors', 'Circuit Design', 'IoT'],
+    items: ['Embedded Systems', 'Microcontrollers', 'Sensors', 'Circuit Design', 'PCB Design (KiCad)', 'IoT'],
   },
   {
     title: 'AI & Continuous Learning',
@@ -776,7 +793,7 @@ const skillGroups: SkillGroup[] = [
 
 /**
  * Scrolling logo strip. `icon` must be one of:
- * 'react' | 'javascript' | 'html' | 'css' | 'tailwind' | 'supabase' | 'python'
+ * 'react' | 'javascript' | 'html' | 'css' | 'tailwind' | 'supabase' | 'python' | 'kicad'
  * (To add a new icon, register it in src/sections/SkillsSection.tsx.)
  */
 const techLogos: TechLogo[] = [
@@ -787,6 +804,7 @@ const techLogos: TechLogo[] = [
   { icon: 'tailwind', title: 'Tailwind CSS', href: 'https://tailwindcss.com', hoverColor: '#38bdf8' },
   { icon: 'supabase', title: 'Supabase', href: 'https://supabase.com', hoverColor: '#3ecf8e' },
   { icon: 'python', title: 'Python', href: 'https://www.python.org', hoverColor: '#3776ab' },
+  { icon: 'kicad', title: 'KiCad', href: 'https://www.kicad.org', hoverColor: '#314cb0' },
 ]
 
 const skills = {
@@ -859,6 +877,7 @@ export const content = {
   nav,
   about,
   work,
+  workPage,
   projectUi,
   categories,
   projects,

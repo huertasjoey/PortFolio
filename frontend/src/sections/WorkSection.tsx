@@ -1,32 +1,24 @@
-import { X } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useCallback, useState } from 'react'
-import { FeaturedProject } from '../components/FeaturedProject'
-import { ProjectCard } from '../components/ProjectCard'
+import { Link } from '../components/Link'
 import { ProjectCaseStudy } from '../components/ProjectCaseStudy'
-import { ProjectCategory } from '../components/ProjectCategory'
+import { ProjectCollage } from '../components/ProjectCollage'
 import { RichText } from '../components/RichText'
 import { Reveal } from '../components/ui/Reveal'
 import { content } from '../content'
 import { fill } from '../lib/utils'
-import type { CategoryId, Project } from '../types'
+import type { Project } from '../types'
 
-const { work, categories, projects } = content
+const { work, projects } = content
 
+/** Home-page collage of every project; the detailed, filterable list lives on the /work page. */
 export function WorkSection() {
   const [openProject, setOpenProject] = useState<Project | null>(null)
-  const [category, setCategory] = useState<CategoryId | null>(null)
   const close = useCallback(() => setOpenProject(null), [])
-
-  const featured = projects.find((p) => p.featured) ?? projects[0]
-  const others = projects
-    .filter((p) => p !== featured)
-    .filter((p) => !category || p.categories.includes(category))
-  const activeCategory = categories.find((c) => c.id === category)
-  const categoryTitle = activeCategory?.title ?? ''
 
   return (
     <section id="work" aria-labelledby="work-title" className="py-28 lg:py-40">
-      <header className="mb-20 md:mb-28">
+      <header className="mb-16 md:mb-20">
         <p className="mb-8 flex items-center gap-4 text-[11px] tracking-[0.3em] text-muted uppercase">
           <span className="font-serif text-lg tracking-normal text-gold italic lining-nums">02</span>
           <span className="h-px w-12 bg-line" aria-hidden />
@@ -40,56 +32,19 @@ export function WorkSection() {
         <p className="mt-10 max-w-md text-base leading-[1.8] text-fg2">{work.description}</p>
       </header>
 
-      {featured && (
-        <Reveal>
-          <FeaturedProject project={featured} onOpen={setOpenProject} />
-        </Reveal>
-      )}
+      <ProjectCollage projects={projects} onOpen={setOpenProject} />
 
-      <Reveal className="mt-32">
-        <h3 className="mb-6 text-[11px] tracking-[0.3em] text-muted uppercase">{work.browseTitle}</h3>
-        <div className="flex flex-wrap items-baseline gap-x-14 gap-y-2 border-y border-line py-3">
-          {categories.map((c) => (
-            <ProjectCategory
-              key={c.id}
-              category={c}
-              selected={category === c.id}
-              onSelect={(id) => setCategory((cur) => (cur === id ? null : id))}
-            />
-          ))}
-        </div>
+      <Reveal className="mt-16 flex items-center gap-6 md:mt-20">
+        <span className="h-px flex-1 bg-line" aria-hidden />
+        <Link
+          href="/work"
+          className="group inline-flex min-h-12 items-center gap-3 rounded-full border border-gold/60 px-7 text-sm tracking-[0.18em] text-fg uppercase transition-all duration-300 hover:border-gold hover:bg-gold hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+        >
+          {fill(work.viewAll, { count: projects.length })}
+          <ArrowRight size={16} strokeWidth={1.5} className="transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+        <span className="h-px flex-1 bg-line" aria-hidden />
       </Reveal>
-
-      <div className="mt-20" aria-live="polite">
-        {activeCategory && <p className="mb-10 max-w-xl font-serif text-2xl leading-snug font-light text-fg2 italic">{activeCategory.description}</p>}
-        <div className="mb-12 flex min-h-8 items-center justify-between gap-4">
-          <h3 className="text-[11px] tracking-[0.3em] text-muted uppercase">
-            {activeCategory ? fill(work.moreTitleFiltered, { category: categoryTitle }) : work.moreTitle}
-          </h3>
-          {category && (
-            <button
-              type="button"
-              onClick={() => setCategory(null)}
-              className="inline-flex min-h-11 items-center gap-2 text-xs tracking-[0.2em] text-muted uppercase transition hover:text-gold"
-            >
-              <X size={13} /> {work.clearFilter}
-            </button>
-          )}
-        </div>
-        {others.length ? (
-          <div className="grid gap-x-12 gap-y-24 sm:grid-cols-2 xl:grid-cols-3">
-            {others.map((p, i) => (
-              <ProjectCard key={p.id} project={p} index={i + 2} onOpen={setOpenProject} />
-            ))}
-          </div>
-        ) : (
-          <p className="border-t border-line py-10 font-serif text-2xl font-light text-fg2 italic">
-            {featured.categories.includes(category as CategoryId)
-              ? fill(work.emptyOnlyFeatured, { category: categoryTitle })
-              : work.emptyNone}
-          </p>
-        )}
-      </div>
 
       <ProjectCaseStudy project={openProject} onClose={close} />
     </section>

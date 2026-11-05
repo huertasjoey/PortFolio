@@ -1,3 +1,5 @@
+import { ArrowRight } from 'lucide-react'
+import { content } from '../content'
 import type { Project } from '../types'
 import { ProjectPreview } from './ProjectPreview'
 
@@ -30,6 +32,9 @@ export function ProjectCard({ project, index, onOpen }: Props) {
       <p className="mt-6 text-xs tracking-wide text-muted" aria-label="Technologies">
         {project.tags.slice(0, 3).join('  ·  ')}
       </p>
+      <span aria-hidden className="mt-6 inline-flex items-center gap-2 text-sm text-gold transition-[gap] duration-300 group-hover:gap-3">
+        {content.projectUi.caseStudyButton} <ArrowRight size={15} strokeWidth={1.75} />
+      </span>
     </article>
   )
 }

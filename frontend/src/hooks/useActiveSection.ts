@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { content } from '../content'
 import type { SectionId } from '../types'
 
-/** Tracks which section crosses the middle band of the viewport. */
-export function useActiveSection(): SectionId {
+/** Tracks which section crosses the middle band of the viewport. Re-observes when `page` changes. */
+export function useActiveSection(page: string): SectionId {
   const [active, setActive] = useState<SectionId>('about')
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export function useActiveSection(): SectionId {
       if (el) observer.observe(el)
     }
     return () => observer.disconnect()
-  }, [])
+  }, [page])
 
   return active
 }

@@ -8,7 +8,7 @@ export interface NavItem {
   label: string
 }
 
-export type CategoryId = 'embedded' | 'iot' | 'fullstack'
+export type CategoryId = 'embedded' | 'iot' | 'pcb' | 'ai' | 'fullstack'
 export type ProjectStatus = 'Concept' | 'In progress' | 'Prototype' | 'Completed'
 export type IconName = 'flame' | 'fish' | 'notebook' | 'sprout'
 
@@ -96,7 +96,7 @@ export interface SkillGroup {
   items: string[]
 }
 
-export type TechIcon = 'react' | 'javascript' | 'html' | 'css' | 'tailwind' | 'supabase' | 'python'
+export type TechIcon = 'react' | 'javascript' | 'html' | 'css' | 'tailwind' | 'supabase' | 'python' | 'kicad'
 
 export interface TechLogo {
   icon: TechIcon

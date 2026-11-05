@@ -1,4 +1,5 @@
 import { content } from '../content'
+import { Link } from './Link'
 import type { SectionId } from '../types'
 import { ResumeButton } from './ResumeButton'
 import { SocialLinks } from './SocialLinks'
@@ -22,8 +23,8 @@ export function NavLinks({ active, onNavigate }: NavProps) {
         const isActive = active === id
         return (
           <li key={id}>
-            <a
-              href={`#${id}`}
+            <Link
+              href={`/#${id}`}
               onClick={onNavigate}
               aria-current={isActive ? 'true' : undefined}
               className={`group flex min-h-11 items-center gap-3 text-sm transition-colors ${
@@ -33,7 +34,7 @@ export function NavLinks({ active, onNavigate }: NavProps) {
               <span className="font-mono text-[11px]">{number}</span>
               <span className={`h-px transition-all duration-300 ${isActive ? 'w-6 bg-fg' : 'w-3 bg-muted/60 group-hover:w-5'}`} aria-hidden />
               {label}
-            </a>
+            </Link>
           </li>
         )
       })}
@@ -51,9 +52,9 @@ export function Sidebar({ active, theme, onToggleTheme }: Props) {
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-[245px] flex-col p-8 lg:flex">
       <div className="mb-14">
-        <a href="#about" className="block text-base font-medium tracking-tight text-fg">
+        <Link href="/#about" className="block text-base font-medium tracking-tight text-fg">
           {profile.name}
-        </a>
+        </Link>
         <p className="mt-2 font-mono text-[11px] leading-snug tracking-[0.12em] text-muted">{profile.shortTitle}</p>
         <p className="mt-5 flex items-center gap-2 text-xs text-muted">
           <StatusDot /> {profile.availability}

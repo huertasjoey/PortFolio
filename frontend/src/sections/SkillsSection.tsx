@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { SiCss, SiHtml5, SiJavascript, SiPython, SiReact, SiSupabase, SiTailwindcss } from 'react-icons/si'
+import { SiCss, SiHtml5, SiJavascript, SiKicad, SiPython, SiReact, SiSupabase, SiTailwindcss } from 'react-icons/si'
 import { LogoLoop } from '../components/LogoLoop'
 import { SectionHeading } from '../components/SectionHeading'
 import { Reveal } from '../components/ui/Reveal'
@@ -18,6 +18,7 @@ const techIcons: Record<TechIcon, ReactNode> = {
   tailwind: <SiTailwindcss />,
   supabase: <SiSupabase />,
   python: <SiPython />,
+  kicad: <SiKicad />,
 }
 
 const logos = skills.logos.map(({ icon, ...rest }) => ({ node: techIcons[icon], ...rest }))
