@@ -1,168 +1,126 @@
-import { Mail, Send } from 'lucide-react'
-import { useState, type FormEvent, type ReactNode } from 'react'
-import { GithubIcon, LinkedinIcon } from '../components/BrandIcons'
-import { SectionHeading } from '../components/SectionHeading'
-import { Button, ButtonLink } from '../components/ui/Button'
+import { ArrowUpRight, Check, Copy, Download, Mail, MapPin } from 'lucide-react'
+import { useState, type ReactNode } from 'react'
+import { RichText } from '../components/RichText'
 import { Reveal } from '../components/ui/Reveal'
 import { content } from '../content'
 import { gmailComposeUrl } from '../lib/utils'
 
 const { profile, contact } = content
-const { form } = contact
 
-type Fields = { name: string; email: string; subject: string; message: string }
-type Errors = Partial<Record<keyof Fields, string>>
-type Status =
-  | { kind: 'idle' }
-  | { kind: 'sending' }
-  | { kind: 'sent' }
-  | { kind: 'error'; text: string }
-  | { kind: 'unconfigured' }
-
-const empty: Fields = { name: '', email: '', subject: '', message: '' }
-
-function validate(f: Fields): Errors {
-  const e: Errors = {}
-  if (!f.name.trim()) e.name = form.errors.name
-  if (!f.email.trim()) e.email = form.errors.emailMissing
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = form.errors.emailInvalid
-  if (!f.subject.trim()) e.subject = form.errors.subject
-  if (f.message.trim().length < 10) e.message = form.errors.message
-  return e
-}
-
-const inputClass =
-  'w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-3 text-sm text-fg placeholder:text-muted transition focus:border-fg focus:outline-none aria-[invalid=true]:border-red-500'
-
-function Field({
-  id,
-  label,
-  error,
-  children,
-}: {
-  id: string
-  label: string
-  error?: string
-  children: ReactNode
-}) {
+function Pill({ href, download, children }: { href: string; download?: boolean; children: ReactNode }) {
   return (
-    <div>
-      <label htmlFor={id} className="mb-1 block font-mono text-[11px] tracking-wider text-muted uppercase">
-        {label}
-      </label>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      download={download || undefined}
+      className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-5 text-sm text-fg transition-colors duration-300 hover:border-gold/70 hover:text-gold"
+    >
       {children}
-      {error && (
-        <p id={`${id}-error`} className="mt-1.5 text-xs text-red-400">
-          {error}
-        </p>
-      )}
-    </div>
+    </a>
   )
 }
 
 export function ContactSection() {
-  const [fields, setFields] = useState<Fields>(empty)
-  const [errors, setErrors] = useState<Errors>({})
-  const [status, setStatus] = useState<Status>({ kind: 'idle' })
+  const [copied, setCopied] = useState(false)
 
-  const set = (k: keyof Fields) => (e: { target: { value: string } }) => setFields((f) => ({ ...f, [k]: e.target.value }))
-
-  const mailto = gmailComposeUrl(fields.subject, `${fields.message}
-
-— ${fields.name} (${fields.email})`)
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault()
-    const found = validate(fields)
-    setErrors(found)
-    if (Object.keys(found).length) return
-
-    if (!profile.contactEndpoint) {
-      setStatus({ kind: 'unconfigured' })
-      return
-    }
-    setStatus({ kind: 'sending' })
+  async function copyEmail() {
     try {
-      const res = await fetch(profile.contactEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(fields),
-      })
-      if (!res.ok) throw new Error(`Server responded ${res.status}`)
-      setStatus({ kind: 'sent' })
-      setFields(empty)
+      await navigator.clipboard.writeText(profile.email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
     } catch {
-      setStatus({ kind: 'error', text: form.failed })
+      window.open(gmailComposeUrl(), '_blank', 'noopener')
     }
   }
 
-  const a11y = (k: keyof Fields) => ({
-    'aria-invalid': errors[k] ? true : undefined,
-    'aria-describedby': errors[k] ? `${k}-error` : undefined,
-  })
+  // Links with an empty URL in src/content.ts are left out.
+  const links = [
+    { label: contact.githubButton, href: profile.github },
+    { label: contact.linkedinButton, href: profile.linkedin },
+    { label: contact.facebookButton, href: profile.facebook },
+  ].filter((l) => l.href)
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="py-28 lg:py-36">
-      <SectionHeading number="06" label="Contact" id="contact-title" title={contact.heading} description={contact.description} />
+    <section id="contact" aria-labelledby="contact-title" className="flex min-h-dvh flex-col justify-center py-24 lg:py-16">
+      <Reveal>
+        <p className="mb-6 flex items-center gap-4 text-[11px] tracking-[0.3em] text-muted uppercase">
+          <span className="font-serif text-lg tracking-normal text-gold italic lining-nums">06</span>
+          <span className="h-px w-12 bg-line" aria-hidden />
+          Contact
+        </p>
+        <h2 className="font-serif text-6xl leading-[0.95] font-light tracking-tight text-fg sm:text-7xl [&_strong]:font-light [&_strong]:text-gold [&_strong]:italic">
+          <span id="contact-title">
+            <RichText text={contact.heading} />
+          </span>
+        </h2>
+        <p className="mt-6 max-w-xl text-base leading-[1.8] text-fg2">{contact.description}</p>
+      </Reveal>
 
-      <div className="grid gap-14 lg:grid-cols-[1fr_1.4fr]">
-        <Reveal className="flex flex-col items-start gap-2">
-          <ButtonLink href={gmailComposeUrl()} target="_blank" rel="noopener noreferrer">
-            <Mail size={16} /> {profile.email}
-          </ButtonLink>
-          <ButtonLink href={profile.github} variant="ghost" target="_blank" rel="noopener noreferrer">
-            <GithubIcon /> {contact.githubButton}
-          </ButtonLink>
-          <ButtonLink href={profile.linkedin} variant="ghost" target="_blank" rel="noopener noreferrer">
-            <LinkedinIcon /> {contact.linkedinButton}
-          </ButtonLink>
-          {contact.note && <p className="mt-2 font-mono text-xs text-muted">{contact.note}</p>}
-        </Reveal>
+      {/* The email card: the main way to reach me. */}
+      <Reveal delay={0.08} className="mt-10">
+        <div className="relative overflow-hidden rounded-[3px] border border-gold/30 bg-card p-7 sm:p-10 lg:p-12">
+          <span aria-hidden className="pointer-events-none absolute -top-40 -left-24 size-96 rounded-full bg-gold/10 blur-3xl" />
 
-        <Reveal delay={0.1}>
-          <form
-            onSubmit={onSubmit}
-            noValidate
-            className="space-y-6"
-          >
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field id="name" label={form.nameLabel} error={errors.name}>
-                <input id="name" autoComplete="name" className={inputClass} value={fields.name} onChange={set('name')} {...a11y('name')} />
-              </Field>
-              <Field id="email" label={form.emailLabel} error={errors.email}>
-                <input id="email" type="email" autoComplete="email" className={inputClass} value={fields.email} onChange={set('email')} {...a11y('email')} />
-              </Field>
+          <div className="relative flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+            <div className="min-w-0">
+              <p className="flex items-center gap-2.5 text-[11px] tracking-[0.3em] text-gold uppercase">
+                <Mail size={14} strokeWidth={1.5} /> {contact.emailLabel}
+              </p>
+              <a
+                href={gmailComposeUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 block font-serif text-3xl leading-tight font-light break-all text-fg lining-nums transition-colors hover:text-gold sm:text-5xl sm:break-normal"
+              >
+                {profile.email}
+              </a>
+              <p className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-fg2">
+                <span className="flex items-center gap-2">
+                  <MapPin size={15} strokeWidth={1.5} className="text-muted" /> {profile.location}
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-full bg-gold" aria-hidden /> {contact.availability}
+                </span>
+              </p>
             </div>
-            <Field id="subject" label={form.subjectLabel} error={errors.subject}>
-              <input id="subject" className={inputClass} value={fields.subject} onChange={set('subject')} {...a11y('subject')} />
-            </Field>
-            <Field id="message" label={form.messageLabel} error={errors.message}>
-              <textarea id="message" rows={6} className={`${inputClass} resize-y`} value={fields.message} onChange={set('message')} {...a11y('message')} />
-            </Field>
 
-            <Button type="submit" disabled={status.kind === 'sending'}>
-              <Send size={16} /> {status.kind === 'sending' ? form.sending : form.submit}
-            </Button>
-
-            <div role="status" aria-live="polite" className="text-sm">
-              {status.kind === 'sent' && <p className="text-fg">{form.sent}</p>}
-              {status.kind === 'error' && <p className="text-red-400">{status.text}</p>}
-              {status.kind === 'unconfigured' && (
-                <div className="border-l border-line pl-4 text-fg2">
-                  <p className="mb-2 text-fg">{form.notConnectedTitle}</p>
-                  <p>
-                    {form.notConnectedBody}{' '}
-                    <a className="text-fg underline underline-offset-2" href={mailto} target="_blank" rel="noopener noreferrer">
-                      {form.gmailFallback}
-                    </a>
-                    .
-                  </p>
-                </div>
-              )}
+            <div className="flex shrink-0 flex-wrap gap-3">
+              <a
+                href={gmailComposeUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex min-h-12 items-center gap-2.5 rounded-full bg-gold px-6 text-sm font-medium text-bg shadow-lg shadow-gold/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-gold/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+              >
+                <Mail size={16} strokeWidth={1.75} /> {contact.sendButton}
+              </a>
+              <button
+                type="button"
+                onClick={copyEmail}
+                className="inline-flex min-h-12 items-center gap-2.5 rounded-full border border-line bg-bg/40 px-6 text-sm text-fg transition-colors duration-300 hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+              >
+                {copied ? <Check size={16} className="text-gold" /> : <Copy size={16} strokeWidth={1.5} />}
+                <span aria-live="polite">{copied ? contact.copiedLabel : contact.copyButton}</span>
+              </button>
             </div>
-          </form>
-        </Reveal>
-      </div>
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.14} className="mt-6 flex flex-wrap gap-3">
+        {links.map((l) => (
+          <Pill key={l.label} href={l.href}>
+            {l.label}
+            <ArrowUpRight size={15} strokeWidth={1.5} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </Pill>
+        ))}
+        {profile.resumeUrl && (
+          <Pill href={profile.resumeUrl} download>
+            <Download size={15} strokeWidth={1.5} /> {profile.resumeLabel}
+          </Pill>
+        )}
+      </Reveal>
+      {contact.note && <p className="mt-5 text-[11px] text-muted">{contact.note}</p>}
     </section>
   )
 }

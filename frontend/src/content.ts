@@ -34,11 +34,10 @@ const profile = {
   resumeLabel: 'Resume',
   resumeMissingLabel: 'Resume (not added)',
   resumeMissingHint: 'Add your resume PDF to public/ and set resumeUrl in src/content.ts',
-  /**
-   * Contact form endpoint (Formspree, Web3Forms, your own API…). Set the
-   * VITE_CONTACT_ENDPOINT environment variable rather than putting it here.
-   */
-  contactEndpoint: (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) ?? '',
+  /** Shown on the contact card. */
+  location: 'Pampanga, Philippines',
+  /** Optional: your Facebook profile URL. Leave '' to hide the Facebook link. */
+  facebook: '',
 }
 
 /** Sidebar / mobile menu links. Keep the ids — they match the section ids on the page. */
@@ -863,34 +862,19 @@ const education = {
 /* ───────────────────────────── 06 Contact ─────────────────────────── */
 
 const contact = {
-  heading: 'Have something worth **building?**',
+  heading: 'Let’s build **something.**',
   description:
-    'I’m open to opportunities, freelance projects, and collaborations involving web development, IoT, embedded systems, and emerging technologies.',
+    'Have a project, a role or just a question? My inbox is open for opportunities, freelance work and collaborations in web development, IoT and embedded systems.',
+  emailLabel: 'Email me',
+  availability: 'Open to full-time roles and freelance projects',
+  sendButton: 'Send an email',
+  copyButton: 'Copy email',
+  copiedLabel: 'Copied',
   githubButton: 'GitHub',
   linkedinButton: 'LinkedIn',
-  /** Small print under the buttons. Set to '' to hide. */
+  facebookButton: 'Facebook',
+  /** Small print under the links. Set to '' to hide. */
   note: 'The LinkedIn link is a placeholder until set in src/content.ts.',
-  form: {
-    nameLabel: 'Name',
-    emailLabel: 'Email',
-    subjectLabel: 'Subject',
-    messageLabel: 'Message',
-    submit: 'Send message',
-    sending: 'Sending…',
-    errors: {
-      name: 'Please enter your name.',
-      emailMissing: 'Please enter your email.',
-      emailInvalid: 'Enter a valid email address.',
-      subject: 'Please add a subject.',
-      message: 'Message should be at least 10 characters.',
-    },
-    sent: 'Message sent. Thank you — I’ll reply by email.',
-    failed: 'Your message could not be sent. Please try again or email me directly.',
-    notConnectedTitle: 'Your message was not sent.',
-    notConnectedBody:
-      'This form isn’t connected to an email service yet, so nothing has been delivered. Set VITE_CONTACT_ENDPOINT to enable it, or',
-    gmailFallback: 'send this message from Gmail',
-  },
 }
 
 /* ────────────────────────────── Footer ────────────────────────────── */
