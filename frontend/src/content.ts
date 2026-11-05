@@ -775,19 +775,46 @@ const experience = {
 
 /* ───────────────────────────── 04 Skills ──────────────────────────── */
 
+/**
+ * Skill cards, laid out as a bento grid in this order (two wide cards, then three).
+ * `category` links the card's "See N projects" to the /work page filtered to that category.
+ */
 const skillGroups: SkillGroup[] = [
-  { title: 'Frontend Development', icon: 'code', items: ['React', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS'] },
-  { title: 'Backend & Data', icon: 'database', items: ['Supabase', 'Database fundamentals', 'REST APIs'] },
   {
-    title: 'Computer Engineering',
+    title: 'Embedded & IoT',
     icon: 'cpu',
-    items: ['Embedded Systems', 'Microcontrollers', 'Sensors', 'Circuit Design', 'PCB Design (KiCad)', 'IoT'],
+    description: 'Microcontrollers and sensors wired into machines that react to the real world.',
+    items: ['Embedded Systems', 'Microcontrollers', 'Sensors', 'IoT'],
+    category: 'embedded',
+  },
+  {
+    title: 'Frontend Development',
+    icon: 'code',
+    description: 'Clear, responsive interfaces that make the data easy to use.',
+    items: ['React', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS'],
+    category: 'fullstack',
+  },
+  {
+    title: 'PCB Design',
+    icon: 'circuit',
+    description: 'From schematic to routed, hand-built board.',
+    items: ['Circuit Design', 'KiCad'],
+    category: 'pcb',
+  },
+  {
+    title: 'Backend & Data',
+    icon: 'database',
+    description: 'APIs, authentication and the data behind the interface.',
+    items: ['Supabase', 'Database fundamentals', 'REST APIs'],
+    category: 'fullstack',
   },
   {
     title: 'AI & Continuous Learning',
     icon: 'brain',
+    description: 'Applying AI where it earns its place.',
     // Keep "Python" only if it is part of your actual skill set.
     items: ['Python', 'AI Engineering fundamentals', 'Automation'],
+    category: 'ai',
   },
 ]
 
@@ -809,7 +836,10 @@ const techLogos: TechLogo[] = [
 
 const skills = {
   heading: 'Tools I **work with.**',
+  description: 'The languages, tools and engineering skills behind my projects, each one put to work in something real.',
   logosLabel: 'Technologies I use',
+  /** {count} and {projects} are filled in, e.g. "See 3 projects". */
+  seeProjects: 'See {count} {projects}',
   groups: skillGroups,
   logos: techLogos,
 }

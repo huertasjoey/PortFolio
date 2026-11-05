@@ -13,10 +13,16 @@ import type { CategoryId, Project } from '../types'
 
 const { workPage, categories, projects } = content
 
+/** Category from the address, e.g. /work?category=pcb (used by the skill cards' links). */
+const initialCategory = () => {
+  const id = new URLSearchParams(window.location.search).get('category')
+  return categories.find((c) => c.id === id)?.id ?? null
+}
+
 /** /work: every project, filterable by category. */
 export function WorkPage() {
   const [openProject, setOpenProject] = useState<Project | null>(null)
-  const [category, setCategory] = useState<CategoryId | null>(null)
+  const [category, setCategory] = useState<CategoryId | null>(initialCategory)
   const close = useCallback(() => setOpenProject(null), [])
 
   const listed = projects.filter((p) => !category || p.categories.includes(category))

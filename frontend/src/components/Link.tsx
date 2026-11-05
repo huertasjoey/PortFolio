@@ -12,7 +12,7 @@ export function Link({ href = '/', onClick, ...props }: AnchorHTMLAttributes<HTM
     const url = new URL(href, window.location.href)
     if (url.origin !== window.location.origin || url.pathname === window.location.pathname) return
     e.preventDefault()
-    navigate(url.pathname + url.hash)
+    navigate(url.pathname + url.search + url.hash)
   }
   return <a href={href} onClick={handle} {...props} />
 }

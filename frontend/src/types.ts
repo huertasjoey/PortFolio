@@ -92,8 +92,12 @@ export interface ExperienceEntry {
 
 export interface SkillGroup {
   title: string
-  icon: 'code' | 'database' | 'cpu' | 'brain'
+  icon: 'code' | 'database' | 'cpu' | 'brain' | 'circuit'
+  /** One line under the title. */
+  description?: string
   items: string[]
+  /** Work-page category the card's "See N projects" link opens. */
+  category?: CategoryId
 }
 
 export type TechIcon = 'react' | 'javascript' | 'html' | 'css' | 'tailwind' | 'supabase' | 'python' | 'kicad'
