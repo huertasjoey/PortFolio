@@ -9,6 +9,7 @@ import { BinaryOrbit } from './BinaryOrbit'
 import {
   Comparison,
   Credits,
+  DemoVideo,
   FeatureGrid,
   Findings,
   Hero,
@@ -76,7 +77,29 @@ function CaseStudyBody({ project, onClose }: { project: Project; onClose: () => 
 
         {cs.howItWorks && (
           <section>
-            <HowItWorks steps={cs.howItWorks} title={cs.howItWorksIntro?.title ?? h.howItWorks} intro={cs.howItWorksIntro} index={next()} />
+            <HowItWorks
+              steps={cs.howItWorks}
+              title={cs.howItWorksIntro?.title ?? h.howItWorks}
+              intro={cs.howItWorksIntro}
+              index={next()}
+              demoId={cs.demo?.youtubeId}
+            />
+          </section>
+        )}
+
+        {cs.demo && (
+          <section>
+            <SectionHeader
+              index={next()}
+              title="Full demo"
+              heading={
+                <>
+                  The whole run, <em>unedited.</em>
+                </>
+              }
+              aside={<p className="max-w-sm text-sm text-fg2">The prototype running from start to finish.</p>}
+            />
+            <DemoVideo demo={cs.demo} />
           </section>
         )}
 

@@ -1,5 +1,5 @@
 import { ArrowRight, BookOpen, Star } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { content } from '../content'
 import type { Project } from '../types'
 
@@ -19,6 +19,9 @@ export function FeaturedSpotlight({ project, number, onOpen }: { project: Projec
   const video = useRef<HTMLVideoElement>(null)
   const playing = motionOk && inView
   const highlights = cs.comparison?.highlights ?? []
+  // Up to 8 stages fit in one row with a numbered rail; more wrap into two rows with a plain progress bar.
+  const oneRow = stages.length <= 8
+  const cols = oneRow ? stages.length : Math.ceil(stages.length / 2)
   const facts = highlights.length
     ? highlights.map((h) => ({ value: h.value, label: h.label.replace(/\s*\(.*?\)/g, '').split(':')[0] }))
     : (cs.metrics?.slice(0, 3) ?? [])
@@ -126,7 +129,12 @@ export function FeaturedSpotlight({ project, number, onOpen }: { project: Projec
           </div>
 
           {/* Progress rail (wide screens) */}
-          <div aria-hidden className="relative mb-4 hidden lg:block">
+          {!oneRow && (
+            <div aria-hidden className="mb-4 h-0.5 overflow-hidden rounded-full bg-line">
+              <div className="h-full origin-left bg-gold transition-transform duration-700" style={{ transform: `scaleX(${(active + 1) / stages.length})` }} />
+            </div>
+          )}
+          <div aria-hidden className={`relative mb-4 hidden ${oneRow ? 'lg:block' : ''}`}>
             <div className="absolute top-1/2 h-px -translate-y-1/2 bg-line" style={{ left: `${50 / stages.length}%`, right: `${50 / stages.length}%` }}>
               <div
                 className="h-full origin-left bg-gold transition-transform duration-700"
@@ -148,7 +156,11 @@ export function FeaturedSpotlight({ project, number, onOpen }: { project: Projec
             </div>
           </div>
 
-          <ol className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8" aria-label={`${project.title} stages`}>
+          <ol
+            className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-[repeat(var(--stages),minmax(0,1fr))]"
+            style={{ '--stages': cols } as CSSProperties}
+            aria-label={`${project.title} stages`}
+          >
             {stages.map((s, i) => {
               const on = i === active
               return (
@@ -184,15 +196,15 @@ export function FeaturedSpotlight({ project, number, onOpen }: { project: Projec
                         />
                       )}
                       <span aria-hidden className="absolute inset-0 bg-linear-to-t from-black/75 via-transparent to-transparent" />
-                      {on && playing && s.video && (
+                      {on && playing && s.video && !s.source && (
                         <span className="absolute top-2 left-2 flex items-center gap-1.5 rounded-full bg-black/55 px-2 py-0.5 font-mono text-[9px] tracking-[0.15em] text-white uppercase backdrop-blur">
                           <span className="size-1.5 animate-pulse rounded-full bg-red-500" /> Live
                         </span>
                       )}
-                      <span className="absolute bottom-2 left-2.5 font-mono text-[10px] text-white/80 lg:hidden">{pad(i + 1)}</span>
+                      <span className={`absolute bottom-2 left-2.5 font-mono text-[10px] text-white/80 ${oneRow ? 'lg:hidden' : ''}`}>{pad(i + 1)}</span>
                     </span>
                     <span className={`block px-3 py-2.5 transition-colors ${on ? 'bg-gold/10' : 'bg-card'}`}>
-                      <span className={`block font-mono text-[9px] tracking-[0.16em] uppercase ${on ? 'text-gold' : 'text-muted'}`}>
+                      <span className={`block truncate font-mono text-[9px] tracking-[0.16em] uppercase ${on ? 'text-gold' : 'text-muted'}`}>
                         {s.stage ?? `Stage ${pad(i + 1)}`}
                       </span>
                       <span className={`mt-0.5 block truncate text-sm font-medium ${on ? 'text-fg' : 'text-fg2'}`}>{s.title}</span>

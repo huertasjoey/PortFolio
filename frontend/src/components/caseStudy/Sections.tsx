@@ -1,4 +1,4 @@
-import { AlertTriangle, ArrowRight, BookOpen, Check, Cpu, Images, Lightbulb, Maximize2, Rocket, Wrench } from 'lucide-react'
+import { AlertTriangle, ArrowRight, ArrowUpRight, BookOpen, Check, Cpu, Images, Lightbulb, Maximize2, Play, Rocket, Wrench } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { content } from '../../content'
 import type { Project } from '../../types'
@@ -43,7 +43,7 @@ export function Hero({ project, titleId }: { project: Project; titleId: string }
     </figure>
   ) : project.image ? (
     <div className="overflow-hidden rounded-xl border border-line">
-      <img src={project.image} alt="" className="aspect-[4/3] w-full object-cover" />
+      <img src={project.image} alt="" className="aspect-4/3 w-full object-cover" />
     </div>
   ) : null
 
@@ -471,5 +471,61 @@ export function Comparison({ data }: { data: NonNullable<CaseStudy['comparison']
       </div>
       {data.note && <p className="font-mono text-[11px] leading-relaxed text-muted">{data.note}</p>}
     </div>
+  )
+}
+
+/* ---------- Full demo: YouTube, loaded only on click ---------- */
+
+export function DemoVideo({ demo }: { demo: NonNullable<CaseStudy['demo']> }) {
+  const [playing, setPlaying] = useState(false)
+  const watchUrl = `https://youtu.be/${demo.youtubeId}`
+
+  return (
+    <figure className="overflow-hidden rounded-xl border border-line bg-card">
+      <div className="flex items-center justify-between gap-4 border-b border-line px-5 py-3 font-mono text-[11px] tracking-[0.18em] text-fg2 uppercase">
+        <span className="flex items-center gap-2.5">
+          <span className="size-1.5 rounded-full bg-red-500" aria-hidden /> {demo.title}
+        </span>
+        <span className="tabular-nums">{demo.duration}</span>
+      </div>
+      <div className="relative aspect-video bg-black">
+        {playing ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${demo.youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+            title={demo.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="absolute inset-0 size-full"
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            aria-label={`Play ${demo.title} (${demo.duration})`}
+            className="group absolute inset-0 block size-full"
+          >
+            <img src={demo.poster} alt="" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" />
+            <span aria-hidden className="absolute inset-0 bg-black/35 transition-colors group-hover:bg-black/20" />
+            <span className="absolute inset-0 grid place-items-center">
+              <span className="flex flex-col items-center gap-4">
+                <span className="grid size-20 place-items-center rounded-full bg-gold text-bg shadow-2xl shadow-black/50 transition-transform duration-300 group-hover:scale-110 sm:size-24">
+                  <Play size={30} className="translate-x-0.5 fill-bg" />
+                </span>
+                <span className="rounded-full bg-black/55 px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-white uppercase backdrop-blur">
+                  Play full demo · {demo.duration}
+                </span>
+              </span>
+            </span>
+          </button>
+        )}
+      </div>
+      <figcaption className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-3 text-xs text-fg2">
+        <span>{demo.caption ?? 'Plays from YouTube.'}</span>
+        <a href={watchUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-mono text-[11px] text-gold hover:underline">
+          Watch on YouTube <ArrowUpRight size={13} />
+        </a>
+      </figcaption>
+    </figure>
   )
 }

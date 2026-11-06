@@ -1,17 +1,31 @@
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
+import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 import type { HowItWorksIntro, ProcessStep } from '../types'
 
 const STEP_SECONDS = 4
 const pad = (n: number) => String(n).padStart(2, '0')
+const mmss = (s: number) => `${Math.floor(s / 60)}:${pad(Math.floor(s % 60))}`
 
 /**
  * "How it works" as a pipeline console: a camera-style player loops each stage's clip with a HUD,
  * a spec readout shows that stage's real numbers, and a vertical pipeline rail tracks progress.
  * Advances on its own while on screen; waits for Play when the visitor prefers reduced motion.
  */
-export function HowItWorks({ steps, title, index, intro }: { steps: ProcessStep[]; title: string; index?: string; intro?: HowItWorksIntro }) {
+export function HowItWorks({
+  steps,
+  title,
+  index,
+  intro,
+  demoId,
+}: {
+  steps: ProcessStep[]
+  title: string
+  index?: string
+  intro?: HowItWorksIntro
+  /** YouTube ID of the full demo; steps with `at` link to that moment. */
+  demoId?: string
+}) {
   const [active, setActive] = useState(0)
   const [playing, setPlaying] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [inView, setInView] = useState(false)
@@ -19,6 +33,8 @@ export function HowItWorks({ steps, title, index, intro }: { steps: ProcessStep[
   const video = useRef<HTMLVideoElement>(null)
   const running = playing && inView
   const step = steps[active]
+  /** Live camera footage (not photos or stills). */
+  const live = Boolean(step.video && !step.source)
   const go = (i: number) => setActive((i + steps.length) % steps.length)
 
   useEffect(() => {
@@ -60,7 +76,11 @@ export function HowItWorks({ steps, title, index, intro }: { steps: ProcessStep[
   }, [running, active])
 
   const clock = (active + progress) * STEP_SECONDS
-  const timecode = `T+${pad(Math.floor(clock / 60))}:${pad(Math.floor(clock % 60))}.${Math.floor((clock % 1) * 10)}`
+  // Real moment in the full demo when known; otherwise a running clock.
+  const timecode =
+    step.at !== undefined
+      ? `Demo ${mmss(step.at + progress * STEP_SECONDS)}`
+      : `T+${pad(Math.floor(clock / 60))}:${pad(Math.floor(clock % 60))}.${Math.floor((clock % 1) * 10)}`
 
   return (
     <div ref={box}>
@@ -134,12 +154,12 @@ export function HowItWorks({ steps, title, index, intro }: { steps: ProcessStep[
             <div className="absolute inset-x-0 top-0 flex items-center justify-between px-8 pt-6 font-mono text-[10px] tracking-[0.2em] text-white/85 uppercase sm:text-[11px]">
               <span className="flex items-center gap-2">
                 <span className="relative flex size-2">
-                  {running && step.video && <span className="absolute inset-0 animate-ping rounded-full bg-red-500/70" />}
-                  <span className={`relative size-2 rounded-full ${running && step.video ? 'bg-red-500' : running ? 'bg-gold' : 'bg-white/40'}`} />
+                  {running && live && <span className="absolute inset-0 animate-ping rounded-full bg-red-500/70" />}
+                  <span className={`relative size-2 rounded-full ${running && live ? 'bg-red-500' : running ? 'bg-gold' : 'bg-white/40'}`} />
                 </span>
-                {step.video ? `${running ? 'Live' : 'Paused'} · Cam 01` : `${running ? 'Playing' : 'Paused'} · Frame ${pad(active + 1)}`}
+                {step.source ? step.source : live ? `${running ? 'Live' : 'Paused'} · Cam 01` : `${running ? 'Playing' : 'Paused'} · Frame ${pad(active + 1)}`}
               </span>
-              <span className="tabular-nums">{timecode}</span>
+              {!step.source && <span className="tabular-nums">{timecode}</span>}
             </div>
 
             <div className="absolute inset-x-0 bottom-0 px-6 pb-7 sm:px-8 sm:pb-8">
@@ -206,14 +226,30 @@ export function HowItWorks({ steps, title, index, intro }: { steps: ProcessStep[
                   <dd className="mt-1 text-sm text-fg">{v}</dd>
                 </div>
               ))}
-              <div className="px-5 py-4 max-sm:col-span-2 sm:ml-auto">
-                <dt className="font-mono text-[10px] tracking-[0.18em] text-muted uppercase">Next</dt>
-                <dd className="mt-1">
-                  <button type="button" onClick={() => go(active + 1)} className="inline-flex items-center gap-1 text-sm text-gold hover:underline">
-                    {steps[(active + 1) % steps.length].title} <ChevronRight size={14} />
-                  </button>
-                </dd>
-              </div>
+              {demoId && step.at !== undefined ? (
+                <div className="px-5 py-4 max-sm:col-span-2 sm:ml-auto">
+                  <dt className="font-mono text-[10px] tracking-[0.18em] text-muted uppercase">In the full demo</dt>
+                  <dd className="mt-1">
+                    <a
+                      href={`https://youtu.be/${demoId}?t=${Math.floor(step.at)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-gold hover:underline"
+                    >
+                      <Play size={12} className="fill-gold" /> Watch at {mmss(step.at)} <ArrowUpRight size={13} />
+                    </a>
+                  </dd>
+                </div>
+              ) : (
+                <div className="px-5 py-4 max-sm:col-span-2 sm:ml-auto">
+                  <dt className="font-mono text-[10px] tracking-[0.18em] text-muted uppercase">Next</dt>
+                  <dd className="mt-1">
+                    <button type="button" onClick={() => go(active + 1)} className="inline-flex items-center gap-1 text-sm text-gold hover:underline">
+                      {steps[(active + 1) % steps.length].title} <ChevronRight size={14} />
+                    </button>
+                  </dd>
+                </div>
+              )}
             </motion.dl>
           </AnimatePresence>
         </div>
@@ -226,7 +262,7 @@ export function HowItWorks({ steps, title, index, intro }: { steps: ProcessStep[
             return (
               <li key={s.title} className="relative lg:flex-1">
                 {i < steps.length - 1 && (
-                  <span aria-hidden className="absolute top-9 bottom-[-0.5rem] left-6 w-px bg-line">
+                  <span aria-hidden className="absolute top-9 -bottom-2 left-6 w-px bg-line">
                     <span className="block w-full origin-top bg-gold transition-transform duration-500" style={{ height: '100%', transform: `scaleY(${done ? 1 : on ? progress : 0})` }} />
                   </span>
                 )}

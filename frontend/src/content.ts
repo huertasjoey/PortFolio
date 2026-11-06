@@ -316,39 +316,54 @@ const projects: Project[] = [
         'Tomato gluts leave farmers dumping fruit or selling at a loss. Sun drying takes 8 days, depends on the weather, and exposes the fruit to dust and pests.',
       solution:
         'One offline machine that sorts, slices and dries tomatoes: a Raspberry Pi 5 runs the AI and an ESP32 controls the hardware, keeping the chamber at 45–55 °C in any weather.',
-      howItWorksIntro: { lead: 'From raw tomato to', accent: 'dried batch.', chips: ['Edge inference', 'Fully offline'] },
+      demo: {
+        youtubeId: 'OuHDmBS6Po8',
+        title: 'Full machine demo',
+        duration: '7:37',
+        poster: '/videos/lycodry-demo-poster.jpg',
+        caption: 'Loading, AI grading, routing, UV-C and the drying dashboard. Plays from YouTube.',
+      },
+      howItWorksIntro: { lead: 'From raw tomato to', accent: 'dried batch.', chips: ['Real demo footage', 'Edge inference', 'Fully offline'] },
       howItWorks: [
         {
-          title: 'Load', stage: 'Input', text: 'Raw tomatoes are poured into the funnel.', video: '/videos/how/load.mp4', poster: '/videos/how/load.jpg',
+          title: 'Load', stage: 'Input', at: 10, text: 'Raw tomatoes are poured into the funnel.', video: '/videos/how/load.mp4', poster: '/videos/how/load.jpg',
           specs: [['Feed', 'Single-file funnel'], ['Interlock', 'IR sensor 1 · tray check'], ['Loading', 'Any time, while running']],
         },
         {
-          title: 'Scan', stage: 'Vision', text: 'Each tomato rolls past the camera, one at a time.', video: '/videos/how/scan.mp4', poster: '/videos/how/scan.jpg',
-          specs: [['Camera', 'Pi Camera Module 3'], ['Compute', 'Raspberry Pi 5'], ['Window', '3–5 s per tomato']],
+          title: 'Start', stage: 'Kiosk', at: 19, text: 'The run is started from the touchscreen kiosk.', video: '/videos/how/start.mp4', poster: '/videos/how/start.jpg',
+          specs: [['Interface', 'Touchscreen kiosk'], ['Compute', 'Raspberry Pi 5'], ['Network', 'Fully offline']],
         },
         {
-          title: 'Grade', stage: 'Inference', text: 'The AI labels it Market, Processing or Reject.', video: '/videos/how/grade.mp4', poster: '/videos/how/grade.jpg',
+          title: 'Grade', stage: 'Inference', at: 25, text: 'Each tomato rolls down the ramp while YOLOv11 grades it on the live feed.', video: '/videos/how/grade.mp4', poster: '/videos/how/grade.jpg',
           specs: [['Model', 'YOLOv11 · custom'], ['Input', '640 × 640'], ['mAP@0.5', '0.876']],
         },
         {
-          title: 'Route', stage: 'Actuation', text: 'Servo gates send Market and Reject tomatoes to their baskets.', video: '/videos/how/route.mp4', poster: '/videos/how/route.jpg',
-          specs: [['Controller', 'ESP32'], ['Actuators', 'Gate + push servos'], ['Verify', 'Basket IR · +1']],
+          title: 'Reject', stage: 'Sorting', at: 29, text: 'A reject goes to its own basket and is counted: “1st Reject”.', video: '/videos/how/reject.mp4', poster: '/videos/how/reject.jpg',
+          specs: [['Count', 'Basket IR · +1'], ['Basket limit', '10'], ['Sort accuracy', '82%']],
         },
         {
-          title: 'Slice', stage: 'Processing', text: 'Processing tomatoes are cut into 2 cm slices.', video: '/videos/how/slice.mp4', poster: '/videos/how/slice.jpg',
-          specs: [['Actuator', 'Pneumatic'], ['Blade', 'Fixed grid'], ['Cut', '2 cm slices']],
+          title: 'Market', stage: 'Sorting', at: 200, text: 'Market-grade tomatoes go to the market basket and are counted too.', video: '/videos/how/market.mp4', poster: '/videos/how/market.jpg',
+          specs: [['Count', 'Basket IR · +1'], ['Basket limit', '10'], ['Sort accuracy', '87%']],
         },
         {
-          title: 'Fill the tray', stage: 'Batching', text: 'The slices land on the drying tray.', video: '/videos/how/tray.mp4', poster: '/videos/how/tray.jpg',
-          specs: [['Verify', 'Processing IR · +1'], ['Batch', '5 trays'], ['Early start', '≥ 3 + empty funnel']],
+          title: 'Cut', stage: 'Processing', at: 246, text: 'A processing-grade tomato is pushed through the blade grid; the slices drop onto the tray.', video: '/videos/how/cut.mp4', poster: '/videos/how/cut.jpg',
+          specs: [['Actuator', 'Pneumatic push'], ['Blade', 'Fixed grid'], ['Cut', '2 cm slices']],
         },
         {
-          title: 'Sterilise', stage: 'Sterilisation', text: 'UV-C light cleans the chamber for 15 minutes.', video: '/videos/how/sterilise.mp4', poster: '/videos/how/sterilise.jpg',
-          specs: [['Lamp', 'UV-C'], ['Duration', '15 min'], ['Then', 'Fans · Peltier · coils on']],
+          title: 'Force eject', stage: 'Manual override', at: 268, text: 'The AI can’t identify this object (an egg), so the operator taps Force Eject and the push servo sends it to the reject basket.', video: '/videos/how/push.mp4', poster: '/videos/how/push.jpg',
+          specs: [['Trigger', 'Force Eject button (kiosk)'], ['When', 'AI can’t identify the object'], ['Goes to', 'Reject basket']],
         },
         {
-          title: 'Dry', stage: 'Control loop', text: '24 hours at 45–55 °C, then “Ready to harvest”.', video: '/videos/how/dry.mp4', poster: '/videos/how/dry.jpg',
+          title: 'Chamber', stage: 'Sterilisation', at: 320, text: 'The tray of processing tomatoes goes into the UV-C-lit drying chamber.', video: '/videos/how/chamber.mp4', poster: '/videos/how/chamber.jpg',
+          specs: [['Batch', '5 processing tomatoes'], ['Lamp', 'UV-C'], ['Sterilise', '15 min']],
+        },
+        {
+          title: 'Dry', stage: 'Control loop', at: 346, text: '“5 tomatoes have been processed. Starting drying cycle.” The chamber then heats up and holds its range.', video: '/videos/how/dry.mp4', poster: '/videos/how/dry.jpg',
           specs: [['Sensor', 'DS18B20'], ['Setpoint', '45–55 °C'], ['Cycle', '24 h']],
+        },
+        {
+          title: 'Result', stage: 'Output', source: 'Test photos', text: 'After 24 hours the fresh slices come out dried: 403 g in, 47 g out.', video: '/videos/how/result.mp4', poster: '/videos/how/result.jpg',
+          specs: [['Mass left', '11.66% (sun: 13.51%)'], ['Drying time', '24 h vs 8 days in the sun'], ['Salmonella', 'Not detected']],
         },
       ],
       comparison: {

@@ -48,6 +48,10 @@ export interface ProcessStep {
   stage?: string
   /** Up to three [label, value] facts shown under the player, e.g. ['Model', 'YOLOv11']. */
   specs?: [string, string][]
+  /** Where this moment happens in the project's full demo (`caseStudy.demo`), in seconds. */
+  at?: number
+  /** Label for footage that isn't live camera, e.g. 'Test photos'; replaces the LIVE · CAM tag and timecode. */
+  source?: string
   video?: string
   poster: string
 }
@@ -84,6 +88,11 @@ export interface Project {
       rows: { metric: string; a: string; b: string; gap: string; better?: 'a' | 'b'; bars?: [number, number]; note?: string }[]
       note?: string
     }
+    /**
+     * Optional long demo hosted on YouTube (unlisted is fine). Shown as a local poster first and only
+     * loads YouTube (privacy-enhanced, no-cookie) when the visitor presses play.
+     */
+    demo?: { youtubeId: string; title: string; duration: string; poster: string; caption?: string }
     /** Optional thesis / paper this project comes from, shown at the top of the case study. */
     thesis?: { title: string; meta: string; label?: string }
     /** Heading, label and chips for the "How it works" section, e.g. lead 'From raw tomato to', accent 'dried batch.' */
