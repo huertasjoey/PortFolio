@@ -32,6 +32,14 @@ export interface ImageView {
   fit?: 'cover' | 'contain' | 'natural'
 }
 
+export interface HowItWorksIntro {
+  /** Section label; defaults to "How it works" (e.g. "How it's made"). */
+  title?: string
+  lead: string
+  accent: string
+  chips?: string[]
+}
+
 /** One step of a "How it works" walkthrough. `video` is a short muted clip; `poster` is its first frame (or the image to show). */
 export interface ProcessStep {
   title: string
@@ -69,6 +77,7 @@ export interface Project {
      * `bars` are raw values for a linear bar pair; `better` says which side wins.
      */
     comparison?: {
+      heading?: { lead: string; accent: string }
       a: string
       b: string
       highlights?: { value: string; label: string }[]
@@ -77,6 +86,8 @@ export interface Project {
     }
     /** Optional thesis / paper this project comes from, shown at the top of the case study. */
     thesis?: { title: string; meta: string; label?: string }
+    /** Heading, label and chips for the "How it works" section, e.g. lead 'From raw tomato to', accent 'dried batch.' */
+    howItWorksIntro?: HowItWorksIntro
     /** Optional "How it works" walkthrough, start to finish: one short clip (or image) per step. */
     howItWorks?: ProcessStep[]
     /** Optional "Technical implementation" bullet list. */

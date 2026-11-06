@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
-import type { ProcessStep } from '../types'
+import type { HowItWorksIntro, ProcessStep } from '../types'
 
 const STEP_SECONDS = 4
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -11,7 +11,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
  * a spec readout shows that stage's real numbers, and a vertical pipeline rail tracks progress.
  * Advances on its own while on screen; waits for Play when the visitor prefers reduced motion.
  */
-export function HowItWorks({ steps, title, index }: { steps: ProcessStep[]; title: string; index?: string }) {
+export function HowItWorks({ steps, title, index, intro }: { steps: ProcessStep[]; title: string; index?: string; intro?: HowItWorksIntro }) {
   const [active, setActive] = useState(0)
   const [playing, setPlaying] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [inView, setInView] = useState(false)
@@ -77,11 +77,11 @@ export function HowItWorks({ steps, title, index }: { steps: ProcessStep[]; titl
             {title}
           </p>
           <h3 className="font-serif text-4xl leading-[1.05] font-light text-fg sm:text-5xl">
-            From raw tomato to <em className="text-gold">dried batch.</em>
+            {intro?.lead ?? 'From start'} <em className="text-gold">{intro?.accent ?? 'to finish.'}</em>
           </h3>
         </div>
         <ul className="flex flex-wrap gap-2 font-mono text-[11px] tracking-wide text-fg2">
-          {[`${steps.length} stages`, 'Edge inference', 'Fully offline'].map((c) => (
+          {[`${steps.length} stages`, ...(intro?.chips ?? [])].map((c) => (
             <li key={c} className="rounded-full border border-line px-3 py-1.5">
               {c}
             </li>
@@ -105,7 +105,18 @@ export function HowItWorks({ steps, title, index }: { steps: ProcessStep[]; titl
                 {step.video ? (
                   <video ref={video} src={step.video} poster={step.poster} muted loop playsInline autoPlay={running} preload="auto" aria-hidden className="size-full object-cover" />
                 ) : (
-                  <img src={step.poster} alt="" className="size-full object-cover" />
+                  <>
+                    {/* Stills: blurred backdrop + the whole image, with a slow push-in */}
+                    <img src={step.poster} alt="" className="absolute inset-0 size-full scale-110 object-cover opacity-60 blur-2xl" />
+                    <motion.img
+                      src={step.poster}
+                      alt=""
+                      initial={{ scale: 1 }}
+                      animate={{ scale: running ? 1.06 : 1 }}
+                      transition={{ duration: STEP_SECONDS + 1, ease: 'linear' }}
+                      className="relative size-full object-contain"
+                    />
+                  </>
                 )}
               </motion.div>
             </AnimatePresence>
@@ -123,10 +134,10 @@ export function HowItWorks({ steps, title, index }: { steps: ProcessStep[]; titl
             <div className="absolute inset-x-0 top-0 flex items-center justify-between px-8 pt-6 font-mono text-[10px] tracking-[0.2em] text-white/85 uppercase sm:text-[11px]">
               <span className="flex items-center gap-2">
                 <span className="relative flex size-2">
-                  {running && <span className="absolute inset-0 animate-ping rounded-full bg-red-500/70" />}
-                  <span className={`relative size-2 rounded-full ${running ? 'bg-red-500' : 'bg-white/40'}`} />
+                  {running && step.video && <span className="absolute inset-0 animate-ping rounded-full bg-red-500/70" />}
+                  <span className={`relative size-2 rounded-full ${running && step.video ? 'bg-red-500' : running ? 'bg-gold' : 'bg-white/40'}`} />
                 </span>
-                {running ? 'Live' : 'Paused'} · Cam 01
+                {step.video ? `${running ? 'Live' : 'Paused'} · Cam 01` : `${running ? 'Playing' : 'Paused'} · Frame ${pad(active + 1)}`}
               </span>
               <span className="tabular-nums">{timecode}</span>
             </div>

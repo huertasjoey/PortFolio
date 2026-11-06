@@ -316,6 +316,7 @@ const projects: Project[] = [
         'Tomato gluts leave farmers dumping fruit or selling at a loss. Sun drying takes 8 days, depends on the weather, and exposes the fruit to dust and pests.',
       solution:
         'One offline machine that sorts, slices and dries tomatoes: a Raspberry Pi 5 runs the AI and an ESP32 controls the hardware, keeping the chamber at 45–55 °C in any weather.',
+      howItWorksIntro: { lead: 'From raw tomato to', accent: 'dried batch.', chips: ['Edge inference', 'Fully offline'] },
       howItWorks: [
         {
           title: 'Load', stage: 'Input', text: 'Raw tomatoes are poured into the funnel.', video: '/videos/how/load.mp4', poster: '/videos/how/load.jpg',
@@ -351,6 +352,7 @@ const projects: Project[] = [
         },
       ],
       comparison: {
+        heading: { lead: 'Same tomatoes,', accent: 'two methods.' },
         a: 'LycoDry machine',
         b: 'Sun-dried',
         highlights: [
@@ -400,18 +402,18 @@ const projects: Project[] = [
     icon: 'fish',
     status: 'In progress',
     summary:
-      'Aquarium Monitor is a custom Arduino-compatible controller board I designed in KiCad for monitoring an aquarium: an ATmega328P with an ESP-01 Wi-Fi module, inputs for pH, TDS and DS18B20 temperature sensors, and outputs for a relay, two fans and a water pump — on a single-sided, all through-hole PCB that can be etched and soldered by hand.',
+      'A Wi-Fi aquarium controller board I designed in KiCad and etched by hand: it reads pH, TDS and temperature, and runs fans and a pump.',
     role: 'Hardware designer — schematic and PCB layout (personal project)',
     image: '/images/arduino/cover.jpg',
     tags: ['IoT', 'KiCad', 'PCB Design', 'ATmega328P', 'ESP-01', 'Sensors'],
     caseStudy: {
       overview:
-        'Aquarium Monitor puts everything a small monitoring-and-control project needs onto one board. At its centre is an ATmega328P with its own crystal, reset circuit and decoupling, broken out to Arduino-style headers. Around it sit an ESP-01 for Wi-Fi, sensor inputs for pH, TDS and temperature, an OLED header, a relay header, and screw terminals for two fans and a water pump powered from a 12 V jack. The board is single-sided with only through-hole parts, so it can be made at home.',
+        'One board with everything an aquarium monitor needs: an Arduino-compatible ATmega328P, ESP-01 Wi-Fi, pH, TDS and temperature inputs, and terminals for two fans and a pump. Single-sided and all through-hole, so it can be made at home.',
       banner: false,
       metrics: [
-        { value: '46', label: 'through-hole parts and no surface-mount parts, so it can be soldered by hand' },
-        { value: '296', label: 'tracks, all on the bottom copper layer (0.5 mm) — a single-sided board' },
-        { value: '91 × 125 mm', label: 'board, with a digital-ground copper pour on the bottom layer' },
+        { value: '46', label: 'through-hole parts, no SMD' },
+        { value: '296', label: 'tracks on one copper layer' },
+        { value: '91 × 125 mm', label: 'board size' },
       ],
       gallery: [
         { src: '/images/arduino/cover.jpg', alt: 'Angled 3D render of the Aquarium Monitor board', caption: '3D render: the assembled board (KiCad render)' },
@@ -419,8 +421,7 @@ const projects: Project[] = [
         { src: '/images/arduino/render-bottom.jpg', alt: '3D render of the bottom of the Aquarium Monitor board showing the copper tracks', caption: 'Bottom view: the single copper layer (KiCad render)' },
       ],
       pcb: {
-        description:
-          'I designed the schematic and the single-sided board in KiCad. Every track is on the bottom copper layer, with a digital-ground pour filling the rest, and every part is through-hole so the board can be etched and soldered by hand.',
+        description: 'Schematic and single-sided layout, designed in KiCad.',
         views: [
           { label: 'Routing', src: '/images/arduino/routing-full.jpg', alt: 'Aquarium Monitor PCB routing on the bottom copper layer with a ground pour', caption: 'Routing: every track on the bottom layer, with a ground pour' },
           { label: 'Schematic', src: '/images/arduino/schematic-full.jpg', alt: 'Aquarium Monitor schematic in KiCad', caption: 'Schematic: MCU core, ESP-01, sensor inputs, power and loads' },
@@ -449,61 +450,51 @@ const projects: Project[] = [
         },
       ],
       problem:
-        'Water parameters like pH, temperature and conductivity (TDS) change gradually and are easy to miss, yet they directly affect aquatic life. Watching them takes several sensors, Wi-Fi and 12 V loads like a pump and fans — which gets messy fast on an off-the-shelf Arduino and breadboard: loose jumper wires, noisy analog readings, and nowhere solid to connect the loads.',
+        'Water quality changes slowly and is easy to miss. Monitoring it on a breadboard means loose wires, noisy sensor readings and nowhere solid to connect a pump or fans.',
       solution:
-        'One purpose-built board: the microcontroller, Wi-Fi module, sensor inputs and power all in one place, with screw terminals for the loads, a filtered supply and separate ground for the analog sensors, and labelled headers that keep the familiar Arduino pin names.',
-      features: [
+        'One purpose-built board: microcontroller, Wi-Fi, sensor inputs and power in one place, with screw terminals for the loads and a separate, filtered ground for the analog sensors.',
+      howItWorksIntro: { title: 'How it’s made', lead: 'From KiCad file to', accent: 'finished board.', chips: ['Hand-etched', 'Through-hole only'] },
+      howItWorks: [
         {
-          group: 'Microcontroller core',
-          items: [
-            'ATmega328P (DIP-28) with an external crystal and 22 pF load capacitors, a reset button with a 10 kΩ pull-up, and 0.1 µF decoupling on the supply pins.',
-            'Arduino-style headers breaking out A0–A5, D2–D7 and D8–D13.',
-            'An interrupt push button on D2 with a debounce capacitor, and indicator LEDs on D5 and D8.',
-          ],
+          title: 'Design', stage: 'KiCad', text: 'Schematic and layout drawn in KiCad.', poster: '/images/aquarium/process/01-full.jpg',
+          specs: [['Board', '91 × 125 mm'], ['Copper', 'Single-sided'], ['Tracks', '296']],
         },
         {
-          group: 'Wi-Fi and display',
-          items: [
-            'ESP-01 socket on a 3.3 V supply header, with its own reset button and a 10 kΩ / 4.7 kΩ divider that drops the 5 V serial line to a safe level for the ESP-01.',
-            'A 4-pin OLED header wired to A4/A5 (the I²C pins).',
-          ],
+          title: 'Print', stage: 'Artwork', text: 'The routing is printed as a negative on transparent film.', poster: '/images/aquarium/process/03-full.jpg',
+          specs: [['Artwork', 'Negative film'], ['Layer', 'Bottom copper']],
         },
         {
-          group: 'Sensors',
-          items: [
-            'pH (A1) and TDS (A0) inputs, each with a 100 Ω series resistor and a 0.1 µF filter capacitor.',
-            'A DS18B20 temperature-probe header on D7 with a 4.7 kΩ pull-up.',
-            'The analog sensors run from their own supply (VCC_ANA), filtered from 5 V by a 10 Ω resistor with 0.1 µF and 10 µF capacitors.',
-          ],
+          title: 'Expose', stage: 'UV transfer', text: 'UV light transfers the pattern onto the board.', poster: '/images/aquarium/process/04-full.jpg',
+          specs: [['Light', 'UV lamp'], ['Rig', 'Cardboard exposure box']],
         },
         {
-          group: 'Power and loads',
-          items: [
-            'A 12 V DC barrel jack feeding screw terminals for two fans and a water pump.',
-            'A separate 5 V screw-terminal input, and a header for a 5 V relay module driven from D6.',
-          ],
+          title: 'Develop', stage: 'Etch', text: 'The developed board is checked against the light.', poster: '/images/aquarium/process/06-full.jpg',
+          specs: [['Check', 'Backlit inspection'], ['Ground', 'Digital-ground pour']],
         },
         {
-          group: 'PCB layout',
-          items: [
-            'Single-sided: every track is on the bottom copper layer, 0.5 mm wide, with a digital-ground copper pour filling the rest.',
-            'Separate digital and analog grounds that meet at a single star point.',
-            'All through-hole parts, with the power and load connectors grouped along one edge of the 91 × 125 mm board.',
-          ],
+          title: 'Solder', stage: 'Assembly', text: 'Every part is through-hole, soldered by hand.', poster: '/images/aquarium/process/09-full.jpg',
+          specs: [['Parts', '46 through-hole'], ['SMD', 'None']],
         },
-      ],
-      implementation: [
-        'Schematic drawn in KiCad using the standard symbol libraries plus an ESP-01 symbol and footprint.',
-        'Board laid out in the KiCad PCB editor as a two-layer file with all routing on the bottom copper, so it can be made as a single-sided board.',
-        'The schematic, routing and 3D renders shown here were exported straight from the project files with KiCad.',
+        {
+          title: 'Assemble', stage: 'Wiring', text: 'The populated board with its jumper wires in place.', poster: '/images/aquarium/process/11-full.jpg',
+          specs: [['MCU', 'ATmega328P'], ['Wi-Fi', 'ESP-01'], ['Display', 'OLED header']],
+        },
+        {
+          title: 'Test', stage: 'Bring-up', text: 'Parts are tried on a breadboard with the Arduino IDE.', poster: '/images/aquarium/process/13-full.jpg',
+          specs: [['Toolchain', 'Arduino IDE'], ['Sensors', 'pH · TDS · DS18B20']],
+        },
+        {
+          title: 'Finish', stage: 'Done', text: 'Aquarium-themed top layer and labelled connectors.', poster: '/images/aquarium/process/14-full.jpg',
+          specs: [['Loads', '2 fans + water pump'], ['Power', '12 V jack + 5 V input']],
+        },
       ],
       contribution:
-        'I designed the schematic and the PCB layout in KiCad. [Edit: add whether the board was etched, assembled and tested, and what it was used for.]',
+        'I designed the schematic and layout in KiCad, then etched, soldered and tested the board myself.',
       challenges:
-        'The design goal was to fit every connection onto one copper layer so the board can be made at home, while keeping the low-level pH and TDS signals clean — hence the filtered analog supply, the separate analog ground with a star point, and the 12 V load wiring kept along its own edge of the board. [Edit: add what was actually hardest for you.]',
+        'Fitting every connection on one copper layer while keeping the small pH and TDS signals clean.',
       futureWork:
-        'Firmware that alerts over Wi-Fi when readings stay out of range (rather than on every brief spike), and automatic filtration control through the relay — the original goals of the project. [Edit: add test results and anything already working.]',
-      note: 'The schematic, routing and 3D views are exported directly from the KiCad project. The 3D views are KiCad renders, not photographs. Text in [brackets] is placeholder content.',
+        'Firmware that sends Wi-Fi alerts when readings stay out of range, and automatic filtration through the relay.',
+      note: 'Schematic, routing and 3D views are exported from the KiCad project; the 3D views are renders, not photos.',
     },
   },
   {
@@ -515,18 +506,18 @@ const projects: Project[] = [
     icon: 'flame',
     status: 'In progress',
     summary:
-      'A flash analog-to-digital converter built entirely from discrete chips — no microcontroller. A resistor ladder and four LM339 quad comparators sample an input voltage, two 74148 priority encoders turn the result into a binary code, and the code is shown on LEDs and a 7-segment display. Designed in KiCad as my midterm project.',
+      'An analog-to-digital converter built only from logic chips, no microcontroller. My midterm project, designed in KiCad.',
     role: 'Circuit designer — schematic and PCB layout (midterm project)',
     image: '/images/adc/cover.jpg',
     tags: ['KiCad', 'PCB Design', 'Analog', 'Digital Logic', 'LM339', '74148'],
     caseStudy: {
       overview:
-        'This converter shows how an ADC works with nothing hidden in software. A potentiometer sets the input voltage, a UA741 op-amp conditions it, and a ladder of 1 kΩ resistors creates a set of reference voltages. Sixteen comparators (four LM339 chips) compare the input against every reference at once. Two cascaded 74148 priority encoders and three 74LS86 XOR gates turn the comparator outputs into a binary code, which drives four LEDs and, through a 7447 decoder, a 7-segment display.',
+        'A flash ADC you can follow by eye: 16 comparators check the input voltage against a resistor ladder, logic chips encode the result, and LEDs and a 7-segment display show it.',
       banner: false,
       metrics: [
-        { value: '16', label: 'comparators (four LM339 quad comparators) checking the input against a resistor ladder' },
-        { value: '47', label: 'through-hole parts and no surface-mount parts, so it can be built by hand' },
-        { value: '153 × 86 mm', label: 'single-sided board, with all tracks on the bottom copper layer' },
+        { value: '16', label: 'comparators (4 × LM339)' },
+        { value: '47', label: 'through-hole parts' },
+        { value: '153 × 86 mm', label: 'single-sided board' },
       ],
       gallery: [
         { src: '/images/adc/cover.jpg', alt: 'Angled 3D render of the 8-bit ADC board', caption: '3D render of the board (KiCad render)' },
@@ -534,8 +525,7 @@ const projects: Project[] = [
         { src: '/images/adc/render-bottom.jpg', alt: '3D render of the bottom of the 8-bit ADC board showing the copper tracks', caption: 'Bottom view: the single copper layer (KiCad render)' },
       ],
       pcb: {
-        description:
-          'I drew the schematic and laid out a single-sided board in KiCad, with 1 mm tracks for power and 0.5 mm tracks for signals. The layout is still a work in progress: the input stage, timer and part of the encoder section are routed, while the comparator outputs, the LED outputs and the ground connections are still to be routed.',
+        description: 'Schematic and single-sided layout in KiCad. Routing is still in progress.',
         views: [
           { label: 'Routing', src: '/images/adc/routing-full.jpg', alt: '8-bit ADC PCB routing on the bottom copper layer', caption: 'Routing in progress: every track is on the bottom layer' },
           { label: 'Schematic', src: '/images/adc/schematic-full.jpg', alt: '8-bit ADC schematic in KiCad', caption: 'Schematic: input stage, resistor ladder, comparators, encoders, XOR logic and display driver' },
@@ -543,53 +533,43 @@ const projects: Project[] = [
         model: { src: '/models/adc.glb', alt: 'Interactive 3D model of the 8-bit ADC board, exported from KiCad' },
       },
       problem:
-        'Analog-to-digital conversion usually happens inside a microcontroller, where it is easy to use and hard to see. The goal here was to build the whole conversion out of individual chips, so every stage — reference voltages, comparison, encoding and display — can be followed on the board.',
+        'Analog-to-digital conversion usually hides inside a microcontroller, easy to use and impossible to see.',
       solution:
-        'A flash-type converter: the input is compared against every reference voltage at the same time, and priority encoders report the highest comparator that is switched on. That code is shown directly on LEDs and decoded for a 7-segment display.',
-      features: [
+        'A flash converter built from individual chips, so every stage, from reference voltages to the display, can be followed on the board.',
+      howItWorksIntro: { lead: 'From voltage to', accent: 'digits.', chips: ['No microcontroller', 'Pure logic'] },
+      howItWorks: [
         {
-          group: 'Input and timing',
-          items: [
-            'A 10 kΩ potentiometer sets the input voltage, conditioned by a UA741 op-amp with offset-adjust resistors.',
-            'A 2N7000 MOSFET in the input stage, and an LM555 timer circuit with its own resistors and capacitor.',
-            'Power through a two-way screw terminal.',
-          ],
+          title: 'Input', stage: 'Signal in', text: 'A potentiometer sets the voltage; a UA741 op-amp conditions it.', poster: '/images/adc/how/input.jpg',
+          specs: [['Source', '10 kΩ potentiometer'], ['Op-amp', 'UA741'], ['Switch', '2N7000 MOSFET']],
         },
         {
-          group: 'Comparison',
-          items: [
-            'A ladder of 1 kΩ resistors divides the reference into evenly spaced voltages.',
-            'Sixteen comparators — four LM339 quad comparators — each compare the input with one ladder voltage.',
-          ],
+          title: 'Reference', stage: 'Ladder', text: 'A ladder of 1 kΩ resistors makes evenly spaced reference voltages.', poster: '/images/adc/how/ladder.jpg',
+          specs: [['Resistors', '1 kΩ ladder'], ['Steps', 'Evenly spaced']],
         },
         {
-          group: 'Encoding and display',
-          items: [
-            'Two 74148 8-to-3 priority encoders, each handling eight comparators and cascaded through their enable pins.',
-            'Three 74LS86 XOR gates combine the two encoders into one binary code.',
-            'Four LEDs (with 220 Ω resistors) show the code, and a 7447 BCD-to-7-segment decoder drives a D198K common-cathode display.',
-          ],
+          title: 'Compare', stage: 'Flash', text: '16 comparators check the input against every reference at once.', poster: '/images/adc/how/compare.jpg',
+          specs: [['Comparators', '16'], ['Chips', '4 × LM339']],
         },
         {
-          group: 'PCB layout',
-          items: [
-            'Single-sided: every track on the bottom copper layer, 1 mm wide for power and 0.5 mm for signals.',
-            'All 47 parts are through-hole, with the chips in DIP packages for easy soldering and replacement.',
-          ],
+          title: 'Encode', stage: 'Logic', text: 'Two priority encoders and XOR gates turn the result into binary.', poster: '/images/adc/how/encode.jpg',
+          specs: [['Encoders', '2 × 74148, cascaded'], ['Gates', '3 × 74LS86 XOR']],
         },
-      ],
-      implementation: [
-        'Schematic drawn in KiCad with the standard libraries plus imported symbols and footprints for the LM339 and UA741.',
-        'Board laid out in the KiCad PCB editor on a 153 × 86 mm outline.',
-        'The schematic, routing and 3D renders shown here were exported straight from the project files with KiCad. The four LM339s, the 7-segment display and the potentiometer have no 3D models in their footprints, so they appear as outlines in the 3D views.',
+        {
+          title: 'Display', stage: 'Output', text: 'LEDs show the code; a 7447 drives the 7-segment display.', poster: '/images/adc/how/display.jpg',
+          specs: [['LEDs', '4, with 220 Ω'], ['Decoder', '7447'], ['Display', 'D198K, common cathode']],
+        },
+        {
+          title: 'Board', stage: 'PCB', text: 'Everything routed on one copper layer in KiCad.', poster: '/images/adc/routing-full.jpg',
+          specs: [['Board', '153 × 86 mm'], ['Parts', '47 through-hole'], ['Tracks', '1 mm power · 0.5 mm signal']],
+        },
       ],
       contribution:
-        'I designed the circuit and drew the schematic and PCB layout in KiCad. [Edit: add whether it was built and tested on a breadboard or board, and who you worked with.]',
+        'I designed the circuit and drew the schematic and PCB layout in KiCad. [Add whether it was built and tested.]',
       challenges:
-        'Fitting sixteen comparators, two encoders and the display logic onto one copper layer without jumpers is the hard part of the layout, which is why the routing is still being finished. [Edit: add what was hardest for you, for example calibrating the ladder or cascading the encoders.]',
+        'Fitting 16 comparators, two encoders and the display logic onto one copper layer without jumpers.',
       futureWork:
-        'Finish routing the comparator outputs, the LED outputs and the ground, then etch and test the board. [Edit: add your own next steps.]',
-      note: 'The schematic, routing and 3D views are exported directly from the KiCad project. The 3D views are KiCad renders, not photographs. Text in [brackets] is placeholder content.',
+        'Finish routing the comparator and LED outputs and the ground, then etch and test the board.',
+      note: 'Schematic, routing and 3D views are exported from the KiCad project; the 3D views are renders, not photos. Text in [brackets] is placeholder content.',
     },
   },
   {
@@ -601,13 +581,13 @@ const projects: Project[] = [
     icon: 'notebook',
     status: 'In progress',
     summary:
-      'Kaizen is a personal productivity web app (Habit Tracker & Daily Journal) that combines weekly habit tracking with rest days and progress levels, a daily plan, goals and a private diary with an optional AI writing assistant — built with React and Supabase, with every user’s data protected by Row Level Security.',
+      'A habit tracker, planner and private diary in one web app, built with React and Supabase.',
     role: 'Designer & full-stack developer (personal project)',
     image: '/images/kaizen/cover.jpg',
     tags: ['React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Vite', 'Full-Stack'],
     caseStudy: {
       overview:
-        'Kaizen — a Habit Tracker & Daily Journal — started as a weekly habit grid and grew into a small personal planner. You sign in, tick habits across the week, take rest days without breaking your progress, plan today’s tasks, track goals with deadlines, and write a daily diary — all synced to your own account through Supabase and kept private by database-level security. It was built from a to-do list project and has been extended feature by feature.',
+        'Track habits across the week, take rest days without breaking progress, plan today, chase goals and keep a daily diary, all synced to your own private account.',
       banner: false,
       background: 'fading-stars',
       video: {
@@ -617,9 +597,9 @@ const projects: Project[] = [
         caption: '32-second promo with sound. Press play.',
       },
       metrics: [
-        { value: '5', label: 'Supabase tables (weeks, week tasks, goals, diary entries, day tasks), all with Row Level Security' },
-        { value: '3', label: 'themes: Light, Dark and Night' },
-        { value: '4', label: 'optional AI writing tools: correct, make natural, explain mistakes, vocabulary' },
+        { value: '5', label: 'database tables, all private per user' },
+        { value: '3', label: 'themes: Light, Dark, Night' },
+        { value: '4', label: 'optional AI writing tools' },
       ],
       gallery: [
         { src: '/images/kaizen/week.jpg', alt: 'Kaizen weekly planner with daily plan, goals, diary markers and habit grid', caption: 'Weekly planner: daily plan, goals, diary markers and the habit grid' },
@@ -643,79 +623,55 @@ const projects: Project[] = [
         { src: '/images/kaizen/login.jpg', alt: 'Kaizen sign-in page', caption: 'Sign in: email accounts with confirmation and password reset' },
       ],
       problem:
-        'Habits, goals, daily to-dos and journaling usually live in separate apps, so it is hard to see how your days add up. Many planners also lose data when a tab closes, and keeping personal notes in an online tool raises privacy questions.',
+        'Habits, goals, to-dos and journaling usually live in separate apps, so it’s hard to see how your days add up, and personal notes online raise privacy questions.',
       solution:
-        'One planner where the week, the month, today’s tasks, goals and the diary sit side by side, saved to the cloud per account, with careful handling so writing is never silently lost or overwritten, and a privacy model where the database itself refuses to show one person’s rows to another.',
-      features: [
+        'One planner for the week, today’s tasks, goals and a diary, saved to your own account and kept private by the database itself.',
+      howItWorksIntro: { lead: 'From sign-in to', accent: 'a better week.', chips: ['React + Supabase', 'Private by design'] },
+      howItWorks: [
         {
-          group: 'Habits & planner',
-          items: [
-            'Weekly habit grid (Monday–Sunday): add habits, tick the days you did them, and add notes for the week.',
-            'Browse any week with the arrows or a mini calendar; today is marked and the selected week is highlighted.',
-            'Month view with a daily progress chart and every habit against every day, plus a weekly average for each week of the month.',
-            'Rest days: tap the moon under any weekday to rest the whole day, or right-click a box (the menu key, or a long press on a phone) to rest just one habit on one day — handy for habits like drinking water that never take a day off. Rest days are striped, never count for or against you, and are left out of every percentage and average.',
-            'Progress levels: every weekly and monthly average gets a plain label — Just starting (0–29%), Building (30–49%), Steady (50–69%), Strong (70–84%) or Excellent (85–100%) — shown beside the week ring and the month average, with a Progress guide so months can be compared on the same scale.',
-            'In the Month view, a habit you removed from the Week view stays visible as “Removed” with its past marks, and can be deleted for good, with its marks for that month, after a confirmation.',
-            'Sidebar with the live date and time, a month calendar, the week’s progress and the tools.',
-            'Print the planner, export the week to a CSV file that opens cleanly in Excel (formula-safe), or reset the week’s marks after confirming.',
-          ],
+          title: 'Sign in', stage: 'Auth', text: 'Each account signs in with email; its data stays private.', poster: '/images/kaizen/login.jpg',
+          specs: [['Auth', 'Supabase Auth'], ['Privacy', 'Row Level Security'], ['Tables', '5']],
         },
         {
-          group: 'Daily plan',
-          items: [
-            'Small tasks for a specific date, up to 30 per day, kept separate from the weekly habit grid.',
-            'An optional “Tomorrow” list that automatically becomes today’s list at midnight.',
-          ],
+          title: 'Plan the week', stage: 'Planner', text: 'The week, goals and daily plan sit side by side.', poster: '/images/kaizen/week.jpg',
+          specs: [['Front end', 'React 19 + Vite'], ['Styling', 'Tailwind CSS v4']],
         },
         {
-          group: 'Goals',
-          items: [
-            'Goals with a start date, end date and an optional target, current value and unit (for example “Read 12 books”).',
-            'A progress bar and percentage when a target is set; a goal completes itself when it reaches the target, or you can mark it done by hand.',
-            'Automatic status — Active, Completed or Overdue — with the nearest deadlines listed first, and goal lanes shown inside the week view.',
-          ],
+          title: 'Tick habits', stage: 'Tracking', text: 'Tick each day; every habit gets a weekly count.', poster: '/images/kaizen/habits.jpg',
+          specs: [['Saving', 'Per row, per checkbox'], ['Sync', 'Re-checks on tab focus']],
         },
         {
-          group: 'Daily diary',
-          items: [
-            'One diary entry per date: write a journal, save a draft or the finished entry, and edit it later.',
-            'Optional mood (Happy, Productive, Grateful, Calm, Tired, Sad, Anxious, Frustrated) and four guided reflections: highlights, challenges, lessons learned and tomorrow’s plan.',
-            'A daily word goal with a live progress bar, and writing progress by day with current and longest writing streaks. It counts words written, not English ability.',
-            'Diary history, newest first, with search, a date range and a mood filter; days with an entry get a marker on the calendars.',
-          ],
+          title: 'Take a rest day', stage: 'Rest days', text: 'Rest a whole day or one habit without breaking your progress.', poster: '/images/kaizen/rest-day.jpg',
+          specs: [['Scope', 'Whole day or one habit'], ['Effect', 'Left out of every average']],
         },
         {
-          group: 'Improve my writing (optional AI assistant)',
-          items: [
-            'Four tools: correct my writing, make it sound more natural, explain my mistakes, and suggest vocabulary.',
-            'Nothing is sent anywhere until you tick an agreement box and press a tool; your text is never changed until you press Apply, which has a one-click undo.',
-            'Runs as a Supabase Edge Function that holds the AI API key as a secret, accepts only signed-in users and limits each request to 6,000 characters.',
-          ],
+          title: 'Plan today', stage: 'Daily plan', text: 'Up to 30 tasks a day, plus a Tomorrow list.', poster: '/images/kaizen/daily-plan.jpg',
+          specs: [['Limit', '30 tasks a day'], ['Rollover', 'Tomorrow → today at midnight']],
         },
         {
-          group: 'Accounts, privacy & polish',
-          items: [
-            'Email sign-up with confirmation, sign-in, password reset and sign-out; signed-out visitors are redirected to the login page.',
-            'Every table has Row Level Security so an account can only read and change its own rows.',
-            'Light, Dark and Night themes with a keyboard-friendly switcher; native dialogs for modals and confirmations, and accessible labels throughout.',
-          ],
+          title: 'Track goals', stage: 'Goals', text: 'Targets and deadlines, with automatic status.', poster: '/images/kaizen/goals.jpg',
+          specs: [['Status', 'Active · Overdue · Completed'], ['Progress', 'Bar + percentage']],
         },
-      ],
-      implementation: [
-        'Front end: React 19 with Vite, React Router for pages and route guards, Tailwind CSS v4 for styling, and react-hot-toast for notifications.',
-        'Backend as a service: Supabase Auth for accounts and a Postgres database for weeks, habits, goals, diary entries and day tasks. The browser talks to Supabase directly with only the public anon key; the schema lives in versioned SQL migrations.',
-        'Security: Row Level Security with four policies per table; the service-role key is never in the front end. The AI key lives only in a Supabase Edge Function secret.',
-        'Saving: changes are saved per row (one habit, one checkbox, the notes) so two devices editing different habits do not overwrite each other. The app re-checks the database when a tab regains focus, if there are no unsaved edits.',
-        'Rest days: kept in the browser’s local storage for each account (a whole date, or a date plus one habit). Every calculation skips them — the week ring, the daily bars, the weekly and monthly averages and the “3/5”-style counts — so they are never treated as missed days.',
-        'Hosting: a small Express server serves the built site, or the front end can be deployed to any static host (build command npm run build, output folder dist) with all paths rewritten to index.html.',
+        {
+          title: 'Write the diary', stage: 'Journal', text: 'One entry a day, with mood, reflections and a word goal.', poster: '/images/kaizen/editor.jpg',
+          specs: [['Moods', '8'], ['Reflections', '4 prompts'], ['Safety', 'Warns before losing text']],
+        },
+        {
+          title: 'Improve writing', stage: 'AI assist', text: 'Optional AI suggestions, applied only when you choose.', poster: '/images/kaizen/assistant-result.jpg',
+          specs: [['Tools', '4'], ['Runs on', 'Supabase Edge Function'], ['Limit', '6,000 characters']],
+        },
+        {
+          title: 'Review the month', stage: 'Insights', text: 'Charts and progress levels show how the month went.', poster: '/images/kaizen/month.jpg',
+          specs: [['Levels', 'Just starting → Excellent'], ['Themes', 'Light · Dark · Night']],
+        },
       ],
       contribution:
-        'I designed and built the app end to end — the interface, the database schema and security policies, the Supabase integration, and each feature above. It lives in my GitHub repository, diy-todo-list. [Edit: add anything else you want to credit, such as a live demo link.]',
+        'I designed and built it end to end: the interface, database schema, security policies and every feature.',
       challenges:
-        'The hard parts were trust and safety rather than layout: never losing writing (the diary warns before you leave with unsaved text and asks whether to keep your version or load another device’s if both changed the same entry), keeping private notes private with Row Level Security, and keeping an AI key off the front end. Syncing is deliberately simple: there is no live push between devices, and two devices editing the very same field is last-write-wins. Rest days are saved in the browser rather than the database, so they do not follow you to another device yet.',
+        'Never losing writing, keeping private notes private, and keeping the AI key off the front end.',
       futureWork:
-        'Saving rest days to the database so they sync between devices, live updates between devices with Supabase Realtime, and setting up a custom email sender for production sign-ups. [Edit: add your own ideas, for example streaks and reminders for habits.]',
-      note: 'Details come from the project’s source code and setup notes. Screenshots show sample data, not real entries, and the AI suggestions shown are sample output. Text in [brackets] is placeholder content.',
+        'Sync rest days across devices, live updates with Supabase Realtime, and production sign-up emails.',
+      note: 'Screenshots show sample data, and the AI suggestions shown are sample output.',
     },
   },
   {
@@ -727,13 +683,13 @@ const projects: Project[] = [
     icon: 'notebook',
     status: 'Completed',
     summary:
-      'Fieldnote is a full-stack editorial blog: a React front end and an Express + MongoDB API with featured stories, category filters, search, a newsletter, an admin area for publishing articles, and secure session-based login with CSRF protection and rate limiting.',
+      'A magazine-style blog with an admin area for publishing and secure, session-based login. React, Express and MongoDB.',
     role: 'Designer & full-stack developer (personal project)',
     image: '/images/fieldnote/cover.jpg',
     tags: ['React', 'Express', 'MongoDB', 'Node.js', 'Tailwind CSS', 'Full-Stack'],
     caseStudy: {
       overview:
-        'Fieldnote is a magazine-style blog. Signed-in readers get a featured story, a grid of recent stories they can filter by category or search, full article pages and a newsletter signup. Administrators get a private area to upload, edit, feature and delete articles. The React site and the Express API are built to ship as one service, so login cookies stay on a single origin.',
+        'Readers browse a featured story, filter and search articles, and subscribe; admins publish, feature and edit articles from their own private area.',
       banner: false,
       video: {
         title: 'Promo video',
@@ -742,9 +698,9 @@ const projects: Project[] = [
         caption: '29-second promo with sound. Press play.',
       },
       metrics: [
-        { value: '13', label: 'automated backend tests covering sign-up, login, sessions, CSRF, roles and rate limiting — all passing' },
-        { value: '2', label: 'roles: readers can read and subscribe; only administrators can create, edit, feature or delete articles' },
-        { value: '4', label: 'MongoDB collections: articles, users, sessions and newsletter subscribers' },
+        { value: '13', label: 'backend tests, all passing' },
+        { value: '2', label: 'roles: reader and admin' },
+        { value: '4', label: 'MongoDB collections' },
       ],
       gallery: [
         { src: '/images/fieldnote/home.jpg', alt: 'Fieldnote homepage with a featured story, search box and category filters', caption: 'Homepage: featured story, search and category filters' },
@@ -763,63 +719,51 @@ const projects: Project[] = [
         { src: '/images/fieldnote/mobile-menu.jpg', alt: 'Fieldnote mobile navigation menu', caption: 'Mobile: full navigation in a menu', fit: 'contain' },
       ],
       problem:
-        'Many small blogs either have no way to publish without touching code, or bolt on a login that is easy to get wrong. A publishing site needs readers to browse quickly, authors to add articles safely, and write access that can never be reached by an ordinary account.',
+        'Small blogs either can’t publish without touching code, or bolt on a login that’s easy to get wrong.',
       solution:
-        'A single application with a clean reading experience on the front and a small, locked-down API behind it. Articles live in MongoDB; an admin page replaces editing files; and authentication uses server-side sessions, so a logout or a database change takes effect immediately.',
-      features: [
+        'A clean reading site with a small, locked-down API behind it: an admin page for publishing, and server-side sessions so logout takes effect instantly.',
+      howItWorksIntro: { lead: 'From login to', accent: 'published story.', chips: ['React + Express', 'MongoDB'] },
+      howItWorks: [
         {
-          group: 'Reading',
-          items: [
-            'A featured story on the homepage (one at a time, falling back to the newest article) above a grid of recent stories, nine per page with Previous / Next.',
-            'Six category filters (Culture, Places, Ideas, Lifestyle, Technology, Stories), also reachable from the top navigation, and a search box that waits for you to stop typing.',
-            'Article pages with category, author, date and estimated read time; articles open by database ID or by a readable slug.',
-            'An About page, a 404 page, and clear loading, error and empty states; broken cover images fall back gracefully.',
-            'Responsive layout with a mobile menu.',
-          ],
+          title: 'Log in', stage: 'Auth', text: 'The whole site requires an account.', poster: '/images/fieldnote/login.jpg',
+          specs: [['Sessions', 'HttpOnly cookie'], ['Passwords', 'bcrypt'], ['Abuse', 'Rate-limited']],
         },
         {
-          group: 'Newsletter',
-          items: [
-            'Email signup with validation; a duplicate address is recognised instead of stored twice.',
-            'Subscribers are saved in MongoDB.',
-          ],
+          title: 'Browse', stage: 'Home', text: 'A featured story above the latest articles.', poster: '/images/fieldnote/home.jpg',
+          specs: [['Featured', 'One at a time'], ['Grid', '9 stories a page']],
         },
         {
-          group: 'Admin: manage and publish',
-          items: [
-            'A Manage articles page listing every article with View, Feature, Edit and Delete.',
-            'An Upload a blog form: title, excerpt, category, author, cover image URL with a live preview, and content where a blank line starts a new paragraph.',
-            'Read time is calculated automatically, slugs are kept unique, and only one article can be featured at a time.',
-            'Deleting opens a confirmation dialog that keeps keyboard focus inside it and closes with Esc.',
-          ],
+          title: 'Filter', stage: 'Categories', text: 'Six categories, one click away.', poster: '/images/fieldnote/category.jpg',
+          specs: [['Categories', '6'], ['Also in', 'Top navigation']],
         },
         {
-          group: 'Accounts & security',
-          items: [
-            'Create an account with live password rules, or log in with a show-password toggle and an optional “Remember me for 30 days”.',
-            'The whole site requires login, and public registration can only ever create an ordinary reader. Administrators are created with a command-line script.',
-            'Server-side sessions in an HttpOnly cookie; only a SHA-256 hash of the session token is stored, and logging out deletes the session on the server.',
-            'Passwords are hashed with bcrypt. The login check takes the same path whether or not the email exists, so response time does not reveal registered emails.',
-            'CSRF protection: each session has its own token that every write request must send, and requests from an unexpected origin are rejected.',
-            'Rate limiting on login and sign-up to slow down guessing.',
-          ],
+          title: 'Search', stage: 'Search', text: 'Results update as you type.', poster: '/images/fieldnote/search.jpg',
+          specs: [['Input', 'Debounced'], ['Scope', 'All articles']],
         },
-      ],
-      implementation: [
-        'Front end: React 19 with Vite, React Router for pages and route guards (signed-in, then admin-only), Tailwind CSS v4, Lucide icons, and small hooks for async loading and debouncing.',
-        'Back end: Node.js and Express 5 with Mongoose models for articles, users, sessions and subscribers. Controllers and routes are separated, with centralised error handling and input validation.',
-        'Authorization is enforced on the server: every read needs a session and every write needs the admin role, regardless of what the front end shows.',
-        'Data tooling: an idempotent seed script that adds seven sample articles without overwriting edits, plus scripts to create or promote an administrator.',
-        'Testing: 13 automated tests with Node’s built-in test runner against an in-memory MongoDB, covering registration, login, sessions, logout, role checks, CSRF and rate limiting.',
-        'Deployment: one Render web service serves both the API and the built React site on the same origin, with a health-check endpoint and a render.yaml blueprint; MongoDB Atlas holds the data.',
+        {
+          title: 'Read', stage: 'Article', text: 'Article pages built for long reads.', poster: '/images/fieldnote/article.jpg',
+          specs: [['Read time', 'Calculated automatically'], ['Links', 'By ID or slug']],
+        },
+        {
+          title: 'Subscribe', stage: 'Newsletter', text: 'Email signup with validation.', poster: '/images/fieldnote/newsletter.jpg',
+          specs: [['Storage', 'MongoDB'], ['Duplicates', 'Detected']],
+        },
+        {
+          title: 'Publish', stage: 'Admin', text: 'Admins upload articles with a live cover preview.', poster: '/images/fieldnote/editor.jpg',
+          specs: [['Access', 'Admin role only'], ['Writes', 'CSRF token required']],
+        },
+        {
+          title: 'Manage', stage: 'Admin', text: 'View, feature, edit or delete any article.', poster: '/images/fieldnote/admin.jpg',
+          specs: [['Tests', '13 passing'], ['Hosting', 'Render + MongoDB Atlas']],
+        },
       ],
       contribution:
-        'I designed and built the whole project: the React interface, the Express API, the MongoDB data models, the authentication and security layer, the admin tools, the tests and the deployment setup. [Edit: add your GitHub repository link and a live demo link if you have them.]',
+        'I designed and built all of it: the React site, Express API, MongoDB models, security layer, admin tools, tests and deployment.',
       challenges:
-        'The hard part was authentication done properly rather than the blog itself: keeping write access away from ordinary accounts, making cookies safe against cross-site requests, letting logout truly end a session, and making a separate front end and API work together in development while shipping as one same-origin service in production.',
+        'Getting authentication right: admin-only writes, CSRF-safe cookies, real logout, and one same-origin deployment.',
       futureWork:
-        'Password reset and email verification, security headers and request logging, Markdown or rich-text articles, double opt-in confirmation emails (subscribers are stored, but no emails are sent yet), and real image uploads instead of image URLs.',
-      note: 'Details come from the project’s source code, README and test run. Screenshots were taken from a local copy running on a temporary database with the project’s seven sample articles (placeholder text, stock photos and fictional authors) and demo accounts, not real content or users. Text in [brackets] is placeholder content.',
+        'Password reset, email verification, rich-text articles, newsletter emails, and real image uploads.',
+      note: 'Screenshots use the project’s sample articles and demo accounts, not real content or users.',
     },
   },
 ]

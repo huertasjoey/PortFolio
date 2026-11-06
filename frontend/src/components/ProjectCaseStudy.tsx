@@ -90,7 +90,8 @@ function CaseStudyBody({
           <section>
             <HowItWorks
               steps={cs.howItWorks}
-              title={h.howItWorks}
+              title={cs.howItWorksIntro?.title ?? h.howItWorks}
+              intro={cs.howItWorksIntro}
               index={next()}
             />
           </section>
@@ -191,7 +192,15 @@ function CaseStudyBody({
               title={h.gallery}
               heading={
                 <>
-                  From the <em>workshop.</em>
+                  {project.previewKind === 'hardware' ? (
+                    <>
+                      From the <em>workshop.</em>
+                    </>
+                  ) : (
+                    <>
+                      Screen <em>by screen.</em>
+                    </>
+                  )}
                 </>
               }
               aside={
@@ -211,7 +220,7 @@ function CaseStudyBody({
               title={`${cs.comparison.a} vs ${cs.comparison.b}`}
               heading={
                 <>
-                  Same tomatoes, <em>two methods.</em>
+                  {cs.comparison.heading?.lead ?? 'Side by'} <em>{cs.comparison.heading?.accent ?? 'side.'}</em>
                 </>
               }
               aside={
