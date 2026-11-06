@@ -1,6 +1,7 @@
 import { ArrowLeft } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useCallback, useState } from 'react'
+import { FeaturedSpotlight } from '../components/FeaturedSpotlight'
 import { Link } from '../components/Link'
 import { ProjectCaseStudy } from '../components/ProjectCaseStudy'
 import { ProjectCategory } from '../components/ProjectCategory'
@@ -83,9 +84,16 @@ export function WorkPage() {
             transition={{ duration: 0.4, ease: 'easeOut' }}
             className="space-y-28 md:space-y-40"
           >
-            {listed.map((p, i) => (
-              <ProjectPanel key={p.id} project={p} number={projects.indexOf(p) + 1} flip={i % 2 === 1} onOpen={setOpenProject} />
-            ))}
+            {listed
+              .filter((p) => p.featured)
+              .map((p) => (
+                <FeaturedSpotlight key={p.id} project={p} number={projects.indexOf(p) + 1} onOpen={setOpenProject} />
+              ))}
+            {listed
+              .filter((p) => !p.featured)
+              .map((p, i) => (
+                <ProjectPanel key={p.id} project={p} number={projects.indexOf(p) + 1} flip={i % 2 === 1} onOpen={setOpenProject} />
+              ))}
           </motion.div>
         ) : (
           <p className="border-t border-line py-10 font-serif text-2xl font-light text-fg2 italic">{workPage.emptyNone}</p>

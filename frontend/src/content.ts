@@ -19,7 +19,7 @@ const profile = {
   /** Full title (used in the page header area / meta). */
   title: 'Computer Engineer · Full-Stack Developer',
   /** Small uppercase label under your name in the sidebar. */
-  shortTitle: 'COMPUTER ENGINEER · FULL-STACK',
+  shortTitle: 'COMPUTER ENGINEER',
   /** Text next to the blue status dot. */
   availability: 'Open to work',
   email: 'joeyhuertas12@gmail.com',
