@@ -1,11 +1,11 @@
-import { ArrowLeft, Box, CircuitBoard, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
-import { content } from "../content";
-import { useTheme } from "../hooks/useTheme";
-import type { Project } from "../types";
-import { BinaryOrbit } from "./BinaryOrbit";
+import { ArrowLeft, Box, CircuitBoard, X } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import { content } from '../content'
+import { useTheme } from '../hooks/useTheme'
+import type { Project } from '../types'
+import { BinaryOrbit } from './BinaryOrbit'
 import {
   Comparison,
   Credits,
@@ -19,53 +19,41 @@ import {
   ProblemSolution,
   SectionHeader,
   SpecList,
-} from "./caseStudy/Sections";
-import { FadingStars } from "./FadingStars";
-import { HowItWorks } from "./HowItWorks";
-import { LiveFlowchart } from "./LiveFlowchart";
-import { ModelTabs } from "./ModelViewer";
-import { PcbViewer } from "./PcbViewer";
-import { ProjectPreview } from "./ProjectPreview";
-import { ThemeToggle } from "./ThemeToggle";
+} from './caseStudy/Sections'
+import { FadingStars } from './FadingStars'
+import { HowItWorks } from './HowItWorks'
+import { LiveFlowchart } from './LiveFlowchart'
+import { ModelTabs } from './ModelViewer'
+import { PcbViewer } from './PcbViewer'
+import { ProjectPreview } from './ProjectPreview'
+import { ThemeToggle } from './ThemeToggle'
 
-const ui = content.projectUi;
+const ui = content.projectUi
 
 interface Props {
-  project: Project | null;
-  onClose: () => void;
+  project: Project | null
+  onClose: () => void
 }
 
 /** The case study page: a wide, sectioned layout. Sections without data are skipped and the rest renumber. */
-function CaseStudyBody({
-  project,
-  onClose,
-}: {
-  project: Project;
-  onClose: () => void;
-}) {
-  const cs = project.caseStudy;
-  const h = ui.caseStudyHeadings;
-  let n = 0;
-  const next = () => String(++n).padStart(2, "0");
-  const photos = [
-    ...(cs.gallery ?? []),
-    ...(cs.galleries ?? []).flatMap((g) => g.slides),
-  ];
-  const hardware = [cs.model3d, cs.pcb].filter(Boolean).length;
+function CaseStudyBody({ project, onClose }: { project: Project; onClose: () => void }) {
+  const cs = project.caseStudy
+  const h = ui.caseStudyHeadings
+  let n = 0
+  const next = () => String(++n).padStart(2, '0')
+  const photos = [...(cs.gallery ?? []), ...(cs.galleries ?? []).flatMap((g) => g.slides)]
+  const hardware = [cs.model3d, cs.pcb].filter(Boolean).length
 
   return (
     <>
       {cs.banner !== false && (
         <div className="group">
-          <ProjectPreview
-            project={project}
-            className="h-52 border-b border-line sm:h-72"
-          />
+          <ProjectPreview project={project} className="h-52 border-b border-line sm:h-72" />
         </div>
       )}
       <div
         className={`mx-auto max-w-7xl space-y-20 px-5 pt-20 pb-12 sm:space-y-28 sm:px-10 sm:pb-16 ${
-          cs.background ? "my-6 rounded-3xl bg-bg/80 backdrop-blur-[6px]" : ""
+          cs.background ? 'my-6 rounded-3xl bg-bg/80 backdrop-blur-[6px]' : ''
         }`}
       >
         <div className="space-y-10">
@@ -88,12 +76,7 @@ function CaseStudyBody({
 
         {cs.howItWorks && (
           <section>
-            <HowItWorks
-              steps={cs.howItWorks}
-              title={cs.howItWorksIntro?.title ?? h.howItWorks}
-              intro={cs.howItWorksIntro}
-              index={next()}
-            />
+            <HowItWorks steps={cs.howItWorks} title={cs.howItWorksIntro?.title ?? h.howItWorks} intro={cs.howItWorksIntro} index={next()} />
           </section>
         )}
 
@@ -137,17 +120,9 @@ function CaseStudyBody({
                   The logic, <em>running live.</em>
                 </>
               }
-              aside={
-                <p className="max-w-sm text-sm text-fg2">
-                  {cs.flowchart.description}
-                </p>
-              }
+              aside={<p className="max-w-sm text-sm text-fg2">{cs.flowchart.description}</p>}
             />
-            {cs.flowchart.live ? (
-              <LiveFlowchart figures={cs.flowchart.views} />
-            ) : (
-              <PcbViewer {...cs.flowchart} label="Flowchart stages" />
-            )}
+            {cs.flowchart.live ? <LiveFlowchart figures={cs.flowchart.views} /> : <PcbViewer {...cs.flowchart} label="Flowchart stages" />}
           </section>
         )}
 
@@ -162,18 +137,11 @@ function CaseStudyBody({
                 </>
               }
             />
-            <div
-              className={`grid gap-4 ${hardware > 1 ? "xl:grid-cols-2" : ""}`}
-            >
+            <div className={`grid gap-4 ${hardware > 1 ? 'xl:grid-cols-2' : ''}`}>
               {cs.model3d && (
                 <Panel label={h.model3d} icon={<Box size={14} />}>
-                  <p className="mb-4 text-sm text-fg2">
-                    {cs.model3d.description}
-                  </p>
-                  <ModelTabs
-                    views={cs.model3d.views}
-                    orbit="30deg 65deg auto"
-                  />
+                  <p className="mb-4 text-sm text-fg2">{cs.model3d.description}</p>
+                  <ModelTabs views={cs.model3d.views} orbit="30deg 65deg auto" />
                 </Panel>
               )}
               {cs.pcb && (
@@ -203,11 +171,7 @@ function CaseStudyBody({
                   )}
                 </>
               }
-              aside={
-                <p className="font-mono text-xs text-fg2">
-                  {photos.length} photos
-                </p>
-              }
+              aside={<p className="font-mono text-xs text-fg2">{photos.length} photos</p>}
             />
             <PhotoGrid photos={photos} />
           </section>
@@ -226,15 +190,10 @@ function CaseStudyBody({
               aside={
                 <p className="flex items-center gap-4 font-mono text-[11px] text-fg2">
                   <span className="flex items-center gap-2">
-                    <span className="size-2 rounded-full bg-gold" aria-hidden />{" "}
-                    {cs.comparison.a}
+                    <span className="size-2 rounded-full bg-gold" aria-hidden /> {cs.comparison.a}
                   </span>
                   <span className="flex items-center gap-2">
-                    <span
-                      className="size-2 rounded-full bg-muted/60"
-                      aria-hidden
-                    />{" "}
-                    {cs.comparison.b}
+                    <span className="size-2 rounded-full bg-muted/60" aria-hidden /> {cs.comparison.b}
                   </span>
                 </p>
               }
@@ -274,9 +233,7 @@ function CaseStudyBody({
         <section>
           <SectionHeader
             index={next()}
-            title={
-              cs.futureWork ? `${h.challenges} & ${h.futureWork}` : h.challenges
-            }
+            title={cs.futureWork ? `${h.challenges} & ${h.futureWork}` : h.challenges}
             heading={
               <>
                 Lessons and <em>what&rsquo;s next.</em>
@@ -287,9 +244,7 @@ function CaseStudyBody({
         </section>
 
         <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-          <p className="max-w-2xl font-mono text-[11px] leading-relaxed text-muted">
-            {cs.note ?? ui.disclaimer}
-          </p>
+          <p className="max-w-2xl font-mono text-[11px] leading-relaxed text-muted">{cs.note ?? ui.disclaimer}</p>
           <button
             type="button"
             onClick={onClose}
@@ -300,57 +255,50 @@ function CaseStudyBody({
         </footer>
       </div>
     </>
-  );
+  )
 }
 
 /** Accessible modal case study: Esc to close, focus trap, focus restored, background scroll locked. */
 export function ProjectCaseStudy({ project, onClose }: Props) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const { theme, toggle: toggleTheme } = useTheme();
+  const panelRef = useRef<HTMLDivElement>(null)
+  const { theme, toggle: toggleTheme } = useTheme()
 
   useEffect(() => {
-    if (!project) return;
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    panelRef.current?.focus();
+    if (!project) return
+    const previouslyFocused = document.activeElement as HTMLElement | null
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    panelRef.current?.focus()
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") return onClose();
-      if (e.key !== "Tab" || !panelRef.current) return;
-      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
-        'button, a[href], [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
+      if (e.key === 'Escape') return onClose()
+      if (e.key !== 'Tab' || !panelRef.current) return
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>('button, a[href], [tabindex]:not([tabindex="-1"])')
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
       if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
+        e.preventDefault()
+        last.focus()
       } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+        e.preventDefault()
+        first.focus()
       }
-    };
-    document.addEventListener("keydown", onKey);
+    }
+    document.addEventListener('keydown', onKey)
     return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-      previouslyFocused?.focus();
-    };
-  }, [project, onClose]);
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+      previouslyFocused?.focus()
+    }
+  }, [project, onClose])
 
   return createPortal(
     <AnimatePresence>
       {project && (
-        <motion.div
-          className="fixed inset-0 z-50 bg-bg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          {project.caseStudy.background === "binary-orbit" && <BinaryOrbit />}
-          {project.caseStudy.background === "fading-stars" && <FadingStars />}
+        <motion.div className="fixed inset-0 z-50 bg-bg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          {project.caseStudy.background === 'binary-orbit' && <BinaryOrbit />}
+          {project.caseStudy.background === 'fading-stars' && <FadingStars />}
           <motion.div
             ref={panelRef}
             role="dialog"
@@ -360,7 +308,7 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 30, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
             className="relative z-10 h-dvh w-full overflow-y-auto outline-none"
           >
             <div className="fixed top-3 right-3 z-10 flex items-center gap-2 rounded-2xl border border-line bg-bg/80 p-1 backdrop-blur sm:top-4 sm:right-4">
@@ -380,5 +328,5 @@ export function ProjectCaseStudy({ project, onClose }: Props) {
       )}
     </AnimatePresence>,
     document.body,
-  );
+  )
 }
