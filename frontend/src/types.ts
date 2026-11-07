@@ -182,8 +182,16 @@ export interface TechLogo {
 
 export interface EducationEntry {
   degree: string
+  /** Short form for small labels, e.g. "BS Computer Engineering". */
+  short?: string
   institution: string
   location: string
-  /** Optional, e.g. "2020 — 2024". Leave out if you don't want it shown. */
+  /** Optional, e.g. "2020 — 2024" or "Class of 2026". Leave out if you don't want it shown. */
   period?: string
+  /** School logo or wordmark (public/images/…). */
+  logo?: string
+  /** Campus photo used as a dimmed backdrop. */
+  photo?: string
+  /** Areas of study, shown as chips. */
+  focus?: string[]
 }

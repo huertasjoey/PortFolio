@@ -1,7 +1,8 @@
 import { ArrowRight } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link } from '../components/Link'
 import { ProjectCaseStudy } from '../components/ProjectCaseStudy'
+import { OPEN_CASE_STUDY } from '../lib/openCaseStudy'
 import { ProjectCollage } from '../components/ProjectCollage'
 import { RichText } from '../components/RichText'
 import { Reveal } from '../components/ui/Reveal'
@@ -15,6 +16,16 @@ const { work, projects } = content
 export function WorkSection() {
   const [openProject, setOpenProject] = useState<Project | null>(null)
   const close = useCallback(() => setOpenProject(null), [])
+
+  // Other sections (e.g. Education) can open a case study by project id.
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const p = projects.find((x) => x.id === (e as CustomEvent<string>).detail)
+      if (p) setOpenProject(p)
+    }
+    window.addEventListener(OPEN_CASE_STUDY, onOpen)
+    return () => window.removeEventListener(OPEN_CASE_STUDY, onOpen)
+  }, [])
 
   return (
     <section id="work" aria-labelledby="work-title" className="py-28 lg:py-40">

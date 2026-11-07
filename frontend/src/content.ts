@@ -80,20 +80,25 @@ const about = {
     alt: 'Portrait of Joey Huertas in graduation attire',
     caption: 'Computer Engineering · Pampanga State University',
   },
-  headline: 'Building at the intersection of **hardware**, **software**, and **intelligence.**',
+  headline: 'Building at the intersection of **hardware**, **software** and **intelligence.**',
   paragraphs: [
-    'I’m Joey Huertas, a Computer Engineering graduate growing into full-stack web development, IoT, embedded systems and AI engineering.',
-    'I like problems that cross layers — a sensor reading that ends up on a screen, a microcontroller that decides when to act, an interface that makes the data useful. I start from the real-world need, sketch the system end to end, then build and test it in small steps.',
+    'I’m Joey Huertas, a Computer Engineering graduate working across embedded systems, IoT, full‑stack web and applied AI.',
+    'I like problems that cross layers: a sensor reading that ends up on a screen, a microcontroller that decides when to act, an interface that makes the data useful.',
   ],
-  focusTitle: 'Focus areas',
-  focusAreas: [
-    'Full-stack web applications',
-    'Embedded systems & sensors',
-    'IoT & automation',
-    'Applied AI engineering',
+  /** Fact sheet under the intro. */
+  facts: [
+    { label: 'Based in', value: 'Pampanga, Philippines' },
+    { label: 'Degree', value: 'BS Computer Engineering' },
+    { label: 'University', value: 'Pampanga State University' },
+    { label: 'Capstone', value: 'LycoDry · 2026' },
   ],
-  primaryButton: 'Explore my projects',
-  secondaryButton: 'Get in touch',
+  processTitle: 'How I work',
+  process: [
+    { title: 'Understand the need', text: 'Start from the real-world problem and the people it affects.' },
+    { title: 'Sketch the system', text: 'Map it end to end: sensors, logic, data and interface.' },
+    { title: 'Build in small steps', text: 'Prototype one layer at a time, from circuit to code.' },
+    { title: 'Test with real data', text: 'Measure, compare and refine until it holds up.' },
+  ],
 }
 
 /* ────────────────────────────── 02 Work ───────────────────────────── */
@@ -918,15 +923,22 @@ const skills = {
 
 const educationEntries: EducationEntry[] = [
   {
-    degree: 'Computer Engineering',
+    degree: 'Bachelor of Science in Computer Engineering',
+    short: 'BS Computer Engineering',
     institution: 'Pampanga State University',
-    location: 'Pampanga, Philippines',
-    // period: '2020 — 2024',
+    location: 'Bacolor, Pampanga, Philippines',
+    period: 'Class of 2026',
+    /** Official wordmark (public domain, via Wikimedia Commons). */
+    logo: '/images/education/psu-wordmark.png',
+    /** Campus frontage, CC0 photo by Judgefloro on Wikimedia Commons. */
+    photo: '/images/education/psu-campus.jpg',
+    focus: ['Embedded systems', 'Digital logic', 'Circuit & PCB design', 'Computer vision', 'Programming'],
   },
 ]
 
 const education = {
   heading: 'Engineering my **foundation.**',
+  focusLabel: 'Areas of study',
   entries: educationEntries,
 }
 
