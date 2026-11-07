@@ -600,8 +600,8 @@ const projects: Project[] = [
     role: 'Designer & full-stack developer (personal project)',
     image: '/images/kaizen/cover.jpg',
     links: {
-      live: '', // ← paste Kaizen's live URL here, e.g. 'https://kaizen-xyz.vercel.app'
-      repo: 'https://github.com/huertasjoey/diy-todo-list',
+      live: 'https://diy-todo-list.onrender.com/',
+      note: 'Hosted on a free server: the first visit can take up to a minute to wake up. Sign up with your email to try it.',
     },
     tags: ['React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Vite', 'Full-Stack'],
     caseStudy: {
@@ -706,8 +706,8 @@ const projects: Project[] = [
     role: 'Designer & full-stack developer (personal project)',
     image: '/images/fieldnote/cover.jpg',
     links: {
-      live: '', // ← paste Fieldnote's live URL here, e.g. 'https://field-note.onrender.com'
-      repo: 'https://github.com/huertasjoey/field-note',
+      live: 'https://fieldnote-86xi.onrender.com/',
+      note: 'Hosted on a free server: the first visit can take up to a minute to wake up. Create a reader account to browse the stories.',
     },
     tags: ['React', 'Express', 'MongoDB', 'Node.js', 'Tailwind CSS', 'Full-Stack'],
     caseStudy: {
