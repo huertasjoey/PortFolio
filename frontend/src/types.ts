@@ -67,6 +67,11 @@ export interface Project {
   icon: IconName
   /** Optional cover image (in public/images/). Replaces the dotted icon preview. */
   image?: string
+  /**
+   * Optional links: `live` is the deployed app visitors can use ("Open the live app"),
+   * `repo` the source code. Leave either out to hide its button.
+   */
+  links?: { live?: string; repo?: string; note?: string }
   status: ProjectStatus
   featured?: boolean
   summary: string

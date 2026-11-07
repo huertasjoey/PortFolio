@@ -3,6 +3,7 @@ import { useState, type ReactNode } from 'react'
 import { content } from '../../content'
 import type { Project } from '../../types'
 import { Lightbox } from '../Lightbox'
+import { ProjectLinks } from '../ProjectLinks'
 import { Tag } from '../ui/Tag'
 
 type CaseStudy = Project['caseStudy']
@@ -88,6 +89,7 @@ export function Hero({ project, titleId }: { project: Project; titleId: string }
               </li>
             ))}
           </ul>
+          <ProjectLinks project={project} className="mt-8" />
         </div>
         {media && <div className="min-w-0">{media}</div>}
       </div>

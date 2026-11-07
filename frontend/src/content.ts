@@ -599,6 +599,10 @@ const projects: Project[] = [
       'A habit tracker, planner and private diary in one web app, built with React and Supabase.',
     role: 'Designer & full-stack developer (personal project)',
     image: '/images/kaizen/cover.jpg',
+    links: {
+      live: '', // ← paste Kaizen's live URL here, e.g. 'https://kaizen-xyz.vercel.app'
+      repo: 'https://github.com/huertasjoey/diy-todo-list',
+    },
     tags: ['React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Vite', 'Full-Stack'],
     caseStudy: {
       overview:
@@ -701,6 +705,10 @@ const projects: Project[] = [
       'A magazine-style blog with an admin area for publishing and secure, session-based login. React, Express and MongoDB.',
     role: 'Designer & full-stack developer (personal project)',
     image: '/images/fieldnote/cover.jpg',
+    links: {
+      live: '', // ← paste Fieldnote's live URL here, e.g. 'https://field-note.onrender.com'
+      repo: 'https://github.com/huertasjoey/field-note',
+    },
     tags: ['React', 'Express', 'MongoDB', 'Node.js', 'Tailwind CSS', 'Full-Stack'],
     caseStudy: {
       overview:

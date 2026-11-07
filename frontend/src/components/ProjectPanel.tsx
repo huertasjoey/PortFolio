@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { content } from '../content'
 import type { Project } from '../types'
+import { ProjectLinks } from './ProjectLinks'
 import { ProjectPreview } from './ProjectPreview'
 
 interface Props {
@@ -53,6 +54,7 @@ export function ProjectPanel({ project, number, flip = false, onOpen }: Props) {
           {content.projectUi.caseStudyButton}
           <ArrowRight size={18} strokeWidth={2} className="transition-transform duration-300 group-hover/cta:translate-x-0.5" />
         </button>
+        <ProjectLinks project={project} className="mt-4" />
       </div>
     </article>
   )
