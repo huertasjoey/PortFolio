@@ -14,12 +14,12 @@ export function AboutSection() {
         <div>
           <Reveal>
             <p className="mb-8 font-mono text-[11px] tracking-[0.2em] text-muted">01 — ABOUT</p>
-            <h1
+            <h2
               id="about-title"
               className="max-w-4xl text-4xl leading-[1.1] font-light tracking-tight text-fg sm:text-5xl lg:text-6xl [&_strong]:font-medium"
             >
               <RichText text={about.headline} />
-            </h1>
+            </h2>
           </Reveal>
 
           <Reveal delay={0.1} className="mt-14 grid gap-12 lg:grid-cols-[1.4fr_1fr]">

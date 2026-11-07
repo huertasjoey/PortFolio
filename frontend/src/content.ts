@@ -50,6 +50,27 @@ const nav: NavItem[] = [
   { id: 'contact', number: '06', label: 'Contact' },
 ]
 
+/* ─────────────────────────────── Hero ─────────────────────────────── */
+
+/** Full-screen intro shown above About. */
+const hero = {
+  /** Headline; **double asterisks** turn words gold and italic. */
+  headline: 'I build machines that **see,** and the software that **explains them.**',
+  description:
+    'Computer engineer working across embedded hardware, edge AI and full‑stack web, from the circuit board to the dashboard.',
+  quote: { text: 'The best way to predict the future is to invent it.', author: 'Alan Kay' },
+  cta: 'View my work',
+  secondaryCta: 'Get in touch',
+  /** The signal path shown beside the headline. */
+  chain: [
+    { label: 'Sense', detail: 'Sensors · ESP32' },
+    { label: 'Infer', detail: 'YOLOv11 · Raspberry Pi 5' },
+    { label: 'Act', detail: 'Servos · relays · heaters' },
+    { label: 'Show', detail: 'React · live dashboards' },
+  ],
+  scrollLabel: 'Scroll',
+}
+
 /* ───────────────────────────── 01 About ───────────────────────────── */
 
 const about = {
@@ -939,6 +960,7 @@ const footer = {
 export const content = {
   profile,
   nav,
+  hero,
   about,
   work,
   workPage,

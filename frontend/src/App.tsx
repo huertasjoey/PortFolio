@@ -9,6 +9,7 @@ import { usePath } from './hooks/usePath'
 import { useTheme } from './hooks/useTheme'
 import { WorkPage } from './pages/WorkPage'
 import { AboutSection } from './sections/AboutSection'
+import { HeroSection } from './sections/HeroSection'
 import { ContactSection } from './sections/ContactSection'
 import { EducationSection } from './sections/EducationSection'
 import { ExperienceSection } from './sections/ExperienceSection'
@@ -48,6 +49,7 @@ export default function App() {
             <WorkPage />
           ) : (
             <>
+              <HeroSection />
               <AboutSection />
               <WorkSection />
               <ExperienceSection />

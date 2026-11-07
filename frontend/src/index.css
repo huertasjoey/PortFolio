@@ -107,3 +107,13 @@ body,
   }
 }
 
+
+/* Hero: the line in the scroll cue. */
+@keyframes hero-scroll {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(200%);
+  }
+}
