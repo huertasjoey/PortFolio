@@ -218,9 +218,9 @@ const projects: Project[] = [
         'A machine that grades, slices and dries tomatoes on its own. AI sorts each tomato as Market, Processing or Reject, and the processing ones are sliced and dried in 24 hours. Our BS Computer Engineering capstone at Pampanga State University (2026).',
       video: {
         title: 'Promo video',
-        src: '/videos/lycodry-promo.mp4',
-        poster: '/videos/lycodry-promo-poster.jpg',
-        caption: '1-minute promo with sound: how we built it, the machine at work, and the results. Press play.',
+        src: '/videos/lycodry-montage.mp4',
+        poster: '/videos/lycodry-montage-poster.jpg',
+        caption: '3:35 demo montage with sound, from loading to the results, plus the machine with the lights on and off. Music: “Aitech” by Kevin MacLeod (incompetech.com), CC BY 3.0.',
       },
       metrics: [
         { value: '0.876', label: 'AI model accuracy (mAP@0.5)' },
