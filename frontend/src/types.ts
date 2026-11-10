@@ -157,7 +157,11 @@ export interface ExperienceEntry {
   role: string
   organization: string
   period: string
+  /** Small badge beside the period, e.g. "OJT" or "Capstone". */
+  kind?: string
   description: string
+  /** What you did, one line each. */
+  highlights?: string[]
   tech: string[]
 }
 
@@ -185,6 +189,8 @@ export interface EducationEntry {
   /** Short form for small labels, e.g. "BS Computer Engineering". */
   short?: string
   institution: string
+  /** Optional former name of the school, shown as "(formerly …)". */
+  formerly?: string
   location: string
   /** Optional, e.g. "2020 — 2024" or "Class of 2026". Leave out if you don't want it shown. */
   period?: string

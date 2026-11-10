@@ -820,31 +820,62 @@ const projects: Project[] = [
 /* ─────────────────────────── 03 Experience ────────────────────────── */
 
 /**
- * Leave `entries` EMPTY to show the "independent work" cards instead.
- * Example entry:
- *   { role: 'Intern', organization: 'Company', period: '2025', description: '…', tech: ['React'] }
+ * Internships, jobs and major projects, shown as a timeline (newest first). Example:
+ *   { role: 'Intern', organization: 'Company', period: '2025', kind: 'OJT', description: '…', highlights: ['…'], tech: ['React'] }
  */
-const experienceEntries: ExperienceEntry[] = []
+const experienceEntries: ExperienceEntry[] = [
+  {
+    role: 'Project Architect & Hardware Engineer',
+    organization: 'LycoDry capstone · Pampanga State University',
+    period: '2026',
+    kind: 'Capstone',
+    description: 'Led the system design of an AI machine that grades, slices and dries tomatoes, in a team of five.',
+    highlights: [
+      'Architected the full system, then designed and built all of its hardware',
+      'Integrated a YOLOv11 model (0.876 mAP) that sorts tomatoes with 82–93% accuracy',
+      'Dried tomatoes in 24 hours instead of 8 days of sun drying',
+    ],
+    tech: ['ESP32', 'Raspberry Pi 5', 'YOLOv11', 'Servos', 'Pneumatics'],
+  },
+  {
+    role: 'Computer Engineering Intern',
+    organization: 'AI/ML Center · Pampanga State University',
+    period: 'Feb – May 2026',
+    kind: 'OJT',
+    description: 'On-the-job training supporting the center’s computers, software and day-to-day technical work.',
+    highlights: [
+      'Installed, maintained and troubleshot computer hardware',
+      'Installed and configured software and kept systems running',
+      'Diagnosed and fixed hardware and software issues for users',
+      'Worked with the team to finish technical tasks on schedule',
+    ],
+    tech: ['Hardware troubleshooting', 'System setup', 'Software configuration', 'Teamwork'],
+  },
+]
 
 const experience = {
   heading: 'Where I’ve **grown.**',
+  description: 'Hands-on training, a capstone machine built from scratch, and the roles I take on across hardware and software.',
+  entriesLabel: 'Experience',
   entries: experienceEntries,
-  /** Shown while `entries` is empty. */
-  fallbackItems: [
+  rolesLabel: 'Roles I’ve taken on',
+  /** Roles held across academic and independent projects. */
+  roles: [
     {
-      title: 'Independent projects',
-      text: 'Self-directed builds across embedded hardware, IoT and full-stack web — see the Work section.',
+      title: 'PCB Designer',
+      context: 'Circuit design',
+      text: 'Drew schematics and routed boards in KiCad, then etched and hand-soldered finished designs.',
+      tags: ['KiCad', 'Schematics', 'Etching', 'Soldering'],
     },
     {
-      title: 'Practical engineering',
-      text: 'Applying computer engineering coursework to sensors, microcontrollers and circuit design.',
-    },
-    {
-      title: 'Continuous learning',
-      text: 'Growing in AI engineering, automation and modern web tooling.',
+      title: 'Full-Stack Developer',
+      context: 'Web development',
+      text: 'Designed, built and shipped web apps end to end, including accounts, databases and security.',
+      tags: ['React', 'Supabase', 'Express', 'MongoDB'],
     },
   ],
-  fallbackNote: 'No formal employment is listed here. Add entries in src/content.ts to replace this view.',
+  /** What I'm working towards; shown as the last row. */
+  now: { title: 'Currently growing', text: 'AI engineering, automation and modern web tooling.' },
   technologiesLabel: 'Technologies',
 }
 
@@ -926,6 +957,7 @@ const educationEntries: EducationEntry[] = [
     degree: 'Bachelor of Science in Computer Engineering',
     short: 'BS Computer Engineering',
     institution: 'Pampanga State University',
+    formerly: 'Don Honorio Ventura State University',
     location: 'Bacolor, Pampanga, Philippines',
     period: 'Class of 2026',
     /** Official wordmark (public domain, via Wikimedia Commons). */

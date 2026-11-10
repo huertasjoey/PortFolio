@@ -3,3 +3,6 @@
 
 # Original full-size promo video (the compressed copy is frontend/public/videos/lycodry-promo.mp4)
 /LycoDry-Promotional.mp4
+
+# Original full-size demo video (too large for GitHub; the site uses frontend/public/videos/lycodry-montage.mp4)
+/LycoDry-Demo.mp4

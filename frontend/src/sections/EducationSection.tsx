@@ -38,12 +38,16 @@ export function EducationSection() {
                   )}
                   <div className="flex flex-col gap-8 p-6 sm:p-10 lg:flex-row lg:items-end lg:justify-between">
                     <div className="min-w-0">
-                      {e.logo ? (
+                      {e.logo && (
                         <div className="inline-flex rounded-lg bg-[#fbf8f3] px-5 py-3.5 shadow-lg shadow-black/20 ring-1 ring-black/5">
                           <img src={e.logo} alt={e.institution} className="h-5 w-auto sm:h-7" />
                         </div>
-                      ) : (
-                        <p className="text-lg text-fg">{e.institution}</p>
+                      )}
+                      {(!e.logo || e.formerly) && (
+                        <p className={`text-lg text-fg ${e.logo ? 'mt-4' : ''}`}>
+                          {e.institution}
+                          {e.formerly && <span className="text-fg2"> (formerly {e.formerly})</span>}
+                        </p>
                       )}
                       <h3 className="mt-7 max-w-2xl font-serif text-3xl leading-tight font-light text-fg sm:text-4xl">{e.degree}</h3>
                       <p className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-fg2">
