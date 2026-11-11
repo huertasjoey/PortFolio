@@ -988,7 +988,7 @@ const contact = {
   linkedinButton: 'LinkedIn',
   facebookButton: 'Facebook',
   /** Small print under the links. Set to '' to hide. */
-  note: 'The LinkedIn link is a placeholder until set in src/content.ts.',
+  note: '',
 }
 
 /* ────────────────────────────── Footer ────────────────────────────── */
