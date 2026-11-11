@@ -24,13 +24,12 @@ const profile = {
   availability: 'Open to work',
   email: 'joeyhuertas12@gmail.com',
   github: 'https://github.com/huertasjoey',
-  /** PLACEHOLDER — replace with your real LinkedIn profile URL. */
-  linkedin: 'https://www.linkedin.com/in/your-profile',
+  linkedin: 'https://www.linkedin.com/in/huertas-joey-8743b7417',
   /**
    * Resume: put your PDF in `frontend/public/` (e.g. resume.pdf) and set this to
    * '/resume.pdf'. While empty, the Resume button is shown as disabled.
    */
-  resumeUrl: '',
+  resumeUrl: '/Joey-Huertas-Resume.pdf',
   resumeLabel: 'Resume',
   resumeMissingLabel: 'Resume (not added)',
   resumeMissingHint: 'Add your resume PDF to public/ and set resumeUrl in src/content.ts',
