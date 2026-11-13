@@ -631,7 +631,7 @@ const projects: Project[] = [
     tags: ['React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Vite', 'Full-Stack'],
     caseStudy: {
       overview:
-        'Track habits across the week, take rest days without breaking progress, plan today, chase goals and keep a daily diary, all synced to your own private account.',
+        'Track habits across the week, take rest days without breaking progress, plan today, break goals into checklists of steps and keep a daily diary, all synced to your own private account. The week can be printed or saved as a PDF.',
       banner: false,
       background: 'fading-stars',
       video: {
@@ -644,6 +644,7 @@ const projects: Project[] = [
         { value: '5', label: 'database tables, all private per user' },
         { value: '3', label: 'themes: Light, Dark, Night' },
         { value: '4', label: 'optional AI writing tools' },
+        { value: '8–15', label: 'AI-suggested steps per goal' },
       ],
       gallery: [
         { src: '/images/kaizen/week.jpg', alt: 'Kaizen weekly planner with daily plan, goals, diary markers and habit grid', caption: 'Weekly planner: daily plan, goals, diary markers and the habit grid' },
@@ -669,7 +670,7 @@ const projects: Project[] = [
       problem:
         'Habits, goals, to-dos and journaling usually live in separate apps, so it’s hard to see how your days add up, and personal notes online raise privacy questions.',
       solution:
-        'One planner for the week, today’s tasks, goals and a diary, saved to your own account and kept private by the database itself.',
+        'One planner for the week, today’s tasks, goals with step-by-step checklists and a diary, saved to your own account and kept private by the database itself.',
       howItWorksIntro: { lead: 'From sign-in to', accent: 'a better week.', chips: ['React + Supabase', 'Private by design'] },
       howItWorks: [
         {
@@ -677,8 +678,8 @@ const projects: Project[] = [
           specs: [['Auth', 'Supabase Auth'], ['Privacy', 'Row Level Security'], ['Tables', '5']],
         },
         {
-          title: 'Plan the week', stage: 'Planner', text: 'The week, goals and daily plan sit side by side.', poster: '/images/kaizen/week.jpg',
-          specs: [['Front end', 'React 19 + Vite'], ['Styling', 'Tailwind CSS v4']],
+          title: 'Plan the week', stage: 'Planner', text: 'The week, goals, daily plan and notes on paper-style sheets, ready to print.', poster: '/images/kaizen/week.jpg',
+          specs: [['Front end', 'React 19 + Vite'], ['Styling', 'Tailwind CSS v4'], ['Print', 'Week as paper or PDF']],
         },
         {
           title: 'Tick habits', stage: 'Tracking', text: 'Tick each day; every habit gets a weekly count.', poster: '/images/kaizen/habits.jpg',
@@ -697,6 +698,10 @@ const projects: Project[] = [
           specs: [['Status', 'Active · Overdue · Completed'], ['Progress', 'Bar + percentage']],
         },
         {
+          title: 'Break goals into steps', stage: 'Checklist', text: 'Tick off the steps to a goal; AI can suggest them for you.', poster: '/images/kaizen/goal-details.jpg',
+          specs: [['Steps', 'Up to 100 per goal'], ['AI ideas', '8–15 steps, on request'], ['Progress', 'Steps done ÷ total']],
+        },
+        {
           title: 'Write the diary', stage: 'Journal', text: 'One entry a day, with mood, reflections and a word goal.', poster: '/images/kaizen/editor.jpg',
           specs: [['Moods', '8'], ['Reflections', '4 prompts'], ['Safety', 'Warns before losing text']],
         },
@@ -712,7 +717,7 @@ const projects: Project[] = [
       contribution:
         'I designed and built it end to end: the interface, database schema, security policies and every feature.',
       challenges:
-        'Never losing writing, keeping private notes private, and keeping the AI key off the front end.',
+        'Never losing writing, keeping private notes private, keeping the AI key off the front end, and making the planner print cleanly on paper.',
       futureWork:
         'Sync rest days across devices, live updates with Supabase Realtime, and production sign-up emails.',
       note: 'Screenshots show sample data, and the AI suggestions shown are sample output.',
