@@ -24,7 +24,7 @@ const profile = {
   availability: 'Open to work',
   email: 'joeyhuertas12@gmail.com',
   github: 'https://github.com/huertasjoey',
-  linkedin: 'https://www.linkedin.com/in/huertas-joey-8743b7417',
+  linkedin: 'https://www.linkedin.com/in/joey-huertas-8743b7417/',
   /**
    * Resume: put your PDF in `frontend/public/` (e.g. resume.pdf) and set this to
    * '/resume.pdf'. While empty, the Resume button is shown as disabled.
